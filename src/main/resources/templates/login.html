@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{app_name}"></title>
+</head>
+<body>
+
+    <p th:text="${error_message}"></p>
+    <p th:text="${info_message}"></p>
+
+    <form th:action="@{/login}" method="POST"> 
+        <label for="username">email</label>
+        <input type="text" name="username" id="username" value="user1">
+        <label for="password">Hasło</label>
+        <input type="password" name="password" id="password" value="11">
+        <button type="submit">Zaloguj</button>
+    </form>
+
+    <a href="">Przypomnije hasło</a>
+    <a href="">Rejestracja</a>
+
+</body>
+</html>
