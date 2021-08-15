@@ -39,7 +39,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider apiAuthenticationProvider() {
         DaoAuthenticationProvider apiAuthenticationProvider = new DaoAuthenticationProvider();
         apiAuthenticationProvider.setUserDetailsService(chexDetailsService);
-        //noinspection deprecation
         apiAuthenticationProvider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
         return apiAuthenticationProvider;
     }
@@ -71,10 +70,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authenticationProvider(apiAuthenticationProvider())
-
                 .authorizeRequests()
                 .antMatchers("/api/registration/**", "/api/forgotpassword/**").permitAll()
-                .antMatchers("/api/**").hasRole("USER")
+                .antMatchers("/api/**").hasAnyRole("USER", "ADMIN")
                 .and()
                 .httpBasic();
     }
