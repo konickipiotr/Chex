@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{app_name}"></title>
+    <script src="https://kit.fontawesome.com/7ccfa6815b.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/common_style.css">
+    <link rel="stylesheet" type="text/css" href="/css/admin/admin_main.css">
+    <link rel="stylesheet" type="text/css" href="/css/admin/admin_fragments.css">
+    <link rel="stylesheet" type="text/css" href="/css/admin/newplace_style.css">
+</head>
+<body>
+    <header th:replace="admin/fragments/top :: top"></header>
+    <div class="main-container">
+        <nav th:replace="admin/fragments/menu :: menu" id="menu"></nav>
+        <section id="content">
+            <!-- ***************************************************** -->
+            <h2>Dodaj miejsce</h2>
+            <p class="error_msg">error</p>
+            <p class="info_msg">info</p>
+          
+            <div class="select-place-wrapper">
+              <form th:action="@{'/admin/places/new/' + ${placetype}}" method="GET" class="select-place-container">
+                <p>Wybierz miejsce</p>
+                <select id="selected_place" name="selected_place">
+                    <option th:each="l : ${list}" th:value="${l.id}" th:text="${l.name}"></option>
+                </select>
+                <button type="submit">Dalej</button>
+              </form>
+            </div>
+          
+            <form class="add-new-place-container" th:action="@{/admin/places/new/country}" method="post" th:object="${placeForm}" enctype="multipart/form-data">
+                <input type="hidden" name="prefix" th:field="*{prefix}">
+                <input type="hidden" name="sufix" th:field="*{sufix}">
+                <input type="hidden" name="placetype" th:value="${placetype}">
+              <h3>Nowe miejsce</h3>
+              <div>
+                <label>Nowe ID</label>
+              </div>
+              <div>
+                <p class="error_msg" th:if="${#fields.hasErrors('placeid')}" th:errors="*{placeid}" ></p>
+                <span th:text="${placeForm.prefix}"></span>
+                <input type="text" name="placeid" maxlength="3" max="3" min="3" size="3"  th:field="*{placeid}">
+                <span th:text="${placeForm.sufix}"></span>
+              </div>
+          
+              <div class="row">
+                <div class="col-30">
+                  <label for="nameEng" th:text="#{newplace_placeNameEng}"></label>
+                  <input type="text" id="nameEng" name="nameEng" required>
+                </div>
+                <div class="col-25" style="flex-direction: row; justify-content: center; font-size: 1.2em;">
+                  <label for="sameAsFirst" style="width: auto;">same as first</label>
+                  <input style="width: auto;" type="checkbox" name="sameAsFirst" id="sameAsFirst">
+                </div>
+                <div class="col-30" >
+                  <label for="namePl"  th:text="#{newplace_placeNamePl}"></label>
+                  <input type="text" id="namePl" name="namePl" required>
+                </div>
+                
+              </div>
+              <!--  ************************************    -->
+              <div class="row">
+                <div class="col-30">
+                  <label for="latitude">Szerogość geograficzna</label>
+                  <input type="number" min="-90" max="90" step="0.00001" id="latitude" name="latitude" th:field="*{latitude}" required>
+                </div>
+                <div class="col-30">
+                   <label for="longitude">Długość geograficzna</label>
+                   <input type="number" min="-180" max="180" step="0.00001" id="longitude" name="longitude" th:field="*{longitude}" required>
+                </div>
+                <div class="col-30">
+                   <label for="radius">Promień</label>
+                   <input type="number" step="1" min="0" id="radius" name="radius" th:field="*{radius}" required>
+                </div>
+              </div>
+              
+              <!--  ************************************    -->
+              <div class="row">
+                <div class="col-50">
+                  <label for="points" th:text="#{newplace_points}"></label>
+                  <input type="number" step="1" min="0" id="points" name="points"  th:field="*{points}">
+                </div>
+                <div class="col-50">
+                  <label for="difficultylevel">Pozim trudnoście</label>
+                  <input type="number" step="1" min="5" id="difficultylevel" name="difficultylevel"  th:field="*{difficultylevel}">
+                </div>
+              </div>
+              
+              <!--  ************************************    -->
+              <div class="row">
+                <div class="col-50">
+                  <label for="descriptionEng" th:text="#{newplace_descriptionEng}"></label>
+                  <textarea name="descriptionEng" id="descriptionEng" th:text="${placeForm.descriptionEng}"></textarea>
+                </div>
+                <div class="col-50">
+                  <label for="descriptionPl" th:text="#{newplace_descriptionPl}"></label><br>
+                  <textarea name="descriptionPl" id="descriptionPl" th:text="${placeForm.descriptionPl}"></textarea>
+                </div>
+              </div>
+              
+              <!--  ************************************    -->
+              <div class="row">
+                <div class="col-50">
+                  <input type="file" id="picture" name="picture" accept="image/png, image/jpeg, image/jpg, image/bmp" style="display: none">
+                  <button type="button" onclick="chooseImage()" th:text="#{btn_select_photo}"></button>
+                </div>
+                <div class="col-50">
+                  <span id="fileinfo"></span>
+                </div>
+              </div>
+              
+              <!--  ************************************    -->
+              <div class="row">
+                <div class="col-30">&nbsp;</div>
+                <div class="col-30">
+                  <button type="submit" th:text="#{btn_save}"></button>
+                </div>
+                <div class="col-30">&nbsp;</div>
+              </div>
+                  
+            </form>
+
+
+
+
+
+            </form>
+            <!-- ***************************************************** -->
+        </section>
+    </div>
+    
+</body>
+<script>
+
+    function chooseImage(){
+        document.getElementById("picture").click();
+    }
+
+    function returnFileSize(number) {
+        if(number < 1024) {
+            return number + 'bytes';
+        } else if(number >= 1024 && number < 1048576) {
+            return (number/1024).toFixed(1) + 'KB';
+        } else if(number >= 1048576) {
+            return (number/1048576).toFixed(1) + 'MB';
+        }
+    }
+
+    document.getElementById("picture").onchange = function(e){
+        const name = this.value.split(/(\\|\/)/g).pop();
+        const size = returnFileSize(this.files[0].size);
+        const output = name + " - " + size;
+
+        document.getElementById("fileinfo").innerHTML = output;
+    }
+
+    document.getElementById("sameAsFirst").addEventListener('change', (event) => {
+    let secondField = document.getElementById("namePl");
+    if (event.currentTarget.checked) {
+        secondField.value = "";
+        secondField.disabled = true;
+        secondField.style.background = "#c9c9c9";
+    } else {
+        secondField.disabled = false;
+        secondField.style.background = "white";
+    }
+    })
+
+</script>
+</html>

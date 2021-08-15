@@ -2,11 +2,19 @@ package com.chex.webapp;
 
 import com.chex.authentication.Auth;
 import com.chex.authentication.AuthRepository;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletMapping;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.Enumeration;
+import java.util.Locale;
 import java.util.Optional;
 
 @Controller
@@ -25,7 +33,10 @@ public class HomeController {
     }
 
     @GetMapping("/init")
-    public String postLogin(Principal principal){
+    public String postLogin(Principal principal, HttpServletRequest request){
+        if(principal == null)
+            return "redirect:/logout";
+
         Optional<Auth> oUser = this.authRepository.findByUsername(principal.getName());
         if(oUser.isEmpty())
             return "/login";
@@ -43,10 +54,5 @@ public class HomeController {
     @GetMapping
     public String userHome(){
         return "user/home";
-    }
-
-    @GetMapping("/admin")
-    public String adminHome(){
-        return "admin/home";
     }
 }

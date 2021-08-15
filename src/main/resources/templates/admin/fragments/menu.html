@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{app_name}"></title>
+    
+</head>
+<body>
+<nav th:fragment="menu" id="menu">
+    <a th:href="@{/admin/}">Home</a>
+    <a th:href="@{/admin/places}">Miejsca</a>
+    <a th:href="@{/admin/category}">category</a>
+</nav>
+</body>
+</html>

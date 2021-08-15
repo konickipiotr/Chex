@@ -1,0 +1,6 @@
+#menu{
+    display: flex;
+    flex-direction: column;
+    background-color: aquamarine;
+    width: 25%;
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{app_name}"></title>
+    <link rel="stylesheet" type="text/css" href="/css/admin/admin_main.css">
+    <link rel="stylesheet" type="text/css" href="/css/admin/admin_fragments.css">
+</head>
+<body>
+    <header th:replace="admin/fragments/top :: top"></header>
+    <div class="main-container">
+        <nav th:replace="admin/fragments/menu :: menu" id="menu"></nav>
+        <section id="content">
+            <!-- ***************************************************** -->
+            <form th:action="@{/admin/places/new/continent}" method="GET">
+                <button type="submit" name="continent" value="EU" th:text="#{continent_europe}"></button>
+                <button type="submit" name="continent" value="AN" th:text="#{continent_northamerica}"></button>
+                <button type="submit" name="continent" value="AS" th:text="#{continent_southamerica}"></button>
+                <button type="submit" name="continent" value="AZ" th:text="#{continent_asia}"></button>
+                <button type="submit" name="continent" value="AF" th:text="#{continent_africa}"></button>
+                <button type="submit" name="continent" value="AU" th:text="#{continent_australia}"></button>
+                <button type="submit" name="continent" value="AA" th:text="#{continent_antarctica}"></button>
+            </form>
+            <!-- ***************************************************** -->
+        </section>
+    </div>
+    
+</body>
+</html>

@@ -1,18 +1,38 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title th:text="#{app_name}"></title>
+    <script src="https://kit.fontawesome.com/7ccfa6815b.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/common_style.css">
 </head>
 <body>
 
-    <p th:text="${error_message}"></p>
-    <p th:text="${info_message}"></p>
+    <header class="top">
+
+        <div class="logo-div">
+            <span>Chex</span>
+        </div>
+    
+        <div class="rigt-top-div">
+            <div id="flag-container">
+                <a th:href="@{/admin?lang=pl}"><img class="flag" alt="" th:src="@{/img/flag_pl.png}"></a>
+                <a th:href="@{/admin?lang=en}"><img class="flag" alt="" th:src="@{/img/flag_eng.png}"></a>
+            </div>
+        
+            <div id="setting-container">
+                <i class="fas fa-cog"></i>
+                <i class="fas fa-sign-out-alt"></i>
+            </div>
+        </div>
+        
+    </header>
 
     <form th:action="@{/login}" method="POST"> 
         <label for="username">email</label>
-        <input type="text" name="username" id="username" value="user1">
-        <label for="password">Hasło</label>
+        <input type="text" name="username" id="username" value="admin">
+        <label for="password" th:text="#{password}"></label>
         <input type="password" name="password" id="password" value="11">
         <button type="submit">Zaloguj</button>
     </form>

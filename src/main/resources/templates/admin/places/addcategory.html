@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{app_name}"></title>
+    <script src="https://kit.fontawesome.com/7ccfa6815b.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/common_style.css">
+    <link rel="stylesheet" type="text/css" href="/css/admin/admin_main.css">
+    <link rel="stylesheet" type="text/css" href="/css/admin/admin_fragments.css">
+</head>
+<body>
+    <header th:replace="admin/fragments/top :: top"></header>
+    <div class="main-container">
+        <nav th:replace="admin/fragments/menu :: menu" id="menu"></nav>
+        <section id="content">
+            <!-- ***************************************************** -->
+            <p th:text="${error_msg}"></p>
+            
+            <form th:action="@{/admin/category/new}" method="post" th:object="${category}">
+                <input type="hidden" name="id" value="">
+
+                <label for="categoryPl" th:text="#{newcategory_pl}"></label> <br>
+                <input type="text" name="categoryPl" id="categoryPl" th:field="*{pl}" required><br>
+                <label for="categoryEng" th:text="#{newcategory_eng}"></label> <br>
+                <input type="text" name="categoryEng" id="categoryEng" th:field="*{eng}" required><br>
+                <button type="submit" th:text="#{btn_add}"></button>
+            </form>
+
+            <div>
+                <table>
+                    <tr>
+                        <th th:text="#{newcategory_pl}"></th>
+                        <th th:text="#{newcategory_eng}"></th>
+                        <th th:text="#{label_edit}"></th>
+                        <th th:text="#{label_delete}"></th>
+                    </tr>
+                    <tr th:each="c : ${categories}">
+                        <form th:action="@{/admin/category}" method="post">
+                            <input type="hidden" name="id" th:value="${c.id}">
+
+                            <td><input type="text" th:id="${'pl' + c.id}" name="pl" th:value="${c.pl}" disabled></td>
+                            <td><input type="text" th:id="${'eng' + c.id}" name="eng" th:value="${c.eng}" disabled></td>
+                            <td>
+                                <button type="button" th:id="${'editBtn' + c.id}" th:onclick="'unlockFields(' + ${c.id} +')'">Edytuj</button>
+                                <button type="submit" th:id="${'saveBtn' + c.id}" name="action" value="EDIT">Zapisz</button>
+                            </td>
+                            <td><button type="submit" name="action" value="DELETE">Usuń</button></td>
+                        </form>
+                    </tr>
+
+                </table>
+            </div>
+            <!-- ***************************************************** -->
+        </section>
+    </div>
+    
+</body>
+<script src="/scripts/addcategory.js"></script>
+</html>

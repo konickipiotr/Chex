@@ -1,0 +1,141 @@
+
+body{
+    margin: 0px;
+}
+
+.top{
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 10px 3px 10px;
+    color: white;
+}
+
+.flag{
+    height: 20px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.flag:hover{
+    border: 2px solid white;
+    border-radius: 4px;
+}
+
+#flag-container{
+    margin-right: 20px;
+    margin-top: 3px;
+}
+
+#setting-container{
+    display: flex;
+    
+}
+
+#setting-container i.fas{
+    color: rgb(224, 219, 219);
+    font-size: xx-large;
+    cursor: pointer;
+    margin-left: 3px;
+    margin-right: 4px;
+}
+
+#setting-container i.fas:hover{
+    color: rgb(167, 104, 104);
+}
+
+.rigt-top-div{
+    display: flex;
+}
+  
+h1, h2, h3, h4{
+    text-align: center;
+    width: 100%;
+}
+  
+textarea{
+    resize: none;
+    margin: 1%;
+}
+  
+button{
+    width: 98%;
+    margin: 1%;
+    background-color: #090e12;
+    color: white;
+    border-style: none;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+  
+button:hover{
+    opacity: 0.8;
+}
+  
+select{
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 4px;
+    width: 98%;
+    margin: 1%;
+    border-radius: 8px;
+    border: 2px solid transparent;
+}
+  
+select:hover{
+    border: 2px solid #000000;
+}
+  
+h2, h3{
+    background-color: #74917c;
+}
+  
+label{
+    font-weight: bold;
+}
+  
+.error_msg, .info_msg{
+    font-weight: bold;
+    text-align: center;
+}
+  
+.error_msg{color: #8a0606;} 
+.info_msg{color: #014002;}
+
+
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+    width: 100%;
+}
+  
+.row input, .row label{
+    width: 96%;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+  
+.row input{
+    padding: 1%;
+    border-radius: 5px;
+    border: 2px solid #535454;
+}
+  
+.row input:hover{
+    border: 2px solid #000000;
+}
+  
+.col-100, .col-50, .col-30, .col-25, col-10{
+    display: flex;
+    flex-direction: column;
+}
+  
+.col-100 {width: 100%;}
+.col-50 {width: 50%;}
+.col-30 {width: 30%;}
+.col-25 {width: 25%;}
+.col-10 {width: 10%;}

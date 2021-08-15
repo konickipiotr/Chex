@@ -1,0 +1,25 @@
+.select-place-wrapper{
+    display: flex;
+    justify-content: center;
+}
+
+.select-place-container{
+    width: 30vw;
+}
+
+.select-place-container p{
+    margin-left: 5px;
+    margin-bottom: 1px;
+}
+
+.add-new-place-container{
+    display: flex;
+    flex-direction: column;
+    padding: 1%;
+    background-color: #e1f0e5;
+    margin-top: 30px;
+}
+
+.add-new-place-container textarea{
+    min-height: 100px;
+}

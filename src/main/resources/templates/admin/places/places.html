@@ -3,21 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="#{app_name}"></title>
-    <script src="https://kit.fontawesome.com/7ccfa6815b.js" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" type="text/css" href="/css/common_style.css">
     <link rel="stylesheet" type="text/css" href="/css/admin/admin_main.css">
     <link rel="stylesheet" type="text/css" href="/css/admin/admin_fragments.css">
 </head>
 <body>
-    <header th:replace="admin/fragments/top :: top" class="top"></header>
+    <header th:replace="admin/fragments/top :: top"></header>
     <div class="main-container">
         <nav th:replace="admin/fragments/menu :: menu" id="menu"></nav>
         <section id="content">
             <!-- ***************************************************** -->
-
-            
-            content
+            places
+            <a th:href="@{/admin/places/new}">Dodaj nowe</a>
             <!-- ***************************************************** -->
         </section>
     </div>

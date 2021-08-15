@@ -1,0 +1,16 @@
+
+body{
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+    padding: 0px;
+}
+
+.main-container{
+    display: flex;
+}
+
+.content{
+    background-color: #cae3d1;
+    width: 70%;
+}
