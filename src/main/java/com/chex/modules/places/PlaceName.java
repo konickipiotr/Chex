@@ -28,7 +28,10 @@ public class PlaceName {
     public PlaceName(String id, PlaceForm pf) {
         this.id = id;
         this.pl = pf.getNamePl();
-        this.eng = pf.getNameEng();
+        if(pf.isSameAsFirst())
+            this.eng = pf.getNamePl();
+        else
+            this.eng = pf.getNameEng();
     }
 
 }

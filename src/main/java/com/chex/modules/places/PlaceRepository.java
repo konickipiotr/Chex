@@ -10,23 +10,12 @@ import java.util.List;
 @Repository
 public interface PlaceRepository extends JpaRepository<Place, String> {
 
-    @Query(value = "from Place where (id like CONCAT(:continentid,'___00000000000')) and (id not like CONCAT(:continentid,'00000000000000'))")
-    List<Place> getCountries(@Param("continentid") String continentid);
-
-    @Query(value = "from Place where (id like CONCAT(:countryid,'___00000000')) and (id not like CONCAT(:countryid,'00000000000')) ")
-    List<Place> getProvinces(@Param("countryid") String countryid);
-
-    @Query(value = "from Place where (id like CONCAT(:regionid,'___00000')) and (id not like CONCAT(:regionid,'00000000')) ")
-    List<Place> getRegion(@Param("regionid") String regionid);
-
     @Query(value = "From Place where (latitude between :Slatitude and :Nlatitude)  and (longitude between :Wlongitude and :Elongitude)")
     List<Place> filterCoords(@Param("Nlatitude")double Nlatitude,
                              @Param("Slatitude")double Slatitude,
                              @Param("Wlongitude")double Wlongitude,
                              @Param("Elongitude")double Elongitude
     );
-
-
 
     @Query(value = "From Place where id like '%.000.000.000.00000'")
     List<Place> getContinents();

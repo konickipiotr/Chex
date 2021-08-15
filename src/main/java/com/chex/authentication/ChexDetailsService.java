@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class ChexDetailsService implements UserDetailsService {
 
-    private AuthRepository authRepository;
+    private final AuthRepository authRepository;
 
     @Autowired
     public ChexDetailsService(AuthRepository authRepository) {

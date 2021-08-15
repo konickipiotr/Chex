@@ -3,102 +3,139 @@ package com.chex.webapp.admin.places.newplace;
 import com.chex.modules.category.Category;
 import com.chex.modules.category.CategoryRepository;
 import com.chex.modules.places.*;
+import com.chex.utils.Duo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.transaction.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@Transactional
 class AddPlaceServiceTest {
 
-    private PlaceRepository placeRepository;
-    private PlaceNameRepository placeNameRepository;
-    private PlaceDescriptionRepository placeDescriptionRepository;
+    private MockMvc mockMvc;
+    @Mock
     private CategoryRepository categoryRepository;
+    @Mock
+    private PlaceRepository placeRepository;
+    @Mock
+    private PlaceNameRepository placeNameRepository;
+    @Mock
+    private PlaceDescriptionRepository placeDescriptionRepository;
 
-    private AddPlaceService newPlaceService;
-
-    private Category cat1 = new Category("kontynetn", "continent");
-    private Category cat2 = new Category("państwo", "country");
-    private Category cat3 = new Category("prowincja", "province");
-    private Category cat4 = new Category("Miejscowość","city");
-    private Category cat5 = new Category("region", "region");
-
-    private Place p1 = new Place("EU0000000000000");
-    private PlaceName pn1;
-    private PlaceDescription pd1;
-    private Place p2 = new Place("AN0000000000000");
-    private PlaceName pn2;
-    private PlaceDescription pd2;
-
-    @Autowired
-    public AddPlaceServiceTest(PlaceRepository placeRepository, PlaceNameRepository placeNameRepository, PlaceDescriptionRepository placeDescriptionRepository, CategoryRepository categoryRepository, AddPlaceService newPlaceService) {
-        this.placeRepository = placeRepository;
-        this.placeNameRepository = placeNameRepository;
-        this.placeDescriptionRepository = placeDescriptionRepository;
-        this.categoryRepository = categoryRepository;
-        this.newPlaceService = newPlaceService;
-    }
+    @InjectMocks
+    private AddPlaceService addPlaceService;
 
     @BeforeEach
     void setUp() {
-
-        this.placeRepository.deleteAll();
-        this.placeNameRepository.deleteAll();
-        this.placeDescriptionRepository.deleteAll();
-
-        this.categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5));
-        p1.setCategory(cat1.getId());
-        p2.setCategory(cat1.getId());
-        this.placeRepository.saveAll(Arrays.asList(p1, p2));
-
-        pn1 = new PlaceName(p1.getId(), "Europa", "Europe");
-        pn2 = new PlaceName(p2.getId(), "Ameryka Pónocna", "North America");
-        this.placeNameRepository.saveAll(Arrays.asList(pn1, pn2));
-
-        pd1 = new PlaceDescription(p1.getId(), "pies", "koń");
-        pd2 = new PlaceDescription(p2.getId(), "zielony", "niebieski");
+        MockitoAnnotations.openMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(addPlaceService).build();
     }
 
     @Test
-    void add_general_place_in_proper_way() {
-        PlaceForm pf = new PlaceForm();
-        pf.setPrefix("EU");
-        pf.setSufix("00000000000");
-        pf.setPlaceid("PL0");
-        pf.setNamePl("Polska");
-        pf.setNameEng("Poland");
-        pf.setDescriptionEng("Country");
-        pf.setDescriptionPl("Kraj");
+    void get_continent_s_places() {
+        PlaceType placeType = PlaceType.COUNTRY;
+        String id = "EU";
 
-        boolean added = this.newPlaceService.addNewGeneralPlace(pf);
-        String expectedId = "EUPL000000000000";
+        List<Place> list = new ArrayList<>(Arrays.asList(
+                new Place("EU.POL.000.000.00000"),
+                new Place("EU.GER.000.000.00000"),
+                new Place("EU.ITL.000.000.00000")
+        ));
+        PlaceName pn1 = new PlaceName("EU.POL.000.000.00000", "Polska", "Poland");
+        PlaceName pn2 = new PlaceName("EU.GER.000.000.00000", "Niemcy", "Germany");
+        PlaceName pn3 = new PlaceName("EU.ITL.000.000.00000", "Włochy", "Italy");
 
-        assertTrue(added);
-        Place place = this.placeRepository.getById(expectedId);
-        PlaceName placeName = this.placeNameRepository.getById(place.getId());
-        PlaceDescription description = this.placeDescriptionRepository.getById(place.getId());
+        Mockito.when(placeRepository.getAllCountriesFromContinent(id)).thenReturn(list);
+        Mockito.when(placeNameRepository.getById("EU.POL.000.000.00000")).thenReturn(pn1);
+        Mockito.when(placeNameRepository.getById("EU.GER.000.000.00000")).thenReturn(pn2);
+        Mockito.when(placeNameRepository.getById("EU.ITL.000.000.00000")).thenReturn(pn3);
 
-        assertEquals(expectedId, place.getId());
-        assertEquals(10000, place.getLatitude());
-        assertEquals(10000, place.getLongitude());
-        assertEquals(0, place.getRadius());
-        assertEquals(0, place.getRating());
-        assertEquals(cat2.getId(), place.getCategory());
 
-        assertEquals("Polska", placeName.getPl());
-        assertEquals("Poland", placeName.getEng());
+        List<Duo<String>> listOfPlaces = addPlaceService.getListOfPlaces(id, placeType, "pl");
 
-        assertEquals("Country", description.getEng());
-        assertEquals("Kraj", description.getPl());
+        assertEquals(3, listOfPlaces.size());
+        assertEquals("EU.GER.000.000.00000", listOfPlaces.get(0).getKey());
+        assertEquals("Niemcy", listOfPlaces.get(0).getValue());
+        assertEquals("EU.POL.000.000.00000", listOfPlaces.get(1).getKey());
+        assertEquals("Polska", listOfPlaces.get(1).getValue());
+        assertEquals("EU.ITL.000.000.00000", listOfPlaces.get(2).getKey());
+        assertEquals("Włochy", listOfPlaces.get(2).getValue());
+    }
 
+    @Test
+    void get_country_s_places() {
+        PlaceType placeType = PlaceType.PROVINCE;
+        String id = "EU.POL";
+
+        List<Place> list = new ArrayList<>(Arrays.asList(
+                new Place("EU.POL.WKP.000.00000"),
+                new Place("EU.POL.DLS.000.00000"),
+                new Place("EU.POL.ZAC.000.00000")
+        ));
+        PlaceName pn1 = new PlaceName("EU.POL.WKP.000.00000", "Wielkopolskie", "Wielkopolskie");
+        PlaceName pn2 = new PlaceName("EU.POL.DLS.000.00000", "Dolnośląskie", "Dolnośląskie");
+        PlaceName pn3 = new PlaceName("EU.POL.ZAC.000.00000", "Zachodniopomorskie", "Zachodniopomorskie");
+
+        Mockito.when(placeRepository.getAllProvincesFromCountry(id)).thenReturn(list);
+        Mockito.when(placeNameRepository.getById("EU.POL.WKP.000.00000")).thenReturn(pn1);
+        Mockito.when(placeNameRepository.getById("EU.POL.DLS.000.00000")).thenReturn(pn2);
+        Mockito.when(placeNameRepository.getById("EU.POL.ZAC.000.00000")).thenReturn(pn3);
+
+        List<Duo<String>> listOfPlaces = addPlaceService.getListOfPlaces(id, placeType, "pl");
+
+        assertEquals(3, listOfPlaces.size());
+        assertEquals("EU.POL.DLS.000.00000", listOfPlaces.get(0).getKey());
+        assertEquals("Dolnośląskie", listOfPlaces.get(0).getValue());
+        assertEquals("EU.POL.WKP.000.00000", listOfPlaces.get(1).getKey());
+        assertEquals("Wielkopolskie", listOfPlaces.get(1).getValue());
+        assertEquals("EU.POL.ZAC.000.00000", listOfPlaces.get(2).getKey());
+        assertEquals("Zachodniopomorskie", listOfPlaces.get(2).getValue());
+    }
+
+    @Test
+    void get_province_s_places() {
+        PlaceType placeType = PlaceType.REGION;
+        String id = "EU.POL.DLS";
+
+        List<Place> list = new ArrayList<>(Arrays.asList(
+                new Place("EU.POL.DLS.WRO.00000"),
+                new Place("EU.POL.DLS.REG.00000"),
+                new Place("EU.POL.DLS.KLD.00000")
+        ));
+        PlaceName pn1 = new PlaceName("EU.POL.DLS.REG.00000", "Region", "Region");
+        PlaceName pn2 = new PlaceName("EU.POL.DLS.WRO.00000", "Wrocław", "Wrocław");
+        PlaceName pn3 = new PlaceName("EU.POL.DLS.KLD.00000", "Kłodzko", "Kłodzko");
+
+        Mockito.when(placeRepository.getRegionsFromProvince(id)).thenReturn(list);
+        Mockito.when(placeNameRepository.getById("EU.POL.DLS.WRO.00000")).thenReturn(pn2);
+        Mockito.when(placeNameRepository.getById("EU.POL.DLS.REG.00000")).thenReturn(pn1);
+        Mockito.when(placeNameRepository.getById("EU.POL.DLS.KLD.00000")).thenReturn(pn3);
+
+
+        List<Duo<String>> listOfPlaces = addPlaceService.getListOfPlaces(id, placeType, "pl");
+
+        assertEquals(3, listOfPlaces.size());
+        assertEquals("EU.POL.DLS.REG.00000", listOfPlaces.get(0).getKey());
+        assertEquals("Region", listOfPlaces.get(0).getValue());
+
+        assertEquals("EU.POL.DLS.KLD.00000", listOfPlaces.get(1).getKey());
+        assertEquals("Kłodzko", listOfPlaces.get(1).getValue());
+
+        assertEquals("EU.POL.DLS.WRO.00000", listOfPlaces.get(2).getKey());
+        assertEquals("Wrocław", listOfPlaces.get(2).getValue());
     }
 }

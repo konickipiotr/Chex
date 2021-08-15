@@ -17,22 +17,22 @@
         <section id="content">
             <!-- ***************************************************** -->
             <h2>Dodaj miejsce</h2>
-            <p class="error_msg">error</p>
-            <p class="info_msg">info</p>
+            <p th:if="${error_msg}" class="error_msg">error</p>
+            <p th:if="${Info_msg}" class="info_msg">info</p>
           
-            <div class="select-place-wrapper">
+            <div class="select-place-wrapper" th:if="${placetype.name() != 'OTHER'}">
               <form th:action="@{'/admin/places/new/' + ${placetype}}" method="GET" class="select-place-container">
                 <p>Wybierz miejsce</p>
-                <select id="selected_place" name="selected_place">
-                    <option th:each="l : ${list}" th:value="${l.id}" th:text="${l.name}"></option>
+                <select id="selectedPlace" name="selectedPlace" required>
+                    <option th:each="l : ${list}" th:value="${l.key}" th:text="${l.value}"></option>
                 </select>
                 <button type="submit">Dalej</button>
               </form>
             </div>
           
-            <form class="add-new-place-container" th:action="@{/admin/places/new/country}" method="post" th:object="${placeForm}" enctype="multipart/form-data">
+            <form class="add-new-place-container" th:action="@{'/admin/places/new/' + ${placetype}}" method="post" th:object="${placeForm}" enctype="multipart/form-data">
                 <input type="hidden" name="prefix" th:field="*{prefix}">
-                <input type="hidden" name="sufix" th:field="*{sufix}">
+                <input type="hidden" name="suffix" th:field="*{suffix}">
                 <input type="hidden" name="placetype" th:value="${placetype}">
               <h3>Nowe miejsce</h3>
               <div>
@@ -41,8 +41,9 @@
               <div>
                 <p class="error_msg" th:if="${#fields.hasErrors('placeid')}" th:errors="*{placeid}" ></p>
                 <span th:text="${placeForm.prefix}"></span>
-                <input type="text" name="placeid" maxlength="3" max="3" min="3" size="3"  th:field="*{placeid}">
-                <span th:text="${placeForm.sufix}"></span>
+                <input th:if="${placeForm.subplace}" type="text" name="placeid" maxlength="3" max="3" min="3" size="3"  th:field="*{placeid}">
+                <input th:unless="${placeForm.subplace}" type="text" name="placeid" maxlength="5" max="5" min="5" size="5"  th:field="*{placeid}">
+                <span th:text="${placeForm.suffix}"></span>
               </div>
           
               <div class="row">
@@ -61,14 +62,14 @@
                 
               </div>
               <!--  ************************************    -->
-              <div class="row">
+              <div class="row" th:if="${placeForm.subplace == false}">
                 <div class="col-30">
                   <label for="latitude">Szerogość geograficzna</label>
-                  <input type="number" min="-90" max="90" step="0.00001" id="latitude" name="latitude" th:field="*{latitude}" required>
+                  <input type="number" min="-90" max="90" step="0.0000001" id="latitude" name="latitude" th:field="*{latitude}" required>
                 </div>
                 <div class="col-30">
                    <label for="longitude">Długość geograficzna</label>
-                   <input type="number" min="-180" max="180" step="0.00001" id="longitude" name="longitude" th:field="*{longitude}" required>
+                   <input type="number" min="-180" max="180" step="0.0000001" id="longitude" name="longitude" th:field="*{longitude}" required>
                 </div>
                 <div class="col-30">
                    <label for="radius">Promień</label>
@@ -82,9 +83,9 @@
                   <label for="points" th:text="#{newplace_points}"></label>
                   <input type="number" step="1" min="0" id="points" name="points"  th:field="*{points}">
                 </div>
-                <div class="col-50">
+                <div class="col-50" th:if="${placeForm.subplace == false}">
                   <label for="difficultylevel">Pozim trudnoście</label>
-                  <input type="number" step="1" min="5" id="difficultylevel" name="difficultylevel"  th:field="*{difficultylevel}">
+                  <input type="number" step="1" min="1" max="7" id="difficultylevel" name="difficultylevel"  th:field="*{difficultylevel}">
                 </div>
               </div>
               
@@ -95,19 +96,8 @@
                   <textarea name="descriptionEng" id="descriptionEng" th:text="${placeForm.descriptionEng}"></textarea>
                 </div>
                 <div class="col-50">
-                  <label for="descriptionPl" th:text="#{newplace_descriptionPl}"></label><br>
+                  <label for="descriptionPl" th:text="#{newplace_descriptionPl}"></label>
                   <textarea name="descriptionPl" id="descriptionPl" th:text="${placeForm.descriptionPl}"></textarea>
-                </div>
-              </div>
-              
-              <!--  ************************************    -->
-              <div class="row">
-                <div class="col-50">
-                  <input type="file" id="picture" name="picture" accept="image/png, image/jpeg, image/jpg, image/bmp" style="display: none">
-                  <button type="button" onclick="chooseImage()" th:text="#{btn_select_photo}"></button>
-                </div>
-                <div class="col-50">
-                  <span id="fileinfo"></span>
                 </div>
               </div>
               
@@ -115,17 +105,28 @@
               <div class="row">
                 <div class="col-30">&nbsp;</div>
                 <div class="col-30">
-                  <button type="submit" th:text="#{btn_save}"></button>
+                  <input type="file" id="picture" name="picture" accept="image/png, image/jpeg, image/jpg, image/bmp" style="display: none">
+                  <button type="button" onclick="chooseImage()" th:text="#{btn_select_photo}"></button>
                 </div>
                 <div class="col-30">&nbsp;</div>
               </div>
+              <div class="row">
+                <div class="col-30">&nbsp;</div>
+                <div class="col-30">
+                  <span id="fileinfo"></span>
+                </div>
+                <div class="col-30">&nbsp;</div>
+              </div>
+              
+              <!--  ************************************    -->
+              <div class="row">
+                <!-- <div class="col-30">&nbsp;</div>
+                <div class="col-30"> -->
+                  <button type="submit" th:text="#{btn_save}"></button>
+                <!-- </div>
+                <div class="col-30">&nbsp;</div> -->
+              </div>
                   
-            </form>
-
-
-
-
-
             </form>
             <!-- ***************************************************** -->
         </section>

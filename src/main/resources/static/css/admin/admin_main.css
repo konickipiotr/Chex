@@ -13,4 +13,9 @@ body{
 .content{
     background-color: #cae3d1;
     width: 70%;
+
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
 }

@@ -44,6 +44,7 @@ public class Place {
 
         this.id = placeForm.createId();
         this.points = placeForm.getPoints();
+        this.difficultylevel = 1;
         if(placeForm.getPrefix().length() > 11) {
             this.longitude = placeForm.getLongitude();
             this.latitude = placeForm.getLatitude();

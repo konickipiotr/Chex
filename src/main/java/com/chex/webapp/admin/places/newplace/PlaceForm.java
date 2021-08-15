@@ -10,7 +10,7 @@ public class PlaceForm {
 
     private String placeid;
     private String prefix;
-    private String sufix;
+    private String suffix;
     private boolean subplace;
     private String nameEng;
     private String namePl;
@@ -25,14 +25,18 @@ public class PlaceForm {
     private String descriptionPl;
     private MultipartFile picture;
 
-    public PlaceForm(String prefix, String sufix) {
+    public PlaceForm(String prefix, String suffix) {
         this.prefix = prefix;
-        this.sufix = sufix;
+        this.suffix = suffix;
         if(prefix.length()<11)
-            subplace = false;
+            subplace = true;
     }
 
     public String createId(){
-        return prefix + placeid + sufix;
+        return prefix + "." + placeid + suffix;
+    }
+
+    public String getParentId(){
+        return prefix + ".000" + suffix;
     }
 }

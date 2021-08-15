@@ -43,7 +43,7 @@
                             <td><input type="text" th:id="${'eng' + c.id}" name="eng" th:value="${c.eng}" disabled></td>
                             <td>
                                 <button type="button" th:id="${'editBtn' + c.id}" th:onclick="'unlockFields(' + ${c.id} +')'">Edytuj</button>
-                                <button type="submit" th:id="${'saveBtn' + c.id}" name="action" value="EDIT">Zapisz</button>
+                                <button type="submit" th:id="${'saveBtn' + c.id}" name="action" value="EDIT" hidden>Zapisz</button>
                             </td>
                             <td><button type="submit" name="action" value="DELETE">Usuń</button></td>
                         </form>

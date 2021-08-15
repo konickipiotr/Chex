@@ -17,8 +17,8 @@ import java.util.Optional;
 @RestController
 public class LoginAPIController {
 
-    private AuthRepository authRepository;
-    private UserRepository userRepository;
+    private final AuthRepository authRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public LoginAPIController(AuthRepository authRepository, UserRepository userRepository) {
