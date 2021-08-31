@@ -17,7 +17,8 @@ import java.util.Collections;
 @NoArgsConstructor
 public class Auth implements UserDetails {
 
-    @GeneratedValue
+    @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     @Id
     private Long id;
     private String username;

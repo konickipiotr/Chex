@@ -51,6 +51,7 @@ public class DbInit implements CommandLineRunner {
         User u1 = new User(user1.getId(), "Jan", "Nowak");
         this.userRepository.saveAll(Collections.singletonList(u1));
 
+        savePlacesForTesting();
         initBaseData();
     }
 
@@ -122,5 +123,98 @@ public class DbInit implements CommandLineRunner {
             this.placeNameRepository.save(new PlaceName(antarctica.getId(), "Antarktyda", "Antarctica"));
             this.placeDescriptionRepository.save(new PlaceDescription(antarctica.getId(), "", ""));
         }
+    }
+
+    private void savePlacesForTesting(){
+
+        this.placeRepository.deleteAll();
+        this.placeDescriptionRepository.deleteAll();
+        this.placeNameRepository.deleteAll();
+
+        //COUNTRIES
+        Place poland = new Place("AA.POL.000.000.00000");
+        Place germany = new Place("AA.GER.000.000.00000");
+        Place spain = new Place("AA.SPA.000.000.00000");
+        Place italy = new Place("AA.ITL.000.000.00000");
+        this.placeRepository.saveAll(Arrays.asList(poland, germany, spain, italy));
+
+        this.placeNameRepository.save(new PlaceName(poland.getId(), "Polska", "Poland"));
+        this.placeNameRepository.save(new PlaceName(germany.getId(), "Niemcy", "Germany"));
+        this.placeNameRepository.save(new PlaceName(spain.getId(), "Hiszpania", "Spain"));
+        this.placeNameRepository.save(new PlaceName(italy.getId(), "Włochy", "Italy"));
+
+        this.placeDescriptionRepository.save(new PlaceDescription(poland.getId(), "", ""));
+        this.placeDescriptionRepository.save(new PlaceDescription(germany.getId(), "", ""));
+        this.placeDescriptionRepository.save(new PlaceDescription(spain.getId(), "", ""));
+        this.placeDescriptionRepository.save(new PlaceDescription(italy.getId(), "", ""));
+
+        //PRIVINCES
+        Place dolnoslaskie = new Place("AA.POL.DLS.000.00000");
+        Place opolskie = new Place("AA.POL.OPL.000.00000");
+        Place malopolskie = new Place("AA.POL.MAL.000.00000");
+        Place wielkopolskie = new Place("AA.POL.WLP.000.00000");
+        this.placeRepository.saveAll(Arrays.asList(dolnoslaskie, opolskie, malopolskie, wielkopolskie));
+
+        this.placeNameRepository.save(new PlaceName(dolnoslaskie.getId(), "Dolnośląskie", "Dolnoslaskie"));
+        this.placeNameRepository.save(new PlaceName(opolskie.getId(), "Opolskie", "Opolskie"));
+        this.placeNameRepository.save(new PlaceName(malopolskie.getId(), "Małopolskie", "Malopolskie"));
+        this.placeNameRepository.save(new PlaceName(wielkopolskie.getId(), "Wielkopolskie", "Wielkopolskie"));
+
+        this.placeDescriptionRepository.save(new PlaceDescription(dolnoslaskie.getId(), "", ""));
+        this.placeDescriptionRepository.save(new PlaceDescription(opolskie.getId(), "", ""));
+        this.placeDescriptionRepository.save(new PlaceDescription(malopolskie.getId(), "", ""));
+        this.placeDescriptionRepository.save(new PlaceDescription(wielkopolskie.getId(), "", ""));
+
+        Place region = new Place("AA.POL.DLS.REG.00000");
+        Place wroclaw = new Place("AA.POL.DLS.WRO.00000");
+        Place legnica = new Place("AA.POL.DLS.LEG.00000");
+        Place stronie = new Place("AA.POL.DLS.STR.00000");
+        this.placeRepository.saveAll(Arrays.asList(region, wroclaw, legnica, stronie));
+
+        this.placeNameRepository.save(new PlaceName(region.getId(), "Region", "Region"));
+        this.placeNameRepository.save(new PlaceName(wroclaw.getId(), "Wrocław", "Wroclaw"));
+        this.placeNameRepository.save(new PlaceName(legnica.getId(), "Legnica", "Legnica"));
+        this.placeNameRepository.save(new PlaceName(stronie.getId(), "Stronie Sląskie", "Stronie Slaskie"));
+
+        this.placeDescriptionRepository.save(new PlaceDescription(region.getId(), "", ""));
+        this.placeDescriptionRepository.save(new PlaceDescription(wroclaw.getId(), "", ""));
+        this.placeDescriptionRepository.save(new PlaceDescription(legnica.getId(), "", ""));
+        this.placeDescriptionRepository.save(new PlaceDescription(stronie.getId(), "", ""));
+
+
+        Place dom = new Place("AA.POL.DLS.WRO.00001");
+        dom.setLatitude(51.11505245942457);
+        dom.setLongitude(17.011892356597247);
+        dom.setRadius(10);
+        dom.setPoints(50);
+
+        Place church = new Place("AA.POL.DLS.WRO.00002");
+        church.setLatitude(51.115358289422275);
+        church.setLongitude(17.01351628762617);
+        church.setRadius(70);
+        church.setPoints(60);
+
+        Place trash = new Place("AA.POL.DLS.WRO.00003");
+        trash.setLatitude(51.114834340788576);
+        trash.setLongitude(17.010754042527363);
+        trash.setRadius(10);
+        trash.setPoints(10);
+
+        Place someplace = new Place("AA.POL.DLS.WRO.00004");
+        someplace.setLatitude(51.114851611073455);
+        someplace.setLongitude(17.012198333585737);
+        someplace.setRadius(10);
+        someplace.setPoints(10);
+        this.placeRepository.saveAll(Arrays.asList(dom, church, trash, someplace));
+
+        this.placeNameRepository.save(new PlaceName(dom.getId(), "Dom", "Home"));
+        this.placeNameRepository.save(new PlaceName(church.getId(), "Kościół", "Church"));
+        this.placeNameRepository.save(new PlaceName(trash.getId(), "śmietnik", "Trash"));
+        this.placeNameRepository.save(new PlaceName(someplace.getId(), "Jakieś miejsce", "Some place"));
+
+        this.placeDescriptionRepository.save(new PlaceDescription(dom.getId(), "", ""));
+        this.placeDescriptionRepository.save(new PlaceDescription(church.getId(), "", ""));
+        this.placeDescriptionRepository.save(new PlaceDescription(trash.getId(), "", ""));
+        this.placeDescriptionRepository.save(new PlaceDescription(someplace.getId(), "", ""));
     }
 }
