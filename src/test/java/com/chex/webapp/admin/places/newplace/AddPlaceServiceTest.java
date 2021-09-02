@@ -1,8 +1,12 @@
 package com.chex.webapp.admin.places.newplace;
 
-import com.chex.modules.category.Category;
 import com.chex.modules.category.CategoryRepository;
 import com.chex.modules.places.*;
+import com.chex.modules.places.model.Place;
+import com.chex.modules.places.model.PlaceName;
+import com.chex.modules.places.repository.PlaceDescriptionRepository;
+import com.chex.modules.places.repository.PlaceNameRepository;
+import com.chex.modules.places.repository.PlaceRepository;
 import com.chex.utils.Duo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,17 +14,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import javax.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 

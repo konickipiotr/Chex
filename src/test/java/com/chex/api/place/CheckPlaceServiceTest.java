@@ -1,8 +1,9 @@
 package com.chex.api.place;
 
+import com.chex.api.place.service.CheckPlaceService;
 import com.chex.modules.Coords;
-import com.chex.modules.places.Place;
-import com.chex.modules.places.PlaceRepository;
+import com.chex.modules.places.model.Place;
+import com.chex.modules.places.repository.PlaceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +15,19 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class ChexPlaceServiceTest {
+class CheckPlaceServiceTest {
 
     private PlaceRepository placeRepository;
-    private ChexPlaceService chexPlaceService;
+    private CheckPlaceService checkPlaceService;
 
     Place panoramaRaclawicka = new Place("EU.POL.DLS.WRO.00001");
     Place pomnikJuliuszaSlowackiego = new Place("EU.POL.DLS.WRO.00002");
     Place lionStatue = new Place("EU.POL.DLS.WRO.00003");
 
     @Autowired
-    public ChexPlaceServiceTest(PlaceRepository placeRepository, ChexPlaceService chexPlaceService) {
+    public CheckPlaceServiceTest(PlaceRepository placeRepository, CheckPlaceService checkPlaceService) {
         this.placeRepository = placeRepository;
-        this.chexPlaceService = chexPlaceService;
+        this.checkPlaceService = checkPlaceService;
     }
 
     @BeforeEach
@@ -68,7 +69,7 @@ class ChexPlaceServiceTest {
     void Nether_of_places_in_range() {
         Coords odraRiver = new Coords(51.111899534841235, 17.04601676487765);
 
-        List<Place> places = this.chexPlaceService.filterPlace(odraRiver);
+        List<Place> places = this.checkPlaceService.filterPlace(odraRiver);
 
         assertTrue(places.isEmpty());
     }
@@ -77,7 +78,7 @@ class ChexPlaceServiceTest {
     void one_place_in_the_range() {
         Coords street = new Coords(51.11065207427421, 17.044421721215873);
 
-        List<Place> places = this.chexPlaceService.filterPlace(street);
+        List<Place> places = this.checkPlaceService.filterPlace(street);
 
         assertEquals(1, places.size());
         assertEquals("EU.POL.DLS.WRO.00001", places.get(0).getId());
@@ -87,7 +88,7 @@ class ChexPlaceServiceTest {
     void two_place_in_the_range() {
         Coords park = new Coords(51.10969087447883, 17.04473464530148);
 
-        List<Place> places = this.chexPlaceService.filterPlace(park);
+        List<Place> places = this.checkPlaceService.filterPlace(park);
 
         assertEquals(2, places.size());
         assertTrue(places.contains(panoramaRaclawicka));

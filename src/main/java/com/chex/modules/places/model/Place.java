@@ -1,4 +1,4 @@
-package com.chex.modules.places;
+package com.chex.modules.places.model;
 
 import com.chex.webapp.admin.places.newplace.PlaceForm;
 import lombok.Data;
@@ -30,6 +30,7 @@ public class Place {
     private int points;
     private int difficultylevel;
     private double rating;
+    private double votesnum;
     private String imgurl;
     private String imgpath;
 
@@ -63,6 +64,11 @@ public class Place {
 
     public Place(String id) {
         this.id = id;
+    }
+
+    public void addVote(int grade){
+        this.votesnum++;
+        this.rating = (this.rating + grade) / this.votesnum;
     }
 
 

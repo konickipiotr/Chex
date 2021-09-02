@@ -1,17 +1,14 @@
-package com.chex.api.place;
+package com.chex.api.place.service;
 
 import com.chex.exceptions.NotFoundElementInEntity;
-import com.chex.modules.places.PlaceDescription;
-import com.chex.modules.places.PlaceDescriptionRepository;
-import com.chex.modules.places.PlaceName;
-import com.chex.modules.places.PlaceNameRepository;
-import org.aspectj.weaver.ast.Not;
-import org.hibernate.annotations.NotFound;
+import com.chex.modules.places.model.PlaceDescription;
+import com.chex.modules.places.repository.PlaceDescriptionRepository;
+import com.chex.modules.places.model.PlaceName;
+import com.chex.modules.places.repository.PlaceNameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Constructor;
 import java.util.Optional;
 
 @Service

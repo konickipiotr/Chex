@@ -1,5 +1,7 @@
 package com.chex.modules.places;
 
+import com.chex.modules.places.model.Place;
+import com.chex.modules.places.repository.PlaceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

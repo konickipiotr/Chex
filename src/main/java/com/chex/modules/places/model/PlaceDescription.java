@@ -1,4 +1,4 @@
-package com.chex.modules.places;
+package com.chex.modules.places.model;
 
 import com.chex.webapp.admin.places.newplace.PlaceForm;
 import lombok.Data;

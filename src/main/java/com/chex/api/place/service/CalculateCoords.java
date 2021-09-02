@@ -1,7 +1,7 @@
-package com.chex.api.place;
+package com.chex.api.place.service;
 
 import com.chex.modules.Coords;
-import com.chex.modules.places.Place;
+import com.chex.modules.places.model.Place;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

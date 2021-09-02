@@ -1,10 +1,13 @@
-package com.chex.api.place;
+package com.chex.api.place.service;
 
+import com.chex.api.place.service.PlaceNameService;
 import com.chex.modules.places.*;
+import com.chex.modules.places.model.Place;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -18,14 +21,13 @@ public class ChexPlaceViewService {
     }
 
     public List<CheckPlaceView> prepareListOfPlaces(List<Place> placeList){
-        List<CheckPlaceView>  resutlList = new ArrayList<>();
-        if(placeList == null || placeList.isEmpty())
-            return resutlList;
+        List<CheckPlaceView>  resultList = new ArrayList<>();
 
         for(Place p : placeList)
-            resutlList.add(prepareSinglePlace(p));
+            resultList.add(prepareSinglePlace(p));
 
-        return resutlList;
+        Collections.sort(resultList);
+        return resultList;
     }
 
     private CheckPlaceView prepareSinglePlace(Place place){

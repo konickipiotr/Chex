@@ -1,5 +1,6 @@
-package com.chex.modules.places;
+package com.chex.modules.places.repository;
 
+import com.chex.modules.places.model.Place;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
