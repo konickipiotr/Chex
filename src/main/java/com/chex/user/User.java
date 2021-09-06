@@ -18,4 +18,8 @@ public class User {
     private Long id;
     private String firstname;
     private String lastname;
+
+    public String getName(){
+        return this.firstname + " " + this.lastname;
+    }
 }

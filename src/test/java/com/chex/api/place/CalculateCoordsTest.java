@@ -1,12 +1,13 @@
 package com.chex.api.place;
 
 import com.chex.api.place.service.CalculateCoords;
-import com.chex.modules.Coords;
+import com.chex.modules.places.model.Coords;
 import com.chex.modules.places.model.Place;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,7 +27,7 @@ class CalculateCoordsTest {
     @Test
     void users_in_area() {
 
-        List<Place> placesInArea = Arrays.asList(fredroMonumen);
+        List<Place> placesInArea = Collections.singletonList(fredroMonumen);
 
         Coords userSouth = new Coords(51.10960527, 17.03132156);
         List<Place> inRange = CalculateCoords.isInRange(userSouth, placesInArea);
@@ -48,7 +49,7 @@ class CalculateCoordsTest {
     @Test
     void users_out_of_area() {
 
-        List<Place> placesInArea = Arrays.asList(fredroMonumen);
+        List<Place> placesInArea = Collections.singletonList(fredroMonumen);
 
         Coords userSouth = new Coords(51.109578868922036, 17.03125217474375);
         List<Place> inRange = CalculateCoords.isInRange(userSouth, placesInArea);

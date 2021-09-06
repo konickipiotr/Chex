@@ -9,11 +9,10 @@ import com.chex.authentication.AuthRepository;
 import com.chex.modules.places.CheckPlaceView;
 import com.chex.modules.places.model.Place;
 import com.chex.modules.places.repository.PlaceRepository;
-import com.chex.modules.post.Post;
-import com.chex.modules.post.PostRepository;
+import com.chex.modules.post.model.Post;
+import com.chex.modules.post.repository.PostRepository;
 import com.chex.user.place.VisitedPlace;
 import com.chex.user.place.VisitedPlacesRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -315,7 +314,7 @@ class CheckPlaceAPIControllerTest {
         assertEquals(1, allP.size());
 
         Post post = allP.get(0);
-        assertEquals(999l, post.getUserid());
+        assertEquals(999L, post.getUserid());
         assertEquals("elo", post.getDescription());
         assertEquals("EU.POL.DLS.WRO.00001:EU.POL.DLS.WRO.00002", post.getPlaces());
         assertEquals("EU.000.000.000.00000:EU.POL.000.000.00000:EU.POL.DLS.000.00000:EU.POL.DLS.WRO.00000", post.getSubplaces());

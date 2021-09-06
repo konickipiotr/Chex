@@ -27,4 +27,8 @@ public class IdUtils {
         Collections.sort(places);
         return StringUtils.join(places, ":");
     }
+
+    public static List<String> idsToList(String ids){
+        return Arrays.asList(ids.split(":"));
+    }
 }

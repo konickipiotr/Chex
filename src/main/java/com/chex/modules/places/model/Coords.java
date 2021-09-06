@@ -1,4 +1,4 @@
-package com.chex.modules;
+package com.chex.modules.places.model;
 
 import lombok.Data;
 

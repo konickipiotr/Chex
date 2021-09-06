@@ -1,6 +1,6 @@
 package com.chex.api.place.service;
 
-import com.chex.modules.Coords;
+import com.chex.modules.places.model.Coords;
 import com.chex.modules.places.model.Place;
 
 import java.math.BigDecimal;

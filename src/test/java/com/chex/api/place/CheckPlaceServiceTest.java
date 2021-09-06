@@ -1,7 +1,7 @@
 package com.chex.api.place;
 
 import com.chex.api.place.service.CheckPlaceService;
-import com.chex.modules.Coords;
+import com.chex.modules.places.model.Coords;
 import com.chex.modules.places.model.Place;
 import com.chex.modules.places.repository.PlaceRepository;
 import org.junit.jupiter.api.BeforeEach;

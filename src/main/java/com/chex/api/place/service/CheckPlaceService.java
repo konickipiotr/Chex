@@ -3,7 +3,7 @@ package com.chex.api.place.service;
 import com.chex.api.place.AchievedPlaceDTO;
 import com.chex.api.place.response.CheckPlaceResponse;
 import com.chex.api.place.response.CheckPlaceResponseStatus;
-import com.chex.modules.Coords;
+import com.chex.modules.places.model.Coords;
 import com.chex.modules.places.model.Place;
 import com.chex.user.place.VisitedPlace;
 import com.chex.modules.places.repository.PlaceRepository;
@@ -39,7 +39,7 @@ public class CheckPlaceService {
             return null;
         }
 
-        List<Place> inRange = new CalculateCoords().isInRange(currentCoords, places);
+        List<Place> inRange = CalculateCoords.isInRange(currentCoords, places);
         if(inRange.isEmpty()){
             checkPlaceResponse.setResponseStatus(CheckPlaceResponseStatus.NOTFOUND);
             return null;
@@ -72,11 +72,7 @@ public class CheckPlaceService {
 
         for(int i = 4; i > 0; i--){
             int length = splitedId[i].length();
-            StringBuilder sb = new StringBuilder();
-            for(int j = 0; j < length; j++){
-                sb.append("0");
-            }
-            splitedId[i] = sb.toString();
+            splitedId[i] = "0".repeat(length);
             String newid = StringUtils.join(splitedId, ".");
 
             if(!this.visitedPlacesRepository.existsByUseridAndPlaceid(userid, newid)){
@@ -94,8 +90,7 @@ public class CheckPlaceService {
         Coords from = newcoords.get(0);
         Coords to = newcoords.get(1);
 
-        List<Place> filtredPlace = placeRepository.filterCoords(to.latitude, from.latitude, from.longitude, to.longitude);
-        return filtredPlace;
+        return placeRepository.filterCoords(to.latitude, from.latitude, from.longitude, to.longitude);
     }
 
     private List<Coords> coordsWithoffset(Coords currentCoords) {
@@ -108,8 +103,7 @@ public class CheckPlaceService {
         coordsTo.longitude = BigDecimal.valueOf(currentCoords.longitude + longitudeOffset).setScale(6, RoundingMode.HALF_UP).doubleValue();
         coordsfrom.longitude = BigDecimal.valueOf(currentCoords.longitude - longitudeOffset).setScale(6, RoundingMode.HALF_UP).doubleValue();
 
-        List<Coords> newCoords = Arrays.asList(coordsfrom, coordsTo);
-        return newCoords;
+        return Arrays.asList(coordsfrom, coordsTo);
     }
 
     @Transactional
