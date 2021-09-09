@@ -29,6 +29,7 @@ public class IdUtils {
     }
 
     public static List<String> idsToList(String ids){
+        if(ids == null || ids.isBlank()) return new ArrayList<>();
         return Arrays.asList(ids.split(":"));
     }
 }

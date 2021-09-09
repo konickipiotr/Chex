@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class User {
 
@@ -18,8 +16,26 @@ public class User {
     private Long id;
     private String firstname;
     private String lastname;
+    private String imgurl;
+    private String imgpath;
 
     public String getName(){
         return this.firstname + " " + this.lastname;
+    }
+
+    public User() {
+        this.imgurl = "img/user.png";
+    }
+
+    public User(Long id, String firstname, String lastname) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+
+    public String getImgurl() {
+        if(imgurl == null || imgurl.isBlank())
+            return "img/user.png";
+        return imgurl;
     }
 }

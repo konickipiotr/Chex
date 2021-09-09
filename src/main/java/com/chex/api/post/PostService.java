@@ -96,6 +96,7 @@ public class PostService {
             postView.setAuthorName(user.getName());
             postView.setAuthorId(user.getId());
             postView.setAuthor(userid.equals(post.getUserid()));
+            postView.setAuthorPhoto(user.getImgurl());
         }
 
         postView.setPlaces(getShortPlaces(post.getPlaces()));
@@ -132,6 +133,7 @@ public class PostService {
         cv.setContent(comment.getContent());
         cv.setCreatedAt(DateUtils.getNiceDate(comment.getCreated()));
 
+
         if(comment.getAuthorid() == GlobalSettings.USER_ACCOUNT_REMOVED){
             cv.setAuthorid(GlobalSettings.USER_ACCOUNT_REMOVED);
             cv.setAuthorName("UNKNOWN");
@@ -143,6 +145,7 @@ public class PostService {
             cv.setAuthorName(user.getName());
             cv.setAuthorid(user.getId());
             cv.setAuthor(userid.equals(comment.getAuthorid()));
+            cv.setAuthorPhoto(user.getImgurl());
         }
 
         return cv;

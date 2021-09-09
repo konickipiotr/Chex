@@ -3,9 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="#{app_name}"></title>
+
+    <script src="https://kit.fontawesome.com/7ccfa6815b.js" crossorigin="anonymous"></script>
+
+    
+    <link rel="stylesheet" type="text/css" href="../../static/css/common_style.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/user/user_fragments.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/user/user_style.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/user/home_style.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/common_style.css">
+    <link rel="stylesheet" type="text/css" href="/css/user/user_fragments.css">
+    <link rel="stylesheet" type="text/css" href="/css/user/user_style.css">
+    <link rel="stylesheet" type="text/css" href="/css/user/home_style.css">
 </head>
 <body>
-user
+    <header th:replace="user/fragments/top :: top" class="top"></header>
+    <div class="main-container">
+        <nav th:replace="user/fragments/menu :: menu" id="menu"></nav>
+    
+        <section id="content">
+            <!-- ***************************************************** -->
 
+            <div class="inner_conntent">
+
+                <div class="post" th:each="p : ${posts}">
+                    <div class="post-header">
+                        <div class="post-header-left">
+                            <img th:src="@{${p.authorPhoto}}">
+                            <a href="" th:text="${p.authorName}"></a>
+                        </div>
+
+                        <div class="post-header-right">
+                            <p th:text="${p.createdAt}"></p>
+                            <span th:if="${p.isAuthor}">
+                                <a href=""><i class="fas fa-trash-alt"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="post-content">
+                        <p class="post_info">Był w miejscu:</p>
+                        <div class="place-element" th:each="pl : ${p.places}">
+                            <img th:src="@{${pl.imgUrl}}">
+                            <a href="" th:text="${pl.name}"></a>
+                        </div>
+                        <p th:if="${p.subPlaces.isEmpty() == false}" class="post_info">Pierwszy raz odwiedził region:</p>
+                        <div class="place-element" th:each="pl : ${p.subPlaces}">
+                            <img th:src="@{${pl.imgUrl}}">
+                            <a href="" th:text="${pl.name}"></a>
+                        </div>
+                        <!-- <p class="post_info">Oraz zdobyło osiągnięcia</p>
+                        <div class="place-element">
+                            <img src="../../static/img/user.png">
+                            <p>Śnieznik</p>
+                            <a href="">Korana gór</a>
+                        </div> -->
+
+                        <div class="post-photos">
+                            <img src="../../static/img/user.png" class="photo-1">
+
+                            <img src="../../static/img/user.png" class="photo-2">
+                            <img src="../../static/img/user.png" class="photo-2">
+
+                            <img src="../../static/img/user.png" class="photo-3">
+                            <img src="../../static/img/user.png" class="photo-3">
+                            <img src="../../static/img/user.png" class="photo-3">
+                     
+
+                        </div>
+                        <p class="post-description" th:text="${p.description}"></p>
+                    </div>
+
+                    <div class="post-bottom-bar">
+                        <div>
+                            <a th:if="${p.voted}" href=""><i class="fas fa-star"></i></a>
+                            <a th:unless="${p.voted}" href=""><i class="far fa-star"></i></a>
+                            <span th:text="${p.stanum}"></span>
+                        </div>
+                        <a class="btnOpenPost" href="">rozwiń post</a>
+                        <div></div>
+                    </div>
+                    
+                    <div class="post-add-comment">
+                        <form>
+                            <textarea></textarea>
+                            <button style="width: 10%;" type="submit">DODAJ</button>
+                        </form>
+                    </div>
+                    <div class="post-comment">
+                        <div class="comment-element" th:each="c, it : ${p.commentViews}" th:unless="${it.index > 2}">
+                            <div class="comment-element-header">
+                                <div class="comment-element-header-left">
+                                    <img th:src="@{${c.authorPhoto}}">
+                                    <a href="" th:text="${c.authorName}"></a>
+                                </div>
+                                <div class="comment-element-header-right">
+                                    <p th:text="${c.createdAt}"></p>
+                                    <a th:if="${c.isAuthor}" href=""><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </div>
+
+                            <p class="comment-element-content" th:text="${c.content}"></p>
+                        </div>
+
+                        <a th:if="${p.commentViews.size() > 3}" href="" class="more-btn">--- Więcej ---</a>
+                    </div>
+                </div>
+            </div>
+            <!-- ***************************************************** -->
+        </section>
+    </div>
 </body>
 </html>

@@ -10,6 +10,7 @@ public class CommentView {
     private Long authorid;
     private boolean isAuthor;
     private String authorName;
+    private String authorPhoto;
     private Long postid;
     private String content;
     private String createdAt;

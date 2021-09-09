@@ -17,9 +17,11 @@ public class PostView {
     private Long authorId;
     private boolean isAuthor;
     private String authorName;
+    private String authorPhoto;
     private String description;
     private String createdAt;
     private int stanum;
+    private boolean voted;
     private List<PlaceShortView> places = new ArrayList<>();
     private List<PlaceShortView> subPlaces = new ArrayList<>();
     private List<CommentView> commentViews = new ArrayList<>();

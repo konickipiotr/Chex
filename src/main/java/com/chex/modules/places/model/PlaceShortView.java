@@ -11,6 +11,12 @@ public class PlaceShortView implements Comparable<PlaceShortView> {
 
     private String id;
     private String name;
+    private String imgUrl;
+
+    public PlaceShortView(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     @Override
     public int compareTo(PlaceShortView placeShortView) {
