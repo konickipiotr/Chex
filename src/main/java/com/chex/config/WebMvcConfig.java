@@ -26,7 +26,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 //                .addResourceHandler("/testassets/**")
 //                .addResourceLocations("file://" + GlobalSettings.usersSpace + File.separator +"testassets"+ File.separator);
         registry
-                .addResourceHandler("/testassets/**")
-                .addResourceLocations("file:///testassets");
+                .addResourceHandler("/photos/**")
+                .addResourceLocations("file://" + GlobalSettings.appPath);
     }
 }

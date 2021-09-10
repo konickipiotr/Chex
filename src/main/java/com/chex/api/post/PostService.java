@@ -4,6 +4,7 @@ import com.chex.api.place.AchievedPlaceDTO;
 import com.chex.api.place.service.PlaceNameService;
 import com.chex.config.GlobalSettings;
 import com.chex.modules.category.CategoryRepository;
+import com.chex.modules.places.model.Place;
 import com.chex.modules.places.model.PlaceShortView;
 import com.chex.modules.places.repository.PlaceRepository;
 import com.chex.modules.post.model.Comment;
@@ -110,7 +111,10 @@ public class PostService {
         List<PlaceShortView> plist = new ArrayList<>();
         for(String id : IdUtils.idsToList(ids)){
             String name = this.placeNameService.getName(id);
-            plist.add(new PlaceShortView(id, name));
+            Place place = this.placeRepository.getById(id);
+            PlaceShortView placeShortView = new PlaceShortView(id, name);
+            placeShortView.setImgUrl(place.getImgurl());
+            plist.add(placeShortView);
         }
 
         Collections.sort(plist);
