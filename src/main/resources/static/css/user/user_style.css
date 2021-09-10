@@ -1,0 +1,21 @@
+#menu{
+    background-color: #ffff ;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background-color: #b2b4b9;
+}
+
+#content{
+    display: flex;
+    justify-content: center;
+}
+
+button{
+    background-color: #001605;
+}
+
+button:hover{
+    border: 1px solid white;
+}

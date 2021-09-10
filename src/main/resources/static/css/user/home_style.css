@@ -1,0 +1,263 @@
+textarea{
+    resize: vertical;
+    min-height: 30px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px;
+    width: 90%;
+}
+
+.inner_conntent{
+    width: 70%;
+    min-height: 90vh;
+}
+
+.post{
+    margin: 1%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-bottom: 100px;
+}
+
+.post-header {
+    background-color: #001605;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: white;
+
+}
+
+.post-header img{
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.post-header-left{
+    display: flex;
+}
+
+.post-header-left a:link, .post-header-left a:visited{
+    display: block;
+    margin-left: 15px;
+    text-decoration: none;
+    margin-top: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.post-header-left a:hover{
+    color: #a1a1a1;
+}
+
+.post-header-right{
+    margin-right: 10px;
+    display: flex;
+}
+
+.post-header-right p{
+    margin-top: 2px;
+    margin-right: 10px;
+    font-size: 0.7em;
+    font-style: italic;
+}
+
+.post-header-right .fas{
+    font-size: 1.8em;
+    color: rgb(107, 22, 22);
+}
+
+.post-header-right .fas:hover{
+    color: rgb(212, 78, 78);
+}
+
+.post-content{
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+}
+
+.post_info{
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.place-element{
+    display: flex;
+    margin-left: 10px;
+}
+
+.place-element img{
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+}
+
+.place-element p{
+    margin: 5px;
+    padding: 0px;
+}
+
+.place-element a:link, .place-element a:hover, .place-element a:visited{
+    margin: 5px;
+    padding: 0px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.post-photos{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1%;
+    justify-content: center;
+}
+
+.photo-1{
+    width: 100%;
+}
+
+.photo-2{
+    width: 48%;
+}
+
+.photo-3{
+    width: 44%;
+}
+
+.post-description{
+    background-color: #cae3d1;
+    width: 95%;
+    align-self: center;
+    padding: 1%;
+    border-radius: 5px;
+}
+
+.post-bottom-bar{
+    background-color: #001605;
+    color: wheat;
+    font-size: 1.2em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btnOpenPost{
+    display: block;
+    text-decoration: none;
+    width: 25%;
+    text-transform: uppercase;
+    text-align: center;
+    padding-top: 3px;
+}
+
+.btnOpenPost:hover{
+    background-color: rgb(25, 49, 1);  
+    color: rgb(241, 250, 161);
+}
+
+.post-bottom-bar a{
+    color: wheat;
+}
+
+.post-bottom-bar .far,
+.post-bottom-bar .fas{
+    margin: 5px;
+}
+
+.post-bottom-bar .fas{
+    color: rgb(251, 255, 0);
+}
+
+.post-bottom-bar .far:hover{
+    color: rgb(251, 255, 0);
+    font-weight: bold;
+    margin: 5px;
+}
+
+.post-bottom-bar .fas:hover{
+    font-weight: normal;
+}
+
+.comment-element{
+    display: flex;
+    flex-direction: column;
+    margin: 3px 0px 3px 15px;
+    border-radius: 10px 0px 10px 0px;
+    background-color: #b8d3be;
+}
+
+.comment-element-header{
+    display: flex;
+    justify-content: space-between;
+    background-color: #001605;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 0px;
+}
+
+.comment-element-header-left{
+    display: flex;
+}
+
+.comment-element-header-left a:link, 
+.comment-element-header-left a:visited{
+    margin-top: 8px;
+    margin-left: 10px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.comment-element-header-left a:hover{
+    color: rgb(194, 194, 194);
+}
+
+.comment-element-header-right{
+    display: flex;
+}
+
+.comment-element-header-right p{
+    color: white;
+    font-style: italic;
+    font-size: 0.7em;
+    margin-top: 2px;
+    margin-right: 5px;
+}
+
+.comment-element-header-right .fas{
+    font-size: 1.8em;
+    margin: 5px;
+    color: rgb(107, 22, 22);
+}
+
+.comment-element-header-right .fas:hover{
+    color: rgb(212, 78, 78);
+}
+
+.comment-element-header img{
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    margin: 2px;
+}
+
+.comment-element-content{
+    margin: 10px;
+}
+
+.post-add-comment form{
+    display: flex;
+}
+
+.more-btn{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: #001605;
+}
+
+.more-btn:hover{
+    color: #175e27;
+}

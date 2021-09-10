@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{app_name}"></title>
+    <link rel="stylesheet" type="text/css" href="../../../static/css/common_style.css">
+    <script src="https://kit.fontawesome.com/7ccfa6815b.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header th:fragment="top" class="top">
+
+    <div class="logo-div">
+        <span>Chex</span>
+    </div>
+
+    <div class="rigt-top-div">
+        <div id="flag-container">
+            <a th:href="@{/?lang=pl}"><img class="flag" alt="" th:src="@{/img/flag_pl.png}"></a>
+            <a th:href="@{/?lang=en}"><img class="flag" alt="" th:src="@{/img/flag_eng.png}"></a>
+        </div>
+    
+        <div id="setting-container">
+            <i class="fas fa-cog"></i>
+            <i class="fas fa-sign-out-alt"></i>
+        </div>
+    </div>
+    
+</header>
+</body>
+</html>
