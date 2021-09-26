@@ -19,4 +19,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("select p from Post p where p.postvisibility = 'PUBLIC' order by p.created desc")
     List<Post> findAllOrderByCreated(Pageable pageable);
 
+    List<Post> findByUserid(Long userid);
 }

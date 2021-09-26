@@ -25,5 +25,6 @@ public class PostView {
     private List<PlaceShortView> places = new ArrayList<>();
     private List<PlaceShortView> subPlaces = new ArrayList<>();
     private List<CommentView> commentViews = new ArrayList<>();
+    private List<PostPhoto> photos = new ArrayList<>();
 
 }

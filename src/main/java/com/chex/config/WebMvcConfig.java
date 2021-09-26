@@ -19,14 +19,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-                .addResourceHandler("/user/**")
-                .addResourceLocations("file://" + GlobalSettings.usersSpace);
-
-//        registry
-//                .addResourceHandler("/testassets/**")
-//                .addResourceLocations("file://" + GlobalSettings.usersSpace + File.separator +"testassets"+ File.separator);
-        registry
-                .addResourceHandler("/photos/**")
-                .addResourceLocations("file://" + GlobalSettings.appPath);
+                .addResourceHandler("/users/**")
+                .addResourceLocations("file://" + GlobalSettings.appPath + "users/");
     }
 }

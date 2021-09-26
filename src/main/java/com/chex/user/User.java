@@ -16,6 +16,8 @@ public class User {
     private Long id;
     private String firstname;
     private String lastname;
+    private String gender;
+    private String country;
     private String imgurl;
     private String imgpath;
 

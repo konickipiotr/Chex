@@ -27,7 +27,15 @@ public class LoginAPIController {
     }
 
     @GetMapping(path = "/api/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> loginAndGetUser(Principal principal){
+    public ResponseEntity<Auth> loginAndGetAuth(Principal principal){
+        Optional<Auth> oAuth = this.authRepository.findByUsername(principal.getName());
+        if(oAuth.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(oAuth.get(), HttpStatus.OK);
+    }
+
+    @GetMapping("/api/user")
+    public ResponseEntity<User> getUser(Principal principal){
         Optional<Auth> oAuth = this.authRepository.findByUsername(principal.getName());
         User user = this.userRepository.findById(oAuth.get().getId()).get();
         return new ResponseEntity<>(user, HttpStatus.OK);

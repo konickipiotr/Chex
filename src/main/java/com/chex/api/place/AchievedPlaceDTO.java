@@ -1,5 +1,6 @@
 package com.chex.api.place;
 
+import com.chex.api.post.PostVisibility;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -16,5 +17,6 @@ public class AchievedPlaceDTO {
     private Map<String, Integer> achievedPlaces;
     private LocalDateTime timestamp;
     private String description;
-    List<String> sFlies;
+    private List<String> sfiles;
+    private PostVisibility postvisibility = PostVisibility.PUBLIC;
 }

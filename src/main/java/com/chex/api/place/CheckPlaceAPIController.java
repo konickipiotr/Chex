@@ -9,6 +9,7 @@ import com.chex.authentication.Auth;
 import com.chex.authentication.AuthRepository;
 import com.chex.modules.places.model.Coords;
 import com.chex.modules.places.model.Place;
+import com.chex.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,9 +50,9 @@ public class CheckPlaceAPIController {
 
     @PostMapping("/finalize")
     public ResponseEntity<Void> finalizeAddPlaceToUserAccount(@RequestBody AchievedPlaceDTO achievedPlaceDTO, Principal principal){
-        Long userid = this.authService.getUserId(principal);
-        this.checkPlaceService.addToUserVisitedPlaces(achievedPlaceDTO, userid);
-        this.postService.addNewPost(userid, achievedPlaceDTO);
+        User user = this.authService.getUser(principal);
+        this.checkPlaceService.addToUserVisitedPlaces(achievedPlaceDTO, user.getId());
+        this.postService.addNewPost(user, achievedPlaceDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
