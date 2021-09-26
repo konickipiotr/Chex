@@ -5,8 +5,11 @@ import com.chex.authentication.AuthRepository;
 import com.chex.user.User;
 import com.chex.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.client.support.BasicAuthenticationInterceptor;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -33,5 +36,33 @@ public class AuthService {
 
     public User getUser(Principal principal){
         return this.userRepository.getById(getUserId(principal));
+    }
+    public Auth getAuth(Principal principal){
+        Optional<Auth> oUser = this.authRepository.findByUsername(principal.getName());
+        if(oUser.isEmpty())
+            throw new UsernameNotFoundException("User " + principal.getName() + " not found");
+
+        return oUser.get();
+    }
+
+    public Auth findByUsername(String email){
+        Optional<Auth> oUser = this.authRepository.findByUsername(email);
+        if(oUser.isEmpty())
+            throw new UsernameNotFoundException("User " + email + " not found");
+
+        return oUser.get();
+    }
+
+    public RestTemplate configRestTemplate(String email){
+        Optional<Auth> oAuth = this.authRepository.findByUsername(email);
+        if(oAuth.isEmpty())
+            throw new UsernameNotFoundException("User " + email + " not found");
+
+        Auth user = oAuth.get();
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getInterceptors().clear();
+        restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(user.getUsername(), user.getPassword()));
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        return restTemplate;
     }
 }

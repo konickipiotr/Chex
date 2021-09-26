@@ -27,6 +27,7 @@ public class ChexPlaceViewService {
             resultList.add(prepareSinglePlace(p));
 
         Collections.sort(resultList);
+        Collections.reverse(resultList);
         return resultList;
     }
 

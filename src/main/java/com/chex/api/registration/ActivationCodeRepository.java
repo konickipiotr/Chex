@@ -7,6 +7,5 @@ import java.util.Optional;
 
 @Repository
 public interface ActivationCodeRepository extends JpaRepository<ActivationCode, Long> {
-    boolean existsByActivationcode(String activationcode);
     Optional<ActivationCode> findByActivationcode(String activationcode);
 }

@@ -33,6 +33,7 @@ public class User {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.gender = "M";
     }
 
     public String getImgurl() {

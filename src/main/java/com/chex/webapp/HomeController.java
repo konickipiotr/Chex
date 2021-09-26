@@ -39,7 +39,9 @@ public class HomeController {
     }
 
     @GetMapping("/login")
-    public String login(){
+    public String login(String msg_info, String msg_err, Model model){
+        model.addAttribute("msg_info", msg_info);
+        model.addAttribute("msg_err", msg_err);
         return "login";
     }
 
