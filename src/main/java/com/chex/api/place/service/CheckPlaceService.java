@@ -107,7 +107,9 @@ public class CheckPlaceService {
     }
 
     @Transactional
-    public void addToUserVisitedPlaces(AchievedPlaceDTO dto, Long userid){
+    public int addToUserVisitedPlaces(AchievedPlaceDTO dto, Long userid){
+
+        int gainedExperience = 0;
 
         for(Map.Entry<String, Integer> p : dto.getAchievedPlaces().entrySet()){
             VisitedPlace visitedPlace = new VisitedPlace(userid);
@@ -120,7 +122,10 @@ public class CheckPlaceService {
                 Place place = this.placeRepository.getById(visitedPlace.getPlaceid());
                 place.addVote(p.getValue());
                 this.placeRepository.save(place);
+
+                gainedExperience += place.getPoints();
             }
         }
+        return gainedExperience;
     }
 }

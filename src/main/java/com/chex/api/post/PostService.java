@@ -73,7 +73,8 @@ public class PostService {
         post.setPostvisibility(dto.getPostvisibility());
         this.postRepository.save(post);
 
-        savePostFiles(post.getId(), user, dto.getSfiles());
+        if(!dto.getSfiles().isEmpty())
+            savePostFiles(post.getId(), user, dto.getSfiles());
     }
 
     public List<PostView> getPublicPost(Long userid, int nr){

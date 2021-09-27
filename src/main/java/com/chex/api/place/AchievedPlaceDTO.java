@@ -1,6 +1,7 @@
 package com.chex.api.place;
 
 import com.chex.api.post.PostVisibility;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -12,6 +13,7 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AchievedPlaceDTO {
 
     private Map<String, Integer> achievedPlaces;

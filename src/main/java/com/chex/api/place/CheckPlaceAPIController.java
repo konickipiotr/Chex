@@ -51,8 +51,10 @@ public class CheckPlaceAPIController {
     @PostMapping("/finalize")
     public ResponseEntity<Void> finalizeAddPlaceToUserAccount(@RequestBody AchievedPlaceDTO achievedPlaceDTO, Principal principal){
         User user = this.authService.getUser(principal);
-        this.checkPlaceService.addToUserVisitedPlaces(achievedPlaceDTO, user.getId());
+        int exp = this.checkPlaceService.addToUserVisitedPlaces(achievedPlaceDTO, user.getId());
+        user.addExp(exp);
         this.postService.addNewPost(user, achievedPlaceDTO);
+        this.authService.saveUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

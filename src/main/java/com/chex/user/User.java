@@ -33,7 +33,7 @@ public class User {
     public User() {
         this.exp = 0;
         this.level = 1;
-        this.nextlevel = 10;
+        this.nextlevel = 20;
         this.title = "Nowicjusz";
     }
 
@@ -43,5 +43,17 @@ public class User {
         this.firstname = firstname;
         this.lastname = lastname;
         this.gender = "M";
+    }
+
+    public void addExp(int gainedExperience){
+
+        int newExp = this.exp + gainedExperience;
+        while (newExp > this.nextlevel) {
+            newExp -= this.nextlevel;
+            this.level++;
+            this.nextlevel = this.nextlevel + (int) (this.nextlevel * 0.3);
+        }
+
+        this.exp = newExp;
     }
 }

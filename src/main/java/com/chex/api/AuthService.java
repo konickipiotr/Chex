@@ -65,4 +65,8 @@ public class AuthService {
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         return restTemplate;
     }
+
+    public void saveUser(User user){
+        this.userRepository.save(user);
+    }
 }
