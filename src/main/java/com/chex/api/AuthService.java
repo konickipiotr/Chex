@@ -35,7 +35,7 @@ public class AuthService {
     }
 
     public User getUser(Principal principal){
-        return this.userRepository.getById(getUserId(principal));
+        return this.userRepository.findById(getUserId(principal)).get();
     }
     public Auth getAuth(Principal principal){
         Optional<Auth> oUser = this.authRepository.findByUsername(principal.getName());

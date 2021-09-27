@@ -12,7 +12,7 @@ import com.chex.modules.post.repository.StarRepository;
 import com.chex.user.User;
 import com.chex.user.UserRepository;
 import com.chex.user.place.VisitedPlacesRepository;
-import com.chex.utils.FileService;
+import com.chex.files.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

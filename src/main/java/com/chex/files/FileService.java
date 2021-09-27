@@ -1,4 +1,4 @@
-package com.chex.utils;
+package com.chex.files;
 
 import com.chex.config.GlobalSettings;
 import com.chex.modules.post.model.PostPhoto;
@@ -27,7 +27,7 @@ public class FileService {
 
     public void createUserSpace(User user){
 
-        String postsPhoto = getUserSpacePhotoPath(user);
+        String postsPhoto = getUserSpacePath(user);
         File userDirPosts = new File(postsPhoto);
         if(!userDirPosts.exists()){
             userDirPosts.mkdirs();
@@ -48,6 +48,14 @@ public class FileService {
         }
     }
 
+    public void deleteFile(String path){
+        try {
+            FileUtils.delete(new File(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void deletePostsPhotos(List<PostPhoto> photos) {
         for(PostPhoto p : photos){
             try {
@@ -61,8 +69,8 @@ public class FileService {
     private String getUserDirectoryName(User user){
         return user.getLastname() + "_" + user.getId();
     }
-    private String getUserSpacePhotoPath(User user){
-        return GlobalSettings.usersSpace  + "/" + getUserDirectoryName(user) + "/posts/";
+    private String getUserSpacePath(User user){
+        return GlobalSettings.usersSpace  + "/" + getUserDirectoryName(user);// + "/posts/";
     }
 
     public long checkUserSpace(User user){
@@ -78,34 +86,56 @@ public class FileService {
         return mFiles;
     }
 
-    private FileNameStruct createFileName(MultipartFile mFile, User user){
+    public MultipartFile convertToMultipartFile(String imagesStringBytes){
+        byte[] imgbyte = Base64.getDecoder().decode(imagesStringBytes);
+        MultipartFile mFiles = new CustomMultipartFile(imgbyte);
+        return mFiles;
+    }
+
+    private FileNameStruct createFileName(MultipartFile mFile, User user, FileType fileType){
         String orginalFileName = mFile.getOriginalFilename();
-        String fileType = orginalFileName.substring(orginalFileName.length() - 3);
+        String fileExtension = orginalFileName.substring(orginalFileName.length() - 3);
 
         LocalDateTime now = LocalDateTime.now();
         now = now.truncatedTo(ChronoUnit.SECONDS);
 
-        String filename = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_" + photoId++ + "." + fileType;
+        String filename;
+        String realPath = getUserSpacePath(user);
+        String webAppPath = "/" + GlobalSettings.photosPath + getUserDirectoryName(user);
 
-        String realPath = getUserSpacePhotoPath(user);
-        String wepAppPath = "/" + GlobalSettings.photosPath + getUserDirectoryName(user)+ "/posts/" + filename;
+        if(photoId == Integer.MAX_VALUE)
+            photoId = 0;
+
+        switch (fileType){
+            case POSTPHOTO:{
+                filename = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_" + photoId++ + "." + fileExtension;
+                realPath += "/posts";
+                webAppPath += "/posts/" + filename;
+            }break;
+            case PROFILEPHOTO:{
+                filename = "profile_photo." + fileExtension;
+                webAppPath += "/" + filename;
+            }break;
+            default:
+                throw new IllegalArgumentException();
+        }
 
         File dir = new File(realPath);
         if(!dir.exists())
             dir.mkdirs();
 
-        realPath += filename;
+        realPath += "/" + filename;
 
-        return new FileNameStruct(realPath, wepAppPath);
+        return new FileNameStruct(realPath, webAppPath);
     }
 
-    public List<FileNameStruct> uploadPhotos(List<MultipartFile> uploadfiles, User user){
+    public List<FileNameStruct> uploadPhotos(List<MultipartFile> uploadfiles, User user, FileType fileType){
 
         if (uploadfiles == null || uploadfiles.isEmpty()) return null;
 
         List<FileNameStruct> filesNames = new ArrayList<>();
         for(MultipartFile mFile : uploadfiles) {
-            filesNames.add(createFileName(mFile, user));
+            filesNames.add(createFileName(mFile, user, fileType));
         }
 
         try {
@@ -119,5 +149,20 @@ public class FileService {
         }
         return filesNames;
 
+    }
+
+    public FileNameStruct uploadPhoto(MultipartFile mFile, User user, FileType fileType){
+
+        if (mFile == null || mFile.isEmpty()) return null;
+
+        FileNameStruct filesName = createFileName(mFile, user, fileType);
+        try {
+            Path fullpath = Paths.get(filesName.realPath);
+            Files.copy(mFile.getInputStream(), fullpath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new FailedSaveFileException();
+        }
+        return filesName;
     }
 }

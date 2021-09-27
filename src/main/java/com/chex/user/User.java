@@ -21,24 +21,27 @@ public class User {
     private String imgurl;
     private String imgpath;
 
+    private int exp;
+    private int level;
+    private int nextlevel;
+    private String title;
+
     public String getName(){
         return this.firstname + " " + this.lastname;
     }
 
     public User() {
-        this.imgurl = "img/user.png";
+        this.exp = 0;
+        this.level = 1;
+        this.nextlevel = 10;
+        this.title = "Nowicjusz";
     }
 
     public User(Long id, String firstname, String lastname) {
+        this();
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.gender = "M";
-    }
-
-    public String getImgurl() {
-        if(imgurl == null || imgurl.isBlank())
-            return "img/user.png";
-        return imgurl;
     }
 }

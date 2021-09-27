@@ -1,4 +1,4 @@
-package com.chex.utils;
+package com.chex.files;
 
 public class FileNameStruct {
     public String realPath;

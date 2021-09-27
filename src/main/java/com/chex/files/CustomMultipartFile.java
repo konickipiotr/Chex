@@ -1,4 +1,4 @@
-package com.chex.utils;
+package com.chex.files;
 
 import org.springframework.web.multipart.MultipartFile;
 

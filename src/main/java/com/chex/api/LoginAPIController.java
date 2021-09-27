@@ -34,11 +34,6 @@ public class LoginAPIController {
         return new ResponseEntity<>(oAuth.get(), HttpStatus.OK);
     }
 
-    @GetMapping("/api/user")
-    public ResponseEntity<User> getUser(Principal principal){
-        Optional<Auth> oAuth = this.authRepository.findByUsername(principal.getName());
-        User user = this.userRepository.findById(oAuth.get().getId()).get();
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
+
 
 }

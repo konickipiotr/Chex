@@ -3,6 +3,7 @@ package com.chex.api.post;
 import com.chex.api.place.AchievedPlaceDTO;
 import com.chex.api.place.service.PlaceNameService;
 import com.chex.config.GlobalSettings;
+import com.chex.files.FileType;
 import com.chex.modules.category.CategoryRepository;
 import com.chex.modules.places.model.Place;
 import com.chex.modules.places.model.PlaceShortView;
@@ -16,15 +17,14 @@ import com.chex.user.User;
 import com.chex.user.UserRepository;
 import com.chex.user.place.VisitedPlacesRepository;
 import com.chex.utils.DateUtils;
-import com.chex.utils.FileNameStruct;
-import com.chex.utils.FileService;
+import com.chex.files.FileNameStruct;
+import com.chex.files.FileService;
 import com.chex.utils.IdUtils;
 import com.chex.utils.exceptions.FailedSaveFileException;
 import com.chex.utils.exceptions.PostNotFoundException;
 import com.chex.utils.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -216,7 +216,7 @@ public class PostService {
     public void savePostFiles(Long postid, User user, List<String> imagesStringBytes) {
         if(this.postRepository.existsById(postid)) {
             List<MultipartFile> multipartFiles = fileService.convertToMultipartFiles(imagesStringBytes);
-            List<FileNameStruct> fileNameStructs = fileService.uploadPhotos(multipartFiles, user);
+            List<FileNameStruct> fileNameStructs = fileService.uploadPhotos(multipartFiles, user, FileType.POSTPHOTO);
             if (fileNameStructs == null || fileNameStructs.isEmpty())
                 throw new FailedSaveFileException();
 
