@@ -2,8 +2,8 @@ package com.chex.api.user;
 
 import com.chex.files.FileNameStruct;
 import com.chex.files.FileType;
-import com.chex.user.User;
-import com.chex.user.UserRepository;
+import com.chex.user.model.User;
+import com.chex.user.repository.UserRepository;
 import com.chex.files.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{app_name}"></title>
+    <script src="https://kit.fontawesome.com/7ccfa6815b.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/common_style.css">
+    <link rel="stylesheet" type="text/css" href="/css/admin/admin_main.css">
+    <link rel="stylesheet" type="text/css" href="/css/admin/admin_fragments.css">
+    <link rel="stylesheet" type="text/css" href="/css/admin/admin_achievement.css">
+
+    <link rel="stylesheet" type="text/css" href="../../../static/css/common_style.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/css/admin/admin_main.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/css/admin/admin_fragments.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/css/admin/admin_fragments.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/css/admin/admin_achievement.css">
+</head>
+<body>
+    <header th:replace="admin/fragments/top :: top" class="top"></header>
+    <div class="main-container">
+        <nav th:replace="admin/fragments/menu :: menu" id="menu"></nav>
+        <section id="content">
+            <!-- ***************************************************** -->
+            <h2>Nowe Osiągnięcie</h2>
+
+            <p class="error_msg" th:text="${err_msg}"></p>
+            <form th:action="@{/admin/achievement}" method="POST" th:object="${achievementForm}" enctype="multipart/form-data">
+                <label for="name_nameplpl">Nazwa pl</label><br>
+                <input type="text" name="namepl" id="namepl" th:field="*{namepl}" required> <br><br>
+
+                <label for="nameen">Nazwa eng</label><br>
+                <input type="text" name="nameen" id="nameen" th:field="*{nameen}" required> <br><br>
+
+                <label for="points">Punkty</label><br>
+                <input type="number" min="0" step="1" name="points" th:field="*{points}" id="points"> <br><br>
+
+                <label for="descriptionpl">Opis pl</label><br>
+                <textarea id="descriptionpl" name="descriptionpl" th:text="${achievementForm.descriptionpl}"></textarea><br><br>
+
+                <label for="descriptionen">Opis en</label><br>
+                <textarea id="descriptionen" name="descriptionen" th:text="${achievementForm.descriptionpl}"></textarea><br><br>
+
+                <input type="file" id="picture" name="picture" accept="image/png, image/jpeg, image/jpg, image/bmp" style="display: none">
+                <span id="fileinfo"></span>
+                <button type="button" onclick="chooseImage()">wybierz obrazek</button>
+
+                <button type="submit">Zapisz</button><br>
+
+
+                <div class="places-container" id="places-container">
+                    <div class="places-col" id="choosen-places">
+
+                    </div>
+
+                    <div class="places-col" id="available-places-container">
+
+                        <label for="continentsList">Kontynety</label>
+                        <select id="continentsList" onchange="selectContintnt(this)">
+                            <option value="all">All</option>
+                        </select>
+
+                        <label for="countriesList">Kraje</label>
+                        <select id="countriesList" onchange="selectCountry(this)">
+                            <option value="all">All</option>
+                        </select>
+
+                        <label for="regionList">Region</label>
+                        <select id="regionList" onchange="selectRegion(this)">
+                            <option value="all">All</option>
+                        </select>
+
+                        <label for="subregionList">Subregiony</label>
+                        <select id="subregionList" onchange="selectSubRegion(this)">
+                            <option value="all">All</option>
+                        </select>
+
+                        <div id="availablePlacesDiv"></div>
+                        </div>
+                    </div>
+
+
+                    
+
+                </div>
+
+
+
+
+            </form>
+
+
+            
+
+            
+            
+            <!-- ***************************************************** -->
+        </section>
+    </div>
+    
+</body>
+<script src="/scripts/uploadFile.js"></script>
+<script th:inline="javascript">
+    //var pp = [[${places}]];
+
+    var pp = [
+        {"key":"EU.000.000.000.00000","value":"Europa"},
+        {"key":"NA.000.000.000.00000","value":"Ameryka Północna"},
+        {"key":"AZ.000.000.000.00000","value":"Azja"},
+        {"key":"EU.POL.000.000.00000","value":"Polska"},
+        {"key":"EU.GER.000.000.00000","value":"Niemcy"},
+        {"key":"EU.ITL.000.000.00000","value":"Włochy"},
+        {"key":"NA.USA.000.000.00000","value":"USA"},
+        {"key":"NA.MEX.000.000.00000","value":"Meksyk"},
+        {"key":"EU.POL.DLS.000.00000","value":"Dolnysląsk"},
+        {"key":"EU.POL.OPL.000.00000","value":"Opolskie"},
+        {"key":"EU.POL.DLS.WRO.00000","value":"Wrocław"},
+        {"key":"EU.POL.DLS.LEG.00000","value":"Legnica"},
+        {"key":"EU.POL.DLS.KLD.00000","value":"Kłodzko"},
+        {"key":"EU.POL.DLS.KLD.00001","value":"Twierdza"},
+        {"key":"EU.POL.DLS.WRO.00001","value":"Rzeka Odra"},
+        {"key":"EU.POL.DLS.WRO.00002","value":"Rynek"},
+        {"key":"EU.POL.DLS.WRO.00003","value":"Katedra"},
+        ];
+
+    var allplaces = new Map();
+    var currentList = new Map();
+    var continentList = new Map();
+    var availablePlacesList = new Map();
+    var filtredMap = new Map();
+    let availablePlacesDiv = document.getElementById("availablePlacesDiv");
+
+    for(const p of pp){
+        allplaces.set(p.key, p.value);
+        if(p.key.endsWith(".000.000.000.00000")){
+            continentList.set(p.key, p.value);
+        }
+        availablePlacesList.set(p.key, p.value);
+        filtredMap = allplaces;
+
+        // let element = document.createElement('div');
+        // element.className = "element-to-select";
+        // let name = document.createElement('p');
+        // let addBtn = document.createElement('button');
+
+        // name.innerHTML = p.value;
+        // addBtn.innerHTML = "+";
+        // element.appendChild(name);
+        // element.appendChild(addBtn);
+        // availablePlacesDiv.appendChild(element);
+    }
+
+    fillAvailablePlaces()
+
+    const continentSelect = document.getElementById("continentsList");
+
+    for (const [key, val] of continentList){
+        var opt = document.createElement('option');
+        opt.value = key;
+        opt.innerHTML = val;
+        continentSelect.appendChild(opt);
+    }
+
+
+    function selectContintnt(element){
+        clearSelectBelow(3);
+        let countriesSelect = document.getElementById("countriesList");
+        let id = element.value.substring(0,2);    
+        
+        for (const [key, val] of allplaces){
+            if(key.startsWith(id) && key.endsWith(".000.000.00000") && (!key.startsWith(id + ".000."))){
+                fillSelect(countriesSelect, key, val);
+            }
+        }
+
+        let places = new Map();
+        for(const [key, val] of availablePlacesList){
+            if(key.startsWith(id) && (!key.startsWith(id + ".000."))){
+                places.set(key, val);
+            }
+        }
+        fillAvailablePlaces(places);
+    }
+
+    function selectCountry(element){
+        clearSelectBelow(2);
+        let regionSelect = document.getElementById("regionList");
+        let id = element.value.substring(0,6);
+        
+        for (const [key, val] of allplaces){
+            if(key.startsWith(id) && key.endsWith(".000.00000") && (!key.startsWith(id + ".000."))){
+                fillSelect(regionSelect, key, val);
+            }
+        }
+        
+        filtredMap = new Map();
+        for(const [key, val] of availablePlacesList){
+            if(key.startsWith(id) && (!key.startsWith(id + ".000."))){
+                filtredMap.set(key, val);
+            }
+        }
+        fillAvailablePlaces();
+    }
+
+    function selectRegion(element){
+        clearSelectBelow(1);
+        let subregionSelect = document.getElementById("subregionList");
+        let id = element.value.substring(0,10);
+        
+        fillSelect(subregionSelect, "REGION", "REGION");
+        for (const [key, val] of allplaces){
+            if(key.startsWith(id) && key.endsWith(".00000") && (!key.startsWith(id + ".000."))){
+                fillSelect(subregionSelect, key, val);
+            }
+        }
+        
+        
+        filtredMap = new Map();
+        for(const [key, val] of availablePlacesList){
+            if(key.startsWith(id) && (!key.startsWith(id + ".000."))){
+                filtredMap.set(key, val);
+            }
+        }
+        fillAvailablePlaces();
+    }
+
+    function selectSubRegion(element){
+
+        let id = element.value.substring(0,14);
+
+        filtredMap = new Map();
+        for (const [key, val] of allplaces){
+            if(key.startsWith(id)  && (!key.endsWith(".00000"))){
+                filtredMap.set(key, val);
+            }
+        }
+        fillAvailablePlaces();
+    }
+
+    function fillSelect(select, key, val){
+        var opt = document.createElement('option');
+        opt.value = key;
+        opt.innerHTML = val;
+        select.appendChild(opt);
+    }
+
+    function fillAvailablePlaces(){
+
+        cleanAvailablePlaces(availablePlacesDiv);
+        for(const [key, val] of filtredMap){
+            let element = document.createElement('div');
+            element.className = "element-to-select";
+            let name = document.createElement('p');
+            let addBtn = document.createElement('button');
+            addBtn.type = "button";
+            addBtn.addEventListener("click", function(){
+                availablePlacesList.delete(key);
+                filtredMap.delete(key);
+                currentList.set(key, val);
+                fillAvailablePlaces()
+                fillChoosenPlaces()
+            });
+
+            name.innerHTML = val;
+            addBtn.innerHTML = "+";
+            element.appendChild(name);
+            element.appendChild(addBtn);
+            availablePlacesDiv.appendChild(element);
+        }
+    }
+
+    function fillChoosenPlaces(){
+        let chosenPlacesDiv = document.getElementById('choosen-places');
+        cleanAvailablePlaces(chosenPlacesDiv);
+        
+        for(const [key, val] of currentList){
+            let element = document.createElement('div');
+            element.className = "element-to-select";
+            let name = document.createElement('p');
+            let addBtn = document.createElement('button');
+            let inputEl = document.createElement("input");
+            inputEl.type = "hidden";
+            inputEl.name = "achievementPlaces";
+            inputEl.value = key;
+            addBtn.type = "button";
+            addBtn.addEventListener("click", function(){
+                let l = key;
+                currentList.delete(key);
+                availablePlacesList.set(key, val);
+                filtredMap.set(key, val);
+                fillAvailablePlaces()
+                fillChoosenPlaces()
+            });
+
+            name.innerHTML = val;
+            addBtn.innerHTML = "-";
+            element.appendChild(name);
+            element.appendChild(addBtn);
+            element.appendChild(inputEl);
+            chosenPlacesDiv.appendChild(element);
+        }
+    }
+
+    function cleanAvailablePlaces(parent){
+        //let availablePlacesDiv = document.getElementById("availablePlacesDiv");
+        while(parent.firstChild){
+            parent.removeChild(parent.firstChild);
+        }
+    }
+
+    function clearSelectBelow(reg){
+
+        let hierarchy = [
+            document.getElementById("subregionList"),
+            document.getElementById("regionList"),
+            document.getElementById("countriesList")
+        ];
+
+        for(let i = 0; i < reg; i++){
+            let el = hierarchy[i];
+            while(el.firstChild){
+                el.removeChild(el.firstChild);
+            }
+            fillSelect(el, "All", "All");
+        }
+    }
+
+    
+</script>
+</html>

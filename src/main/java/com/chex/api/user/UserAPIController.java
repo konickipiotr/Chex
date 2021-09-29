@@ -1,10 +1,7 @@
 package com.chex.api.user;
 
 import com.chex.api.AuthService;
-import com.chex.authentication.Auth;
-import com.chex.authentication.AuthRepository;
-import com.chex.user.User;
-import com.chex.user.UserRepository;
+import com.chex.user.model.User;
 import com.chex.utils.StringHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")

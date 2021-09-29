@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{app_name}"></title>
+    <script src="https://kit.fontawesome.com/7ccfa6815b.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/common_style.css">
+    <link rel="stylesheet" type="text/css" href="/css/admin/admin_main.css">
+    <link rel="stylesheet" type="text/css" href="/css/admin/admin_fragments.css">
+</head>
+<body>
+    <header th:replace="admin/fragments/top :: top" class="top"></header>
+    <div class="main-container">
+        <nav th:replace="admin/fragments/menu :: menu" id="menu"></nav>
+        <section id="content">
+            <!-- ***************************************************** -->
+            <a th:href="@{/admin/achievement/new}">Dodaj nowe</a>
+
+            <h1>Osiągnięcia</h1>
+            <div>
+                <div th:each="a, it : ${aList}">
+                    <span th:text="${it.count}"></span>
+                    <img style="width: 50px; height: 50px;" th:src="@{${a.img}}">
+                    <span th:text="${a.name}"></span>
+                </div>
+
+            </div>
+            
+            <!-- ***************************************************** -->
+        </section>
+    </div>
+    
+</body>
+</html>

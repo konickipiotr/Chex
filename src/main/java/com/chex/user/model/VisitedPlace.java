@@ -1,4 +1,4 @@
-package com.chex.user.place;
+package com.chex.user.model;
 
 import com.chex.api.place.AchievedPlaceDTO;
 import lombok.Data;

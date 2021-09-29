@@ -2,7 +2,7 @@ package com.chex.files;
 
 import com.chex.config.GlobalSettings;
 import com.chex.modules.post.model.PostPhoto;
-import com.chex.user.User;
+import com.chex.user.model.User;
 import com.chex.utils.exceptions.FailedSaveFileException;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
@@ -164,5 +164,50 @@ public class FileService {
             throw new FailedSaveFileException();
         }
         return filesName;
+    }
+
+    public FileNameStruct uploadAssets(MultipartFile mFile, String filename, FileType fileType){
+
+        if (mFile == null || mFile.isEmpty()) return null;
+
+        FileNameStruct filesName = createAssetName(mFile, filename, fileType);
+        try {
+            Path fullpath = Paths.get(filesName.realPath);
+            Files.copy(mFile.getInputStream(), fullpath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new FailedSaveFileException();
+        }
+        return filesName;
+    }
+
+    private FileNameStruct createAssetName(MultipartFile mFile, String filename, FileType fileType){
+        String orginalFileName = mFile.getOriginalFilename();
+        String fileExtension = orginalFileName.substring(orginalFileName.length() - 3);
+
+        String realPath = GlobalSettings.appPath + "assets";
+        String webAppPath = "/assets";
+        filename = filename + "." + fileExtension;
+
+        switch (fileType){
+            case ACHIEVEMENTASSET:{
+                realPath += "/achievements/";
+                webAppPath += "/achievements/" + filename;
+            }break;
+            case PLACEPICTURE:{
+                realPath += "/places/";
+                webAppPath += "/places/" + filename;
+            }break;
+            default:
+                throw new IllegalArgumentException();
+        }
+
+        File dir = new File(realPath);
+        if(!dir.exists())
+            dir.mkdirs();
+
+        realPath += filename;
+
+        return new FileNameStruct(realPath, webAppPath);
     }
 }

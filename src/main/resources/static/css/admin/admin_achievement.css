@@ -1,0 +1,24 @@
+.places-container{
+    width: 100%;
+    background-color: aquamarine;
+    display: flex;
+}
+
+.places-col{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    background-color: cadetblue;
+    margin: 4px;
+}
+
+.element-to-select{
+    background-color: blueviolet;
+    margin: 2px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.element-to-select button{
+    width: 100px;
+}

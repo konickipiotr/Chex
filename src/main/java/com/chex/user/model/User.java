@@ -1,4 +1,4 @@
-package com.chex.user;
+package com.chex.user.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

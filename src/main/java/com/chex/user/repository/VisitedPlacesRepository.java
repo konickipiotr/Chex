@@ -1,5 +1,6 @@
-package com.chex.user.place;
+package com.chex.user.repository;
 
+import com.chex.user.model.VisitedPlace;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

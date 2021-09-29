@@ -2,8 +2,7 @@ package com.chex.api;
 
 import com.chex.authentication.Auth;
 import com.chex.authentication.AuthRepository;
-import com.chex.user.User;
-import com.chex.user.UserRepository;
+import com.chex.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

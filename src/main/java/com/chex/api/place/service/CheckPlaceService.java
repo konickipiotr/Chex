@@ -5,9 +5,9 @@ import com.chex.api.place.response.CheckPlaceResponse;
 import com.chex.api.place.response.CheckPlaceResponseStatus;
 import com.chex.modules.places.model.Coords;
 import com.chex.modules.places.model.Place;
-import com.chex.user.place.VisitedPlace;
+import com.chex.user.model.VisitedPlace;
 import com.chex.modules.places.repository.PlaceRepository;
-import com.chex.user.place.VisitedPlacesRepository;
+import com.chex.user.repository.VisitedPlacesRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -128,4 +128,5 @@ public class CheckPlaceService {
         }
         return gainedExperience;
     }
+
 }

@@ -1,5 +1,6 @@
 package com.chex.user;
 
+import com.chex.user.model.User;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
