@@ -1,16 +1,9 @@
 package com.chex.api.forgotpassword;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
-@Data
-@NoArgsConstructor
 public class ResetCode {
 
     @Id
@@ -18,9 +11,36 @@ public class ResetCode {
     private String resetcode;
     private LocalDate requestedDate;
 
+    public ResetCode() {
+    }
+
     public ResetCode(Long userid, String resetcode) {
         this.userid = userid;
         this.resetcode = resetcode;
         this.requestedDate = LocalDate.now();
+    }
+
+    public Long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Long userid) {
+        this.userid = userid;
+    }
+
+    public String getResetcode() {
+        return resetcode;
+    }
+
+    public void setResetcode(String resetcode) {
+        this.resetcode = resetcode;
+    }
+
+    public LocalDate getRequestedDate() {
+        return requestedDate;
+    }
+
+    public void setRequestedDate(LocalDate requestedDate) {
+        this.requestedDate = requestedDate;
     }
 }

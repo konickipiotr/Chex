@@ -1,13 +1,8 @@
 package com.chex.modules.achievements.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Entity
-@Data
-@NoArgsConstructor
 public class AchievementPlaces {
 
     @Id
@@ -19,6 +14,33 @@ public class AchievementPlaces {
 
     public AchievementPlaces(Long achievementid, String placeid) {
         this.achievementid = achievementid;
+        this.placeid = placeid;
+    }
+
+    public AchievementPlaces() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getAchievementid() {
+        return achievementid;
+    }
+
+    public void setAchievementid(Long achievementid) {
+        this.achievementid = achievementid;
+    }
+
+    public String getPlaceid() {
+        return placeid;
+    }
+
+    public void setPlaceid(String placeid) {
         this.placeid = placeid;
     }
 }

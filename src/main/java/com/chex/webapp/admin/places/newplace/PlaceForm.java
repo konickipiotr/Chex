@@ -1,11 +1,7 @@
 package com.chex.webapp.admin.places.newplace;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
-@Data
-@NoArgsConstructor
 public class PlaceForm {
 
     private String placeid;
@@ -25,6 +21,9 @@ public class PlaceForm {
     private String descriptionPl;
     private MultipartFile picture;
 
+    public PlaceForm() {
+    }
+
     public PlaceForm(String prefix, String suffix) {
         this.prefix = prefix;
         this.suffix = suffix;
@@ -38,5 +37,133 @@ public class PlaceForm {
 
     public String getParentId(){
         return prefix + ".000" + suffix;
+    }
+
+    public String getPlaceid() {
+        return placeid;
+    }
+
+    public void setPlaceid(String placeid) {
+        this.placeid = placeid;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public String getSuffix() {
+        return suffix;
+    }
+
+    public void setSuffix(String suffix) {
+        this.suffix = suffix;
+    }
+
+    public boolean isSubplace() {
+        return subplace;
+    }
+
+    public void setSubplace(boolean subplace) {
+        this.subplace = subplace;
+    }
+
+    public String getNameEng() {
+        return nameEng;
+    }
+
+    public void setNameEng(String nameEng) {
+        this.nameEng = nameEng;
+    }
+
+    public String getNamePl() {
+        return namePl;
+    }
+
+    public void setNamePl(String namePl) {
+        this.namePl = namePl;
+    }
+
+    public boolean isSameAsFirst() {
+        return sameAsFirst;
+    }
+
+    public void setSameAsFirst(boolean sameAsFirst) {
+        this.sameAsFirst = sameAsFirst;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    public Long getCategory() {
+        return category;
+    }
+
+    public void setCategory(Long category) {
+        this.category = category;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public int getDifficultylevel() {
+        return difficultylevel;
+    }
+
+    public void setDifficultylevel(int difficultylevel) {
+        this.difficultylevel = difficultylevel;
+    }
+
+    public String getDescriptionEng() {
+        return descriptionEng;
+    }
+
+    public void setDescriptionEng(String descriptionEng) {
+        this.descriptionEng = descriptionEng;
+    }
+
+    public String getDescriptionPl() {
+        return descriptionPl;
+    }
+
+    public void setDescriptionPl(String descriptionPl) {
+        this.descriptionPl = descriptionPl;
+    }
+
+    public MultipartFile getPicture() {
+        return picture;
+    }
+
+    public void setPicture(MultipartFile picture) {
+        this.picture = picture;
     }
 }

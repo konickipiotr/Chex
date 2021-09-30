@@ -1,7 +1,6 @@
 package com.chex.api.place.service;
 
-import com.chex.api.place.service.PlaceNameService;
-import com.chex.modules.places.*;
+import com.chex.modules.CheckPlaceView;
 import com.chex.modules.places.model.Place;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

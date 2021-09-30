@@ -1,12 +1,6 @@
 package com.chex.modules.places.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class PlaceShortView implements Comparable<PlaceShortView> {
 
     private String id;
@@ -16,6 +10,33 @@ public class PlaceShortView implements Comparable<PlaceShortView> {
     public PlaceShortView(String id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public PlaceShortView() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     @Override

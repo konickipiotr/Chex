@@ -1,15 +1,9 @@
 package com.chex.user.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
-@NoArgsConstructor
 public class UserAchievements {
 
     @Id
@@ -19,4 +13,45 @@ public class UserAchievements {
     private Long userid;
     private Long achievementid;
     private LocalDateTime achievedat;
+
+    public UserAchievements(Long userid, Long achievementid, LocalDateTime achievedat) {
+        this.userid = userid;
+        this.achievementid = achievementid;
+        this.achievedat = achievedat;
+    }
+
+    public UserAchievements() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Long userid) {
+        this.userid = userid;
+    }
+
+    public Long getAchievementid() {
+        return achievementid;
+    }
+
+    public void setAchievementid(Long achievementid) {
+        this.achievementid = achievementid;
+    }
+
+    public LocalDateTime getAchievedat() {
+        return achievedat;
+    }
+
+    public void setAchievedat(LocalDateTime achievedat) {
+        this.achievedat = achievedat;
+    }
 }

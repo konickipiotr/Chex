@@ -1,9 +1,19 @@
 package com.chex.config;
 
+import com.chex.api.forgotpassword.ResetCodeRepository;
 import com.chex.api.post.PostVisibility;
+import com.chex.api.registration.ActivationCodeRepository;
 import com.chex.authentication.AccountStatus;
 import com.chex.authentication.Auth;
 import com.chex.authentication.AuthRepository;
+import com.chex.modules.achievements.model.Achievement;
+import com.chex.modules.achievements.model.AchievementDescription;
+import com.chex.modules.achievements.model.AchievementName;
+import com.chex.modules.achievements.model.AchievementPlaces;
+import com.chex.modules.achievements.repository.AchievementDescriptionRepository;
+import com.chex.modules.achievements.repository.AchievementNameRepository;
+import com.chex.modules.achievements.repository.AchievementPlacesRepository;
+import com.chex.modules.achievements.repository.AchievementRepository;
 import com.chex.modules.category.Category;
 import com.chex.modules.category.CategoryRepository;
 import com.chex.modules.places.model.Place;
@@ -15,20 +25,22 @@ import com.chex.modules.places.repository.PlaceRepository;
 import com.chex.modules.post.model.Comment;
 import com.chex.modules.post.model.Post;
 import com.chex.modules.post.repository.CommentRepository;
+import com.chex.modules.post.repository.PostPhotoRepository;
 import com.chex.modules.post.repository.PostRepository;
-import com.chex.user.User;
-import com.chex.user.UserRepository;
-import com.chex.user.place.VisitedPlace;
-import com.chex.user.place.VisitedPlacesRepository;
+import com.chex.user.model.User;
+import com.chex.user.model.UsersAchievementsInProgress;
+import com.chex.user.repository.UserAchievementsRepository;
+import com.chex.user.repository.UserRepository;
+import com.chex.user.model.VisitedPlace;
+import com.chex.user.repository.UsersAchievementsInProgressRepository;
+import com.chex.user.repository.VisitedPlacesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collections;
 
 @Service
 public class DbInit implements CommandLineRunner {
@@ -43,12 +55,24 @@ public class DbInit implements CommandLineRunner {
     private final VisitedPlacesRepository visitedPlacesRepository;
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
+    private final ActivationCodeRepository activationCodeRepository;
+    private final ResetCodeRepository resetCodeRepository;
+    private final PostPhotoRepository postPhotoRepository;
+
+    private final AchievementRepository achievementRepository;
+    private final AchievementPlacesRepository achievementPlacesRepository;
+    private final AchievementNameRepository achievementNameRepository;
+    private final AchievementDescriptionRepository achievementDescriptionRepository;
+    private final UserAchievementsRepository userAchievementsRepository;
+    private final UsersAchievementsInProgressRepository usersAchievementsInProgressRepository;
 
     private User u1;
     private User u2;
+    private User u3;
+
 
     @Autowired
-    public DbInit(AuthRepository authRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, PlaceRepository placeRepository, CategoryRepository categoryRepository, PlaceNameRepository placeNameRepository, PlaceDescriptionRepository placeDescriptionRepository, VisitedPlacesRepository visitedPlacesRepository, PostRepository postRepository, CommentRepository commentRepository) {
+    public DbInit(AuthRepository authRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, PlaceRepository placeRepository, CategoryRepository categoryRepository, PlaceNameRepository placeNameRepository, PlaceDescriptionRepository placeDescriptionRepository, VisitedPlacesRepository visitedPlacesRepository, PostRepository postRepository, CommentRepository commentRepository, ActivationCodeRepository activationCodeRepository, ResetCodeRepository resetCodeRepository, PostPhotoRepository postPhotoRepository, AchievementRepository achievementRepository, AchievementPlacesRepository achievementPlacesRepository, AchievementNameRepository achievementNameRepository, AchievementDescriptionRepository achievementDescriptionRepository, UserAchievementsRepository userAchievementsRepository, UsersAchievementsInProgressRepository usersAchievementsInProgressRepository) {
         this.authRepository = authRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -59,6 +83,15 @@ public class DbInit implements CommandLineRunner {
         this.visitedPlacesRepository = visitedPlacesRepository;
         this.postRepository = postRepository;
         this.commentRepository = commentRepository;
+        this.activationCodeRepository = activationCodeRepository;
+        this.resetCodeRepository = resetCodeRepository;
+        this.postPhotoRepository = postPhotoRepository;
+        this.achievementRepository = achievementRepository;
+        this.achievementPlacesRepository = achievementPlacesRepository;
+        this.achievementNameRepository = achievementNameRepository;
+        this.achievementDescriptionRepository = achievementDescriptionRepository;
+        this.userAchievementsRepository = userAchievementsRepository;
+        this.usersAchievementsInProgressRepository = usersAchievementsInProgressRepository;
     }
 
     @Override
@@ -69,13 +102,15 @@ public class DbInit implements CommandLineRunner {
         Auth admin = new Auth("admin", passwordEncoder.encode("11"), "ADMIN", AccountStatus.ACTIVE);
         Auth user1 = new Auth("user1", passwordEncoder.encode("11"), "USER", AccountStatus.ACTIVE);
         Auth user2 = new Auth("user2", passwordEncoder.encode("11"), "USER", AccountStatus.ACTIVE);
+        Auth user3 = new Auth("konicki.piotr@gmail.com", passwordEncoder.encode("11"), "USER", AccountStatus.ACTIVE);
 
-        this.authRepository.saveAll(Arrays.asList(admin, user1, user2));
+        this.authRepository.saveAll(Arrays.asList(admin, user1, user2, user3));
 
         u1 = new User(user1.getId(), "Jan", "Nowak");
-        u1.setImgurl("/photos/profile.png");
         u2 = new User(user2.getId(), "Anna", "Kowalska");
-        this.userRepository.saveAll(Arrays.asList(u1, u2));
+        u2.setGender("F");
+        u3 = new User(user3.getId(), "Piotr", "Konicki");
+        this.userRepository.saveAll(Arrays.asList(u1, u2, u3));
 
         savePlacesForTesting();
         initBaseData();
@@ -102,7 +137,8 @@ public class DbInit implements CommandLineRunner {
 
 
         Place europa = new Place("EU.000.000.000.00000");
-        europa.setImgurl("/photos/eurpa.JPG");
+        europa.setImgurl("/assets/europa.PNG");
+        europa.setImgpath(GlobalSettings.appPath + "assets/europa.PNG");
         if(!this.placeRepository.existsById("EU.000.000.000.00000")){
             this.placeRepository.save(europa);
             this.placeNameRepository.save(new PlaceName(europa.getId(), "Europa", "Europe"));
@@ -160,10 +196,21 @@ public class DbInit implements CommandLineRunner {
         this.visitedPlacesRepository.deleteAll();
         this.postRepository.deleteAll();
         this.commentRepository.deleteAll();
+        this.activationCodeRepository.deleteAll();
+        this.resetCodeRepository.deleteAll();
+        this.postPhotoRepository.deleteAll();
+
+        achievementRepository.deleteAll();
+        achievementPlacesRepository.deleteAll();
+        achievementNameRepository.deleteAll();
+        achievementDescriptionRepository.deleteAll();
+        userAchievementsRepository.deleteAll();
+        usersAchievementsInProgressRepository.deleteAll();
 
         //COUNTRIES
         Place poland = new Place("EU.POL.000.000.00000");
-        poland.setImgurl("/photos/poland.JPG");
+        poland.setImgurl("/assets/Poland.png");
+        poland.setImgpath(GlobalSettings.appPath + "assets/Poland.png");
         Place germany = new Place("EU.GER.000.000.00000");
         Place spain = new Place("EU.SPA.000.000.00000");
         Place italy = new Place("EU.ITL.000.000.00000");
@@ -181,7 +228,8 @@ public class DbInit implements CommandLineRunner {
 
         //PROVINCES
         Place dolnoslaskie = new Place("EU.POL.DLS.000.00000");
-        dolnoslaskie.setImgurl("/photos/dolnośląskie.JPG");
+        dolnoslaskie.setImgurl("/assets/pl_dls.PNG");
+        dolnoslaskie.setImgpath(GlobalSettings.appPath + "assets/pl_dls.PNG");
         Place opolskie = new Place("EU.POL.OPL.000.00000");
         Place malopolskie = new Place("EU.POL.MAL.000.00000");
         Place wielkopolskie = new Place("EU.POL.WLP.000.00000");
@@ -199,50 +247,53 @@ public class DbInit implements CommandLineRunner {
 
         Place region = new Place("EU.POL.DLS.REG.00000");
         Place wroclaw = new Place("EU.POL.DLS.WRO.00000");
-        wroclaw.setImgurl("/photos/wroclaw.JPG");
+        wroclaw.setImgurl("/assets/Wroclaw.png");
+        wroclaw.setImgpath(GlobalSettings.appPath + "assets/Wroclaw.png");
         Place legnica = new Place("EU.POL.DLS.LEG.00000");
         Place stronie = new Place("EU.POL.DLS.STR.00000");
-        this.placeRepository.saveAll(Arrays.asList(region, wroclaw, legnica, stronie));
+
+        Place region2 = new Place("EU.POL.MAL.REG.00000");
+        Place krakow = new Place("EU.POL.MAL.KRK.00000");
+
+        this.placeRepository.saveAll(Arrays.asList(region, wroclaw, legnica, stronie, region2, krakow));
 
         this.placeNameRepository.save(new PlaceName(region.getId(), "Region", "Region"));
         this.placeNameRepository.save(new PlaceName(wroclaw.getId(), "Wrocław", "Wroclaw"));
         this.placeNameRepository.save(new PlaceName(legnica.getId(), "Legnica", "Legnica"));
         this.placeNameRepository.save(new PlaceName(stronie.getId(), "Stronie Sląskie", "Stronie Slaskie"));
+        this.placeNameRepository.save(new PlaceName(region2.getId(), "Region", "Region"));
+        this.placeNameRepository.save(new PlaceName(krakow.getId(), "Kraków", "Cracow"));
 
         this.placeDescriptionRepository.save(new PlaceDescription(region.getId(), "", ""));
         this.placeDescriptionRepository.save(new PlaceDescription(wroclaw.getId(), "", ""));
         this.placeDescriptionRepository.save(new PlaceDescription(legnica.getId(), "", ""));
         this.placeDescriptionRepository.save(new PlaceDescription(stronie.getId(), "", ""));
+        this.placeDescriptionRepository.save(new PlaceDescription(region2.getId(), "", ""));
+        this.placeDescriptionRepository.save(new PlaceDescription(krakow.getId(), "", ""));
 
+        Place kopiecKraka = new Place("EU.POL.MAL.KRK.00001");
+        kopiecKraka.setLatitude(50.03803603952346);
+        kopiecKraka.setLongitude(19.95853994569327);
+        kopiecKraka.setRadius(60);
+        kopiecKraka.setPoints(25);
+        kopiecKraka.setImgurl("https://ocdn.eu/pulscms-transforms/1/grjk9kpTURBXy9jMDVjOTQ2OWM0YjA1YzM2NDFhZWU0MzkwNTk4YTA3Zi5qcGeTlQMAZ80Vmc0MJpMFzQMUzQG8kwmmNzNmODdmBoGhMAE/kopiec-krakusa.jpg");
 
-        Place church = new Place("EU.POL.DLS.WRO.00002");
-        church.setLatitude(51.115358289422275);
-        church.setLongitude(17.01351628762617);
-        church.setRadius(70);
-        church.setPoints(60);
+        Place kopiecKosciuszki = new Place("EU.POL.MAL.KRK.00002");
+        kopiecKosciuszki.setLatitude(50.05499153972385);
+        kopiecKosciuszki.setLongitude(19.89337378342057);
+        kopiecKosciuszki.setRadius(60);
+        kopiecKosciuszki.setPoints(25);
+        kopiecKosciuszki.setImgurl("https://ocdn.eu/pulscms-transforms/1/yXZk9kpTURBXy85MjJlNDYzMmM5NmM5NGEwM2FiZmVjNzVhYWI5NWI2My5qcGeTlQMAzJnNEyLNCsOTBc0DFM0BvJMJpjQ5NGYxOQaBoTAB/kopiec-kosciuszki-w-krakowie.jpg");
 
-        Place trash = new Place("EU.POL.DLS.WRO.00003");
-        trash.setLatitude(51.114834340788576);
-        trash.setLongitude(17.010754042527363);
-        trash.setRadius(10);
-        trash.setPoints(10);
+        Place kopiecKopiecWandy = new Place("EU.POL.MAL.KRK.00003");
+        kopiecKopiecWandy.setLatitude(50.070249355415775);
+        kopiecKopiecWandy.setLongitude(20.068072243561463);
+        kopiecKopiecWandy.setRadius(60);
+        kopiecKopiecWandy.setPoints(25);
+        kopiecKopiecWandy.setImgurl("https://mapio.net/images-p/13088769.jpg");
 
-        Place someplace = new Place("EU.POL.DLS.WRO.00004");
-        someplace.setLatitude(51.114851611073455);
-        someplace.setLongitude(17.012198333585737);
-        someplace.setRadius(10);
-        someplace.setPoints(10);
-
-
-        Place nationalmuseum = new Place("EU.POL.DLS.WRO.00005");
-        nationalmuseum.setLatitude(51.11056175173228);
-        nationalmuseum.setLongitude(17.04744525485578);
-        nationalmuseum.setRadius(70);
-        nationalmuseum.setPoints(25);
-        nationalmuseum.setImgurl("/photos/nationalmuseum.JPG");
 
         Place odrariver = new Place("EU.POL.DLS.WRO.00006");
-
         odrariver.setLatitude(51.111252368679075);
         odrariver.setLongitude(17.048359420006754);
         odrariver.setPoints(15);
@@ -255,21 +306,29 @@ public class DbInit implements CommandLineRunner {
         fredrostatue.setRadius(20);
         fredrostatue.setPoints(30);
         fredrostatue.setImgurl("/photos/fredromonument.JPG");
-        this.placeRepository.saveAll(Arrays.asList(church, trash, someplace, nationalmuseum, odrariver, fredrostatue));
 
-        this.placeNameRepository.save(new PlaceName(church.getId(), "Kościół", "Church"));
-        this.placeNameRepository.save(new PlaceName(trash.getId(), "śmietnik", "Trash"));
-        this.placeNameRepository.save(new PlaceName(someplace.getId(), "Jakieś miejsce", "Some place"));
+
+        Place nationalmuseum = new Place("EU.POL.DLS.WRO.00005");
+        nationalmuseum.setLatitude(51.11056175173228);
+        nationalmuseum.setLongitude(17.04744525485578);
+        nationalmuseum.setRadius(70);
+        nationalmuseum.setPoints(25);
+        nationalmuseum.setImgurl("/photos/nationalmuseum.JPG");
+        this.placeRepository.saveAll(Arrays.asList(nationalmuseum, odrariver, fredrostatue, kopiecKraka, kopiecKosciuszki, kopiecKopiecWandy));
+
         this.placeNameRepository.save(new PlaceName(nationalmuseum.getId(), "Muzeum narodowoe", "National museum"));
         this.placeNameRepository.save(new PlaceName(odrariver.getId(), "Rzeka Odra", "Odra river"));
         this.placeNameRepository.save(new PlaceName(fredrostatue.getId(), "Pomnik Fredry", "Fredro statue"));
+        this.placeNameRepository.save(new PlaceName(kopiecKraka.getId(), "Kopiec  Kraka", "Kopiec  Kraka"));
+        this.placeNameRepository.save(new PlaceName(kopiecKosciuszki.getId(), "Kopiec  Kościuszki", "Kopiec  Kościuszki"));
+        this.placeNameRepository.save(new PlaceName(kopiecKopiecWandy.getId(), "Kopiec  Wandy", "Kopiec  Wandy"));
 
-        this.placeDescriptionRepository.save(new PlaceDescription(church.getId(), "", ""));
-        this.placeDescriptionRepository.save(new PlaceDescription(trash.getId(), "", ""));
-        this.placeDescriptionRepository.save(new PlaceDescription(someplace.getId(), "", ""));
         this.placeDescriptionRepository.save(new PlaceDescription(nationalmuseum.getId(), "", ""));
         this.placeDescriptionRepository.save(new PlaceDescription(odrariver.getId(), "", ""));
         this.placeDescriptionRepository.save(new PlaceDescription(fredrostatue.getId(), "", ""));
+        this.placeDescriptionRepository.save(new PlaceDescription(kopiecKraka.getId(), "", ""));
+        this.placeDescriptionRepository.save(new PlaceDescription(kopiecKosciuszki.getId(), "", ""));
+        this.placeDescriptionRepository.save(new PlaceDescription(kopiecKopiecWandy.getId(), "", ""));
 
         VisitedPlace v1 = new VisitedPlace(u1.getId());
         v1.setPlaceid(nationalmuseum.getId());
@@ -277,30 +336,30 @@ public class DbInit implements CommandLineRunner {
         v1.setRating(5);
 
         VisitedPlace v2 = new VisitedPlace(u1.getId());
-        v1.setPlaceid("EU.POL.DLS.WRO.00000");
-        v1.setVdate(LocalDateTime.of(2021, 7, 20, 11, 30));
+        v2.setPlaceid("EU.POL.DLS.WRO.00000");
+        v2.setVdate(LocalDateTime.of(2021, 7, 20, 11, 30));
 
         VisitedPlace v3 = new VisitedPlace(u1.getId());
-        v1.setPlaceid("EU.POL.DLS.000.00000");
-        v1.setVdate(LocalDateTime.of(2021, 7, 20, 11, 30));
+        v3.setPlaceid("EU.POL.DLS.000.00000");
+        v3.setVdate(LocalDateTime.of(2021, 7, 20, 11, 30));
 
         VisitedPlace v4 = new VisitedPlace(u1.getId());
-        v1.setPlaceid("EU.POL.000.000.00000");
-        v1.setVdate(LocalDateTime.of(2021, 7, 20, 11, 30));
+        v4.setPlaceid("EU.POL.000.000.00000");
+        v4.setVdate(LocalDateTime.of(2021, 7, 20, 11, 30));
 
         VisitedPlace v5 = new VisitedPlace(u1.getId());
-        v1.setPlaceid("EU.000.000.000.00000");
-        v1.setVdate(LocalDateTime.of(2021, 7, 20, 11, 30));
+        v5.setPlaceid("EU.000.000.000.00000");
+        v5.setVdate(LocalDateTime.of(2021, 7, 20, 11, 30));
 
-        VisitedPlace v6 = new VisitedPlace(u1.getId());
-        v1.setPlaceid(fredrostatue.getId());
-        v1.setVdate(LocalDateTime.of(2021, 8, 16, 16, 10));
-        v1.setRating(3);
+        VisitedPlace v6 = new VisitedPlace(u2.getId());
+        v6.setPlaceid(fredrostatue.getId());
+        v6.setVdate(LocalDateTime.of(2021, 8, 16, 16, 10));
+        v6.setRating(3);
 
-        VisitedPlace v7 = new VisitedPlace(u2.getId());
-        v1.setPlaceid(odrariver.getId());
-        v1.setVdate(LocalDateTime.of(2021, 7, 20, 15, 30));
-        v1.setRating(3);
+        VisitedPlace v7 = new VisitedPlace(u1.getId());
+        v7.setPlaceid(odrariver.getId());
+        v7.setVdate(LocalDateTime.of(2021, 7, 20, 15, 30));
+        v7.setRating(3);
 
         this.visitedPlacesRepository.saveAll(Arrays.asList(v1, v2, v3, v4, v5, v6, v7));
 
@@ -339,5 +398,17 @@ public class DbInit implements CommandLineRunner {
         Comment c5 = new Comment(post3.getId(), u1.getId(), "Piekne miejsce. Czy to rynke", LocalDateTime.of(2021, 7, 20, 20, 30));
         Comment c6 = new Comment(post3.getId(), u2.getId(), "Tak", LocalDateTime.of(2021, 7, 20, 21, 30));
         this.commentRepository.saveAll(Arrays.asList(c1, c2, c3, c33, c4, c5, c6));
+
+        Achievement kopceAch = new Achievement();
+        kopceAch.setPoints(50);
+        kopceAch.setImgurl("https://s.twojahistoria.pl/uploads/2018/05/Trzy_kopce_Krakowskie-mini.jpg");
+        this.achievementRepository.save(kopceAch);
+
+        this.achievementPlacesRepository.save(new AchievementPlaces(kopceAch.getId(), kopiecKraka.getId()));
+        this.achievementPlacesRepository.save(new AchievementPlaces(kopceAch.getId(), kopiecKosciuszki.getId()));
+        this.achievementPlacesRepository.save(new AchievementPlaces(kopceAch.getId(), kopiecKopiecWandy.getId()));
+
+        this.achievementNameRepository.save(new AchievementName(kopceAch.getId(), "ach1", "ach1"));
+        this.achievementDescriptionRepository.save(new AchievementDescription(kopceAch.getId(), "", ""));
     }
 }

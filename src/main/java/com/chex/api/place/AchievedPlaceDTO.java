@@ -2,17 +2,10 @@ package com.chex.api.place;
 
 import com.chex.api.post.PostVisibility;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
-@Data
-@NoArgsConstructor
-@ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AchievedPlaceDTO {
 
@@ -21,4 +14,47 @@ public class AchievedPlaceDTO {
     private String description;
     private List<String> sfiles;
     private PostVisibility postvisibility = PostVisibility.PUBLIC;
+
+    public AchievedPlaceDTO() {
+    }
+
+    public Map<String, Integer> getAchievedPlaces() {
+        return achievedPlaces;
+    }
+
+    public void setAchievedPlaces(Map<String, Integer> achievedPlaces) {
+        this.achievedPlaces = achievedPlaces;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<String> getSfiles() {
+        return sfiles;
+    }
+
+    public void setSfiles(List<String> sfiles) {
+        this.sfiles = sfiles;
+    }
+
+    public PostVisibility getPostvisibility() {
+        return postvisibility;
+    }
+
+    public void setPostvisibility(PostVisibility postvisibility) {
+        this.postvisibility = postvisibility;
+    }
 }

@@ -1,15 +1,9 @@
 package com.chex.user.model;
 
-import com.chex.api.place.AchievedPlaceDTO;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
-@NoArgsConstructor
 @Entity
 public class VisitedPlace {
 
@@ -23,7 +17,50 @@ public class VisitedPlace {
     private LocalDateTime vdate;
     private int rating;
 
+    public VisitedPlace() {
+    }
+
     public VisitedPlace(Long userid) {
         this.userid = userid;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Long userid) {
+        this.userid = userid;
+    }
+
+    public String getPlaceid() {
+        return placeid;
+    }
+
+    public void setPlaceid(String placeid) {
+        this.placeid = placeid;
+    }
+
+    public LocalDateTime getVdate() {
+        return vdate;
+    }
+
+    public void setVdate(LocalDateTime vdate) {
+        this.vdate = vdate;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }

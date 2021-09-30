@@ -6,7 +6,7 @@ import com.chex.api.place.service.PlaceNameService;
 import com.chex.authentication.AccountStatus;
 import com.chex.authentication.Auth;
 import com.chex.authentication.AuthRepository;
-import com.chex.modules.places.CheckPlaceView;
+import com.chex.modules.CheckPlaceView;
 import com.chex.modules.places.model.Place;
 import com.chex.modules.places.repository.PlaceRepository;
 import com.chex.modules.post.model.Post;

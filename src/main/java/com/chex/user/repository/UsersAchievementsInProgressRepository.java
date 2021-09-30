@@ -10,5 +10,7 @@ import java.util.List;
 @Repository
 public interface UsersAchievementsInProgressRepository extends JpaRepository<UsersAchievementsInProgress, Long> {
     boolean existsByUseridAndAchievementid(Long userid, Long achievementid);
+    boolean existsByUseridAndAchievementidAndPlaceid(Long userid, Long achievementid, String placeid);
     List<UsersAchievementsInProgress> findByUseridAndAchievementid(Long userid, Long achievementid);
+
 }

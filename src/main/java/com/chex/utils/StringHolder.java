@@ -2,13 +2,7 @@ package com.chex.utils;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 public class StringHolder {
 
     @JsonIgnore
@@ -17,5 +11,20 @@ public class StringHolder {
     @JsonCreator
     public static StringHolder create(String value){
         return new StringHolder(value);
+    }
+
+    public StringHolder() {
+    }
+
+    public StringHolder(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

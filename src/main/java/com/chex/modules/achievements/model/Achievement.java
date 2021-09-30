@@ -1,13 +1,8 @@
 package com.chex.modules.achievements.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Entity
-@Data
-@NoArgsConstructor
 public class Achievement {
 
     @Id
@@ -17,4 +12,39 @@ public class Achievement {
     private int points;
     private String imgurl;
     private String imgpath;
+
+    public Achievement() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
+    }
+
+    public String getImgpath() {
+        return imgpath;
+    }
+
+    public void setImgpath(String imgpath) {
+        this.imgpath = imgpath;
+    }
 }
