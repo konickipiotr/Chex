@@ -1,6 +1,6 @@
 package com.chex.modules.achievements.model;
 
-public class AchievementShortView {
+public class AchievementShortView implements Comparable<AchievementShortView> {
 
     private Long id;
     private String name;
@@ -40,5 +40,10 @@ public class AchievementShortView {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    @Override
+    public int compareTo(AchievementShortView achievementShortView) {
+        return this.name.compareTo(achievementShortView.name);
     }
 }

@@ -90,8 +90,8 @@ public class AchievementAPIService {
         return false;
     }
 
-    public int addPlaceToUserAchievements(Set<String> placeIdSet, Long userid){
-        int exp = 0;
+    public List<Achievement> addPlaceToUserAchievements(Set<String> placeIdSet, Long userid){
+        List<Achievement> achievementList = new ArrayList<>();
         for(String sId : placeIdSet){
             List<AchievementPlaces> achPlaces = this.achievementPlacesRepository.findByPlaceid(sId);
             if(achPlaces.isEmpty()) continue;
@@ -104,13 +104,13 @@ public class AchievementAPIService {
                 if(checkNewAchievementAvailable(ap, userid)){
                     addAchievementToUserCollection(ap, userid);
                     Achievement achievement = this.achievementRepository.findById(ap.getAchievementid()).get();
-                    exp += achievement.getPoints();
+                    achievementList.add(achievement);
                 }else {
                     this.usersAchievementsInProgressRepository.save(new UsersAchievementsInProgress(userid, ap.getAchievementid(), ap.getPlaceid(), LocalDateTime.now()));
                 }
             }
         }
-        return exp;
+        return achievementList;
     }
 
     private void addAchievementToUserCollection(AchievementPlaces ap, Long userid){

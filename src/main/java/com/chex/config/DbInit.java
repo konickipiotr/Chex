@@ -137,7 +137,8 @@ public class DbInit implements CommandLineRunner {
 
 
         Place europa = new Place("EU.000.000.000.00000");
-        europa.setImgurl("/assets/europa.PNG");
+        europa.setImgurl("/assets/places/EU00000000000000.png");
+        europa.setImgpath("assets/places/EU00000000000000.png");
         europa.setImgpath(GlobalSettings.appPath + "assets/europa.PNG");
         if(!this.placeRepository.existsById("EU.000.000.000.00000")){
             this.placeRepository.save(europa);
@@ -146,6 +147,8 @@ public class DbInit implements CommandLineRunner {
         }
 
         Place northAmerica = new Place("NA.000.000.000.00000");
+        northAmerica.setImgurl("/assets/places/NA00000000000000.png");
+        northAmerica.setImgpath("assets/places/NA00000000000000.png");
         if(!this.placeRepository.existsById("NA.000.000.000.00000")){
             this.placeRepository.save(northAmerica);
             this.placeNameRepository.save(new PlaceName(northAmerica.getId(), "Ameryka Północna", "North America"));
@@ -153,6 +156,8 @@ public class DbInit implements CommandLineRunner {
         }
 
         Place southAmerica = new Place("SA.000.000.000.00000");
+        southAmerica.setImgurl("/assets/places/SA00000000000000.png");
+        southAmerica.setImgpath("assets/places/SA00000000000000.png");
         if(!this.placeRepository.existsById("SA.000.000.000.00000")){
             this.placeRepository.save(southAmerica);
             this.placeNameRepository.save(new PlaceName(southAmerica.getId(), "Ameryka Południowa", "South America"));
@@ -160,6 +165,8 @@ public class DbInit implements CommandLineRunner {
         }
 
         Place africa = new Place("AF.000.000.000.00000");
+        africa.setImgurl("/assets/places/AF00000000000000.png");
+        africa.setImgpath("assets/places/AF00000000000000.png");
         if(!this.placeRepository.existsById("AF.000.000.000.00000")){
             this.placeRepository.save(africa);
             this.placeNameRepository.save(new PlaceName(africa.getId(), "Afryka", "Africa"));
@@ -167,6 +174,8 @@ public class DbInit implements CommandLineRunner {
         }
 
         Place asia = new Place("AS.000.000.000.00000");
+        asia.setImgurl("/assets/places/AS00000000000000.png");
+        asia.setImgpath("assets/places/AS00000000000000.png");
         if(!this.placeRepository.existsById("AS.000.000.000.00000")){
             this.placeRepository.save(asia);
             this.placeNameRepository.save(new PlaceName(asia.getId(), "Azja", "Asia"));
@@ -174,6 +183,8 @@ public class DbInit implements CommandLineRunner {
         }
 
         Place australia = new Place("AU.000.000.000.00000");
+        australia.setImgurl("/assets/places/AU00000000000000.png");
+        australia.setImgpath("assets/places/AU00000000000000.png");
         if(!this.placeRepository.existsById("AU.000.000.000.00000")){
             this.placeRepository.save(australia);
             this.placeNameRepository.save(new PlaceName(australia.getId(), "Australia", "Australia"));
@@ -209,8 +220,8 @@ public class DbInit implements CommandLineRunner {
 
         //COUNTRIES
         Place poland = new Place("EU.POL.000.000.00000");
-        poland.setImgurl("/assets/Poland.png");
-        poland.setImgpath(GlobalSettings.appPath + "assets/Poland.png");
+        poland.setImgurl("/assets/places/EUPOL00000000000.png");
+        poland.setImgpath("assets/places/EUPOL00000000000.png");
         Place germany = new Place("EU.GER.000.000.00000");
         Place spain = new Place("EU.SPA.000.000.00000");
         Place italy = new Place("EU.ITL.000.000.00000");
@@ -228,8 +239,8 @@ public class DbInit implements CommandLineRunner {
 
         //PROVINCES
         Place dolnoslaskie = new Place("EU.POL.DLS.000.00000");
-        dolnoslaskie.setImgurl("/assets/pl_dls.PNG");
-        dolnoslaskie.setImgpath(GlobalSettings.appPath + "assets/pl_dls.PNG");
+        dolnoslaskie.setImgurl("/assets/places/EUPOLDLS00000000.png");
+        dolnoslaskie.setImgpath("assets/places/EUPOLDLS00000000.png");
         Place opolskie = new Place("EU.POL.OPL.000.00000");
         Place malopolskie = new Place("EU.POL.MAL.000.00000");
         Place wielkopolskie = new Place("EU.POL.WLP.000.00000");
@@ -247,8 +258,8 @@ public class DbInit implements CommandLineRunner {
 
         Place region = new Place("EU.POL.DLS.REG.00000");
         Place wroclaw = new Place("EU.POL.DLS.WRO.00000");
-        wroclaw.setImgurl("/assets/Wroclaw.png");
-        wroclaw.setImgpath(GlobalSettings.appPath + "assets/Wroclaw.png");
+        wroclaw.setImgurl("/assets/places/EUPOLDLSWRO00000.png");
+        wroclaw.setImgpath("assets/places/EUPOLDLSWRO00000.png");
         Place legnica = new Place("EU.POL.DLS.LEG.00000");
         Place stronie = new Place("EU.POL.DLS.STR.00000");
 

@@ -1,10 +1,12 @@
 package com.chex.modules.achievements.model;
 
+import com.chex.lang.LanguageGetter;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class AchievementDescription {
+public class AchievementDescription implements LanguageGetter {
 
     @Id
     private Long id;
@@ -28,6 +30,7 @@ public class AchievementDescription {
         this.id = id;
     }
 
+    @Override
     public String getPl() {
         return pl;
     }
@@ -36,6 +39,7 @@ public class AchievementDescription {
         this.pl = pl;
     }
 
+    @Override
     public String getEng() {
         return eng;
     }

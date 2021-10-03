@@ -1,5 +1,6 @@
 package com.chex.modules.places.model;
 
+import com.chex.lang.LanguageGetter;
 import com.chex.webapp.admin.places.newplace.PlaceForm;
 
 import javax.persistence.Column;
@@ -7,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class PlaceName {
+public class PlaceName implements LanguageGetter {
 
     @Id
     @Column(length = 20)
@@ -41,6 +42,7 @@ public class PlaceName {
         this.id = id;
     }
 
+    @Override
     public String getPl() {
         return pl;
     }
@@ -49,6 +51,7 @@ public class PlaceName {
         this.pl = pl;
     }
 
+    @Override
     public String getEng() {
         return eng;
     }

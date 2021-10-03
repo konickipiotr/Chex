@@ -11,4 +11,5 @@ public interface AchievementPlacesRepository extends JpaRepository<AchievementPl
 
     List<AchievementPlaces> findByPlaceid(String placeid);
     List<AchievementPlaces> findByAchievementid(Long achievementid);
+    int countByAchievementid(Long achievementid);
 }

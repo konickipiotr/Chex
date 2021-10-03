@@ -1,5 +1,6 @@
 package com.chex.webapp.admin.achievements;
 
+import com.chex.config.AppStats;
 import com.chex.files.FileNameStruct;
 import com.chex.files.FileService;
 import com.chex.files.FileType;
@@ -99,6 +100,8 @@ public class AchievementAdminService {
         achievementDescription.setEng(form.getDescriptionen());
         achievementDescription.setPl(form.getDescriptionpl());
         this.achievementDescriptionRepository.save(achievementDescription);
+
+        AppStats.achievementNum++;
     }
 
     public List<Duo<String>> getListOfAllPlaces(){

@@ -3,9 +3,10 @@ package com.chex.user.model;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 
 @Entity
-public class VisitedPlace {
+public class VisitedPlace implements Comparable<VisitedPlace> {
 
     @Id
     @SequenceGenerator(name = "vp_sequence", sequenceName = "vp_sequence", allocationSize = 1)
@@ -62,5 +63,11 @@ public class VisitedPlace {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+
+    @Override
+    public int compareTo(VisitedPlace visitedPlace) {
+        return this.vdate.compareTo(visitedPlace.vdate);
     }
 }

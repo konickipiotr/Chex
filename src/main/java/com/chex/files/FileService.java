@@ -50,7 +50,7 @@ public class FileService {
 
     public void deleteFile(String path){
         try {
-            FileUtils.delete(new File(path));
+            FileUtils.delete(new File(GlobalSettings.appPath + path));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,7 +59,7 @@ public class FileService {
     public void deletePostsPhotos(List<PostPhoto> photos) {
         for(PostPhoto p : photos){
             try {
-                FileUtils.delete(new File(p.getRealPath()));
+                FileUtils.delete(new File(GlobalSettings.appPath + p.getRealPath()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -100,8 +100,8 @@ public class FileService {
         now = now.truncatedTo(ChronoUnit.SECONDS);
 
         String filename;
-        String realPath = getUserSpacePath(user);
-        String webAppPath = "/" + GlobalSettings.photosPath + getUserDirectoryName(user);
+        String realPath = "users/" + getUserDirectoryName(user);
+        String webAppPath = "/users/" + getUserDirectoryName(user);
 
         if(photoId == Integer.MAX_VALUE)
             photoId = 0;
@@ -120,7 +120,7 @@ public class FileService {
                 throw new IllegalArgumentException();
         }
 
-        File dir = new File(realPath);
+        File dir = new File(GlobalSettings.appPath + realPath);
         if(!dir.exists())
             dir.mkdirs();
 
@@ -140,7 +140,7 @@ public class FileService {
 
         try {
             for(int i = 0; i < uploadfiles.size(); i++ ) {
-                Path fullpath = Paths.get(filesNames.get(i).realPath);
+                Path fullpath = Paths.get(GlobalSettings.appPath + filesNames.get(i).realPath);
                 Files.copy(uploadfiles.get(i).getInputStream(), fullpath, StandardCopyOption.REPLACE_EXISTING);
             }
         } catch (IOException e) {
@@ -157,7 +157,7 @@ public class FileService {
 
         FileNameStruct filesName = createFileName(mFile, user, fileType);
         try {
-            Path fullpath = Paths.get(filesName.realPath);
+            Path fullpath = Paths.get(GlobalSettings.appPath + filesName.realPath);
             Files.copy(mFile.getInputStream(), fullpath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
@@ -172,7 +172,7 @@ public class FileService {
 
         FileNameStruct filesName = createAssetName(mFile, filename, fileType);
         try {
-            Path fullpath = Paths.get(filesName.realPath);
+            Path fullpath =  Paths.get(GlobalSettings.appPath + filesName.realPath);
             Files.copy(mFile.getInputStream(), fullpath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
@@ -185,7 +185,8 @@ public class FileService {
         String orginalFileName = mFile.getOriginalFilename();
         String fileExtension = orginalFileName.substring(orginalFileName.length() - 3);
 
-        String realPath = GlobalSettings.appPath + "assets";
+        filename = filename.replaceAll("\\.", "");
+        String realPath = "assets";
         String webAppPath = "/assets";
         filename = filename + "." + fileExtension;
 
@@ -202,7 +203,7 @@ public class FileService {
                 throw new IllegalArgumentException();
         }
 
-        File dir = new File(realPath);
+        File dir = new File(GlobalSettings.appPath + realPath);
         if(!dir.exists())
             dir.mkdirs();
 

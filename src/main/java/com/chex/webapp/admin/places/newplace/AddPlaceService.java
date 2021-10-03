@@ -1,5 +1,9 @@
 package com.chex.webapp.admin.places.newplace;
 
+import com.chex.config.AppStats;
+import com.chex.files.FileNameStruct;
+import com.chex.files.FileService;
+import com.chex.files.FileType;
 import com.chex.modules.category.Category;
 import com.chex.modules.category.CategoryRepository;
 import com.chex.modules.places.*;
@@ -22,13 +26,15 @@ public class AddPlaceService {
     private final PlaceRepository placeRepository;
     private final PlaceNameRepository placeNameRepository;
     private final PlaceDescriptionRepository placeDescriptionRepository;
+    private final FileService fileService;
 
     @Autowired
-    public AddPlaceService(CategoryRepository categoryRepository, PlaceRepository placeRepository, PlaceNameRepository placeNameRepository, PlaceDescriptionRepository placeDescriptionRepository) {
+    public AddPlaceService(CategoryRepository categoryRepository, PlaceRepository placeRepository, PlaceNameRepository placeNameRepository, PlaceDescriptionRepository placeDescriptionRepository, FileService fileService) {
         this.categoryRepository = categoryRepository;
         this.placeRepository = placeRepository;
         this.placeNameRepository = placeNameRepository;
         this.placeDescriptionRepository = placeDescriptionRepository;
+        this.fileService = fileService;
     }
 
     public boolean idAlreadyExists(PlaceForm placeForm){
@@ -41,6 +47,13 @@ public class AddPlaceService {
         this.placeRepository.save(place);
         this.placeNameRepository.save(new PlaceName(place.getId(), placeForm));
         this.placeDescriptionRepository.save(new PlaceDescription(place.getId(), placeForm));
+        if(placeForm.getPicture() != null && !placeForm.getPicture().isEmpty()){
+            FileNameStruct fileNameStruct = fileService.uploadAssets(placeForm.getPicture(), place.getId(), FileType.PLACEPICTURE);
+            place.setImgpath(fileNameStruct.realPath);
+            place.setImgurl(fileNameStruct.webAppPath);
+            this.placeRepository.save(place);
+        }
+        AppStats.placesNum++;
     }
 
     public List<Duo<String>> getListOfPlaces(String id, PlaceType placeType, String lang){

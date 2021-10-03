@@ -1,5 +1,6 @@
 package com.chex.modules.post.model;
 
+import com.chex.modules.achievements.model.AchievementShortView;
 import com.chex.modules.places.model.PlaceShortView;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class PostView {
     private boolean voted;
     private List<PlaceShortView> places = new ArrayList<>();
     private List<PlaceShortView> subPlaces = new ArrayList<>();
+    private List<AchievementShortView> achievements = new ArrayList<>();
     private List<CommentView> commentViews = new ArrayList<>();
     private List<PostPhoto> photos = new ArrayList<>();
 
@@ -126,5 +128,13 @@ public class PostView {
 
     public void setPhotos(List<PostPhoto> photos) {
         this.photos = photos;
+    }
+
+    public List<AchievementShortView> getAchievements() {
+        return achievements;
+    }
+
+    public void setAchievements(List<AchievementShortView> achievements) {
+        this.achievements = achievements;
     }
 }

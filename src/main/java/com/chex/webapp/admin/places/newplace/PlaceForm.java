@@ -20,6 +20,7 @@ public class PlaceForm {
     private String descriptionEng;
     private String descriptionPl;
     private MultipartFile picture;
+    private String svgPath;
 
     public PlaceForm() {
     }
@@ -165,5 +166,13 @@ public class PlaceForm {
 
     public void setPicture(MultipartFile picture) {
         this.picture = picture;
+    }
+
+    public String getSvgPath() {
+        return svgPath;
+    }
+
+    public void setSvgPath(String svgPath) {
+        this.svgPath = svgPath;
     }
 }

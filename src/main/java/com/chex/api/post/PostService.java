@@ -4,6 +4,12 @@ import com.chex.api.place.AchievedPlaceDTO;
 import com.chex.api.place.service.PlaceNameService;
 import com.chex.config.GlobalSettings;
 import com.chex.files.FileType;
+import com.chex.lang.LanguageUtils;
+import com.chex.modules.achievements.model.Achievement;
+import com.chex.modules.achievements.model.AchievementName;
+import com.chex.modules.achievements.model.AchievementShortView;
+import com.chex.modules.achievements.repository.AchievementNameRepository;
+import com.chex.modules.achievements.repository.AchievementRepository;
 import com.chex.modules.category.CategoryRepository;
 import com.chex.modules.places.model.Place;
 import com.chex.modules.places.model.PlaceShortView;
@@ -33,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -47,10 +54,12 @@ public class PostService {
     private final StarRepository starRepository;
     private final FileService fileService;
     private final PostPhotoRepository photoRepository;
+    private final AchievementNameRepository achievementNameRepository;
+    private final AchievementRepository achievementRepository;
     private static final int PAGE_SIZE = 10;
 
     @Autowired
-    public PostService(PlaceRepository placeRepository, PlaceNameService placeNameService, VisitedPlacesRepository visitedPlacesRepository, CategoryRepository categoryRepository, UserRepository userRepository, PostRepository postRepository, CommentRepository commentRepository, StarRepository starRepository, FileService fileService, PostPhotoRepository photoRepository) {
+    public PostService(PlaceRepository placeRepository, PlaceNameService placeNameService, VisitedPlacesRepository visitedPlacesRepository, CategoryRepository categoryRepository, UserRepository userRepository, PostRepository postRepository, CommentRepository commentRepository, StarRepository starRepository, FileService fileService, PostPhotoRepository photoRepository, AchievementNameRepository achievementNameRepository, AchievementRepository achievementRepository) {
         this.placeRepository = placeRepository;
         this.placeNameService = placeNameService;
         this.visitedPlacesRepository = visitedPlacesRepository;
@@ -61,15 +70,18 @@ public class PostService {
         this.starRepository = starRepository;
         this.fileService = fileService;
         this.photoRepository = photoRepository;
+        this.achievementNameRepository = achievementNameRepository;
+        this.achievementRepository = achievementRepository;
     }
 
-    public void addNewPost(User user, AchievedPlaceDTO dto){
+    public void addNewPost(User user, AchievedPlaceDTO dto, List<Achievement> achievementList){
         Post post = new Post();
         post.setUserid(user.getId());
         post.setDescription(dto.getDescription());
         post.setCreated(dto.getTimestamp());
         post.setPlaces(IdUtils.placeIdsToString(dto.getAchievedPlaces().keySet()));
         post.setSubplaces(IdUtils.subplaceIdsToString(dto.getAchievedPlaces().keySet()));
+        post.setAchivments(IdUtils.idsToString(achievementList.stream().map(i -> i.getId()).collect(Collectors.toList())));
         post.setPostvisibility(dto.getPostvisibility());
         this.postRepository.save(post);
 
@@ -128,6 +140,7 @@ public class PostService {
 
         postView.setPlaces(getShortPlaces(post.getPlaces()));
         postView.setSubPlaces(getShortPlaces(post.getSubplaces()));
+        postView.setAchievements(getShortAchievements(post.getAchivments()));
         postView.setCommentViews(getComments(postid, userid));
 
         List<PostPhoto> photos = this.photoRepository.findByPostid(postid);
@@ -138,12 +151,29 @@ public class PostService {
 
     private List<PlaceShortView> getShortPlaces(String ids){
         List<PlaceShortView> plist = new ArrayList<>();
-        for(String id : IdUtils.idsToList(ids)){
+        for(String id : IdUtils.stringIdsToList(ids)){
             String name = this.placeNameService.getName(id);
             Place place = this.placeRepository.getById(id);
             PlaceShortView placeShortView = new PlaceShortView(id, name);
             placeShortView.setImgUrl(place.getImgurl());
             plist.add(placeShortView);
+        }
+
+        Collections.sort(plist);
+        return plist;
+    }
+
+    private List<AchievementShortView> getShortAchievements(String ids){
+        List<AchievementShortView> plist = new ArrayList<>();
+
+        for(Long id : IdUtils.idsToList(ids)){
+            String name = new LanguageUtils(this.achievementNameRepository.getById(id)).getName();
+            Achievement achievement = this.achievementRepository.findById(id).get();
+            AchievementShortView achievementShortView = new AchievementShortView();
+            achievementShortView.setImg(achievement.getImgurl());
+            achievementShortView.setId(id);
+            achievementShortView.setName(name);
+            plist.add(achievementShortView);
         }
 
         Collections.sort(plist);

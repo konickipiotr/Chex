@@ -5,6 +5,7 @@ import com.chex.webapp.admin.places.newplace.PlaceForm;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 @Entity
 public class Place {
@@ -31,6 +32,8 @@ public class Place {
     private double votesnum;
     private String imgurl;
     private String imgpath;
+    @Lob
+    private String svgpath;
 
     public Place() {
         this.latitude = 10000;
@@ -44,6 +47,7 @@ public class Place {
         this.id = placeForm.createId();
         this.points = placeForm.getPoints();
         this.difficultylevel = 1;
+        this.svgpath = placeForm.getSvgPath();
         if(placeForm.getPrefix().length() > 11) {
             this.longitude = placeForm.getLongitude();
             this.latitude = placeForm.getLatitude();
@@ -164,5 +168,13 @@ public class Place {
 
     public void setImgpath(String imgpath) {
         this.imgpath = imgpath;
+    }
+
+    public String getSvgpath() {
+        return svgpath;
+    }
+
+    public void setSvgpath(String svgpath) {
+        this.svgpath = svgpath;
     }
 }

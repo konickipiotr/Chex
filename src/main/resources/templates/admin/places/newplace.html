@@ -105,6 +105,16 @@
               <div class="row">
                 <div class="col-30">&nbsp;</div>
                 <div class="col-30">
+                  <label for="svgPath">Scieżka svg</label>
+                  <textarea name="svgPath" id="svgPath" th:text="${placeForm.svgPath}"></textarea>
+                </div>
+                <div class="col-30">&nbsp;</div>
+              </div>
+              
+              <!--  ************************************    -->
+              <div class="row">
+                <div class="col-30">&nbsp;</div>
+                <div class="col-30">
                   <input type="file" id="picture" name="picture" accept="image/png, image/jpeg, image/jpg, image/bmp" style="display: none">
                   <button type="button" onclick="chooseImage()" th:text="#{btn_select_photo}"></button>
                 </div>

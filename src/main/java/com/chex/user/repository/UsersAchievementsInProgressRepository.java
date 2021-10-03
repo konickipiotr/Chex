@@ -12,5 +12,6 @@ public interface UsersAchievementsInProgressRepository extends JpaRepository<Use
     boolean existsByUseridAndAchievementid(Long userid, Long achievementid);
     boolean existsByUseridAndAchievementidAndPlaceid(Long userid, Long achievementid, String placeid);
     List<UsersAchievementsInProgress> findByUseridAndAchievementid(Long userid, Long achievementid);
+    List<UsersAchievementsInProgress> findByUserid(Long userid);
 
 }

@@ -129,12 +129,12 @@ class AchievementAPIServiceTest {
         this.usersAchievementsInProgressRepository.save(new UsersAchievementsInProgress(user.getId(), ach1.getId(), p3));
         this.usersAchievementsInProgressRepository.save(new UsersAchievementsInProgress(user.getId(), ach1.getId(), p2));
 
-        int exp = achievementAPIService.addPlaceToUserAchievements(new HashSet<String>(Arrays.asList("p1")), user.getId());
+        List<Achievement> achievementList = achievementAPIService.addPlaceToUserAchievements(new HashSet<String>(Arrays.asList("p1")), user.getId());
 
         List<UsersAchievementsInProgress> inProgress = this.usersAchievementsInProgressRepository.findByUseridAndAchievementid(user.getId(), ach1.getId());
         assertTrue(inProgress.isEmpty());
         assertTrue(this.userAchievementsRepository.existsByUseridAndAchievementid(user.getId(), ach1.getId()));
-        assertEquals(20, exp);
+        assertEquals(20, achievementList.stream().mapToInt(i -> i.getPoints()).sum());
     }
 
 
@@ -167,7 +167,8 @@ class AchievementAPIServiceTest {
         this.usersAchievementsInProgressRepository.save(new UsersAchievementsInProgress(user.getId(), ach2.getId(), p4));
         this.usersAchievementsInProgressRepository.save(new UsersAchievementsInProgress(user.getId(), ach2.getId(), p5));
 
-        int exp = achievementAPIService.addPlaceToUserAchievements(new HashSet<String>(Arrays.asList("p3")), user.getId());
+
+        List<Achievement> achievementList = achievementAPIService.addPlaceToUserAchievements(new HashSet<String>(Arrays.asList("p3")), user.getId());
 
         List<UsersAchievementsInProgress> inProgress = this.usersAchievementsInProgressRepository.findByUseridAndAchievementid(user.getId(), ach1.getId());
         List<UsersAchievementsInProgress> inProgress2 = this.usersAchievementsInProgressRepository.findByUseridAndAchievementid(user.getId(), ach2.getId());
@@ -177,6 +178,6 @@ class AchievementAPIServiceTest {
 
         assertTrue(this.userAchievementsRepository.existsByUseridAndAchievementid(user.getId(), ach1.getId()));
         assertTrue(this.userAchievementsRepository.existsByUseridAndAchievementid(user.getId(), ach2.getId()));
-        assertEquals(50, exp);
+        assertEquals(50, achievementList.stream().mapToInt(i -> i.getPoints()).sum());
     }
 }

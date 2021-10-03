@@ -6,6 +6,7 @@ import com.chex.api.place.service.AchievementAPIService;
 import com.chex.api.place.service.CheckPlaceService;
 import com.chex.api.place.service.ChexPlaceViewService;
 import com.chex.api.post.PostService;
+import com.chex.modules.achievements.model.Achievement;
 import com.chex.modules.places.model.Coords;
 import com.chex.modules.places.model.Place;
 import com.chex.user.model.User;
@@ -62,9 +63,10 @@ public class CheckPlaceAPIController {
     public ResponseEntity<Void> finalizeAddPlaceToUserAccount(@RequestBody AchievedPlaceDTO achievedPlaceDTO, Principal principal){
         User user = this.authService.getUser(principal);
         int exp = this.checkPlaceService.addToUserVisitedPlaces(achievedPlaceDTO, user.getId());
-        exp += this.achievementAPIService.addPlaceToUserAchievements(achievedPlaceDTO.getAchievedPlaces().keySet(), user.getId());
+        List<Achievement> achievementList = this.achievementAPIService.addPlaceToUserAchievements(achievedPlaceDTO.getAchievedPlaces().keySet(), user.getId());
+        exp += achievementList.stream().mapToInt(i -> i.getPoints()).sum();
         user.addExp(exp);
-        this.postService.addNewPost(user, achievedPlaceDTO);
+        this.postService.addNewPost(user, achievedPlaceDTO, achievementList);
         this.authService.saveUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
