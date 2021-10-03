@@ -12,8 +12,7 @@ public class User {
     private String lastname;
     private String gender;
     private String country;
-    private String imgurl;
-    private String imgpath;
+    private String img;
 
     private int exp;
     private int level;
@@ -91,22 +90,6 @@ public class User {
         this.country = country;
     }
 
-    public String getImgurl() {
-        return imgurl;
-    }
-
-    public void setImgurl(String imgurl) {
-        this.imgurl = imgurl;
-    }
-
-    public String getImgpath() {
-        return imgpath;
-    }
-
-    public void setImgpath(String imgpath) {
-        this.imgpath = imgpath;
-    }
-
     public int getExp() {
         return exp;
     }
@@ -137,5 +120,13 @@ public class User {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

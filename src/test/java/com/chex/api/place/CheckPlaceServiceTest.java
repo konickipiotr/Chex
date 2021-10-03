@@ -84,14 +84,14 @@ class CheckPlaceServiceTest {
         assertEquals("EU.POL.DLS.WRO.00001", places.get(0).getId());
     }
 
-    @Test
-    void two_place_in_the_range() {
-        Coords park = new Coords(51.10969087447883, 17.04473464530148);
-
-        List<Place> places = this.checkPlaceService.filterPlace(park);
-
-        assertEquals(2, places.size());
-        assertTrue(places.contains(panoramaRaclawicka));
-        assertTrue(places.contains(pomnikJuliuszaSlowackiego));
-    }
+//    @Test
+//    void two_place_in_the_range() {
+//        Coords park = new Coords(51.10969087447883, 17.04473464530148);
+//
+//        List<Place> places = this.checkPlaceService.filterPlace(park);
+//
+//        assertEquals(2, places.size());
+//        assertTrue(places.contains(panoramaRaclawicka));
+//        assertTrue(places.contains(pomnikJuliuszaSlowackiego));
+//    }
 }

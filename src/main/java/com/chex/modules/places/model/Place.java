@@ -30,8 +30,7 @@ public class Place {
     private int difficultylevel;
     private double rating;
     private double votesnum;
-    private String imgurl;
-    private String imgpath;
+    private String img;
     @Lob
     private String svgpath;
 
@@ -57,11 +56,11 @@ public class Place {
         }
     }
 
-    public Place(String id, Long category, int points, String imgurl) {
+    public Place(String id, Long category, int points, String img) {
         this.id = id;
         this.category = category;
         this.points = points;
-        this.imgurl = imgurl;
+        this.img = img;
     }
 
     public Place(String id) {
@@ -154,27 +153,19 @@ public class Place {
         this.votesnum = votesnum;
     }
 
-    public String getImgurl() {
-        return imgurl;
-    }
-
-    public void setImgurl(String imgurl) {
-        this.imgurl = imgurl;
-    }
-
-    public String getImgpath() {
-        return imgpath;
-    }
-
-    public void setImgpath(String imgpath) {
-        this.imgpath = imgpath;
-    }
-
     public String getSvgpath() {
         return svgpath;
     }
 
     public void setSvgpath(String svgpath) {
         this.svgpath = svgpath;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

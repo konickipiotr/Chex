@@ -25,7 +25,7 @@ public class CheckPlaceView implements Serializable, Comparable<CheckPlaceView> 
     public CheckPlaceView(Place place) {
         this.id = place.getId();
         this.points = place.getPoints();
-        this.image = place.getImgurl();
+        this.image = place.getImg();
         this.timestamp = LocalDateTime.now();
     }
 

@@ -54,7 +54,7 @@ public class AchievementAdminService {
         for(Achievement a : all){
             AchievementShortView asv = new AchievementShortView();
             asv.setId(a.getId());
-            asv.setImg(a.getImgurl());
+            asv.setImg(a.getImg());
             AchievementName achievementName = this.achievementNameRepository.findById(a.getId()).get();
             switch (language){
                 case "pl": asv.setName(achievementName.getPl());break;
@@ -79,9 +79,11 @@ public class AchievementAdminService {
         ach.setPoints(form.getPoints());
 
         if(form.getPicture() != null && !form.getPicture().isEmpty()){
-            FileNameStruct fileNameStruct = fileService.uploadAssets(form.getPicture(), form.getNameen().replaceAll("\\s+",""), FileType.ACHIEVEMENTASSET);
-            ach.setImgpath(fileNameStruct.realPath);
-            ach.setImgurl(fileNameStruct.webAppPath);
+            String assetName = fileService.createAssetName(form.getPicture(), form.getNameen().replaceAll("\\s+", ""), FileType.ACHIEVEMENTASSET);
+            if(fileService.uploadFiles(form.getPicture(), assetName)){
+                ach.setImg(assetName);
+            }
+
         }
         this.achievementRepository.save(ach);
 
@@ -115,7 +117,7 @@ public class AchievementAdminService {
                 name = placeName.getPl();
             else
                 name = placeName.getEng();
-            list.add(new Duo<String>(p.getId(), name));
+            list.add(new Duo<>(p.getId(), name));
         }
         return list;
     }

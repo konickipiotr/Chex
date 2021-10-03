@@ -11,8 +11,7 @@ public class PostPhoto {
     private Long id;
     private Long userid;
     private Long postid;
-    private String realPath;
-    private String webAppPath;
+    private String img;
 
     public PostPhoto(Long postid, Long userid) {
         this.postid = postid;
@@ -46,19 +45,11 @@ public class PostPhoto {
         this.postid = postid;
     }
 
-    public String getRealPath() {
-        return realPath;
+    public String getImg() {
+        return img;
     }
 
-    public void setRealPath(String realPath) {
-        this.realPath = realPath;
-    }
-
-    public String getWebAppPath() {
-        return webAppPath;
-    }
-
-    public void setWebAppPath(String webAppPath) {
-        this.webAppPath = webAppPath;
+    public void setImg(String img) {
+        this.img = img;
     }
 }

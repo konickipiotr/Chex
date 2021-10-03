@@ -81,7 +81,7 @@ public class PostService {
         post.setCreated(dto.getTimestamp());
         post.setPlaces(IdUtils.placeIdsToString(dto.getAchievedPlaces().keySet()));
         post.setSubplaces(IdUtils.subplaceIdsToString(dto.getAchievedPlaces().keySet()));
-        post.setAchivments(IdUtils.idsToString(achievementList.stream().map(i -> i.getId()).collect(Collectors.toList())));
+        post.setAchivments(IdUtils.idsToString(achievementList.stream().map(Achievement::getId).collect(Collectors.toList())));
         post.setPostvisibility(dto.getPostvisibility());
         this.postRepository.save(post);
 
@@ -135,7 +135,7 @@ public class PostService {
             postView.setAuthorName(user.getName());
             postView.setAuthorId(user.getId());
             postView.setAuthor(userid.equals(post.getUserid()));
-            postView.setAuthorPhoto(user.getImgurl());
+            postView.setAuthorPhoto(user.getImg());
         }
 
         postView.setPlaces(getShortPlaces(post.getPlaces()));
@@ -155,7 +155,7 @@ public class PostService {
             String name = this.placeNameService.getName(id);
             Place place = this.placeRepository.getById(id);
             PlaceShortView placeShortView = new PlaceShortView(id, name);
-            placeShortView.setImgUrl(place.getImgurl());
+            placeShortView.setImgUrl(place.getImg());
             plist.add(placeShortView);
         }
 
@@ -170,7 +170,7 @@ public class PostService {
             String name = new LanguageUtils(this.achievementNameRepository.getById(id)).getName();
             Achievement achievement = this.achievementRepository.findById(id).get();
             AchievementShortView achievementShortView = new AchievementShortView();
-            achievementShortView.setImg(achievement.getImgurl());
+            achievementShortView.setImg(achievement.getImg());
             achievementShortView.setId(id);
             achievementShortView.setName(name);
             plist.add(achievementShortView);
@@ -208,7 +208,7 @@ public class PostService {
             cv.setAuthorName(user.getName());
             cv.setAuthorid(user.getId());
             cv.setAuthor(userid.equals(comment.getAuthorid()));
-            cv.setAuthorPhoto(user.getImgurl());
+            cv.setAuthorPhoto(user.getImg());
         }
 
         return cv;
@@ -247,15 +247,13 @@ public class PostService {
     public void savePostFiles(Long postid, User user, List<String> imagesStringBytes) {
         if(this.postRepository.existsById(postid)) {
             List<MultipartFile> multipartFiles = fileService.convertToMultipartFiles(imagesStringBytes);
-            List<FileNameStruct> fileNameStructs = fileService.uploadPhotos(multipartFiles, user, FileType.POSTPHOTO);
-            if (fileNameStructs == null || fileNameStructs.isEmpty())
-                throw new FailedSaveFileException();
-
-            for(FileNameStruct fns : fileNameStructs){
-                PostPhoto photo = new PostPhoto(postid, user.getId());
-                photo.setRealPath(fns.realPath);
-                photo.setWebAppPath(fns.webAppPath);
-                this.photoRepository.save(photo);
+            for(MultipartFile file : multipartFiles){
+                String fileName = fileService.createFileName(file, user, FileType.POSTPHOTO);
+                if(fileService.uploadFiles(file, fileName)){
+                    PostPhoto photo = new PostPhoto(postid, user.getId());
+                    photo.setImg(fileName);
+                    this.photoRepository.save(photo);
+                }
             }
         }
     }

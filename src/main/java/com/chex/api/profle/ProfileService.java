@@ -1,7 +1,6 @@
 package com.chex.api.profle;
 
 import com.chex.config.AppStats;
-import com.chex.lang.LanguageGetter;
 import com.chex.lang.LanguageUtils;
 import com.chex.modules.achievements.model.*;
 import com.chex.modules.achievements.repository.AchievementDescriptionRepository;
@@ -9,8 +8,6 @@ import com.chex.modules.achievements.repository.AchievementNameRepository;
 import com.chex.modules.achievements.repository.AchievementPlacesRepository;
 import com.chex.modules.achievements.repository.AchievementRepository;
 import com.chex.modules.places.model.Place;
-import com.chex.modules.places.model.PlaceDescription;
-import com.chex.modules.places.model.PlaceName;
 import com.chex.modules.places.model.PlaceView;
 import com.chex.modules.places.repository.PlaceDescriptionRepository;
 import com.chex.modules.places.repository.PlaceNameRepository;
@@ -26,7 +23,6 @@ import com.chex.user.repository.VisitedPlacesRepository;
 import com.chex.utils.IdUtils;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -68,7 +64,6 @@ public class ProfileService {
         Optional<User> oUser = this.userRepository.findById(userid);
         if(oUser.isEmpty())
             throw new UsernameNotFoundException("user id " + userid);
-        User user = oUser.get();
 
         ProfileResponse pr = new ProfileResponse();
         pr.setAllPlaces(AppStats.placesNum);
@@ -130,7 +125,7 @@ public class ProfileService {
         view.setId(vp.getPlaceid());
         view.setSubplace(false);
         view.setAchievedAt(vp.getVdate());
-        view.setImg(place.getImgurl());
+        view.setImg(place.getImg());
         view.setPoints(place.getPoints());
         view.setSvg(place.getSvgpath());
         view.setUserRating(vp.getRating());
@@ -154,7 +149,7 @@ public class ProfileService {
         for(Place p : all){
             PlaceView view = new PlaceView();
             view.setId(p.getId());
-            view.setImg(p.getImgurl());
+            view.setImg(p.getImg());
             view.setSvg(p.getSvgpath());
             view.setPoints(p.getPoints());
             view.setDifficultLvl(p.getDifficultylevel());
@@ -225,7 +220,7 @@ public class ProfileService {
             }
         }else if(completeStatus.equals(CompleteStatus.INPROGRESS)){
             List<UsersAchievementsInProgress> inProgress = this.usersAchievementsInProgressRepository.findByUserid(userid);
-            Set<Long> ids = inProgress.stream().map(i -> i.getAchievementid()).collect(Collectors.toSet());
+            Set<Long> ids = inProgress.stream().map(UsersAchievementsInProgress::getAchievementid).collect(Collectors.toSet());
 
             for(Long id : ids){
                 Achievement achievement = this.achievementRepository.findById(id).get();
@@ -246,7 +241,7 @@ public class ProfileService {
 
         view.setId(achievement.getId());
         view.setPoints(achievement.getPoints());
-        view.setImg(achievement.getImgurl());
+        view.setImg(achievement.getImg());
         view.setUsersReached(this.userAchievementsRepository.countByAchievementid(achievement.getId()));
 
 

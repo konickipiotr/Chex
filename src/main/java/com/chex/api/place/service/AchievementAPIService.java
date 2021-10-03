@@ -71,7 +71,7 @@ public class AchievementAPIService {
             default: view.setName(achievementName.getEng());
         }
         Achievement achievement = this.achievementRepository.findById(id).get();
-        view.setImg(achievement.getImgurl());
+        view.setImg(achievement.getImg());
         view.setPoints(achievement.getPoints());
         return view;
     }

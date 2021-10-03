@@ -48,12 +48,13 @@ public class AddPlaceService {
         this.placeNameRepository.save(new PlaceName(place.getId(), placeForm));
         this.placeDescriptionRepository.save(new PlaceDescription(place.getId(), placeForm));
         if(placeForm.getPicture() != null && !placeForm.getPicture().isEmpty()){
-            FileNameStruct fileNameStruct = fileService.uploadAssets(placeForm.getPicture(), place.getId(), FileType.PLACEPICTURE);
-            place.setImgpath(fileNameStruct.realPath);
-            place.setImgurl(fileNameStruct.webAppPath);
-            this.placeRepository.save(place);
+            String assetName = fileService.createAssetName(placeForm.getPicture(), place.getId(), FileType.PLACEPICTURE);
+            if(fileService.uploadFiles(placeForm.getPicture(), assetName)){
+                place.setImg(assetName);
+                this.placeRepository.save(place);
+                AppStats.placesNum++;
+            }
         }
-        AppStats.placesNum++;
     }
 
     public List<Duo<String>> getListOfPlaces(String id, PlaceType placeType, String lang){

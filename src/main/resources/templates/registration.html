@@ -19,7 +19,7 @@
 </head>
 
 <body>
-
+    
     <header class="top_login">
         <div class="login-top-part1">
             <div class="logo-div">
@@ -27,26 +27,37 @@
             </div>
             <div class="xxx">
                 <div class="logo-div">
-                    <span class="create_new_account_span">Zaloguj się</span>
-                </div>            
-                    <span style="display: block; ">CHANGE THE LANGUAGE</span>              
+                    <span class="create_new_account_span">Stwórz nowe konto</span>
+                </div>      
+                    <span style="display: block; ">CHANGE THE LANGUAGE</span>            
             </div>
             <div>
                 <span></span>
             </div>
-        </div>        
+        </div>       
     </header>
 
     <p th:text=${msg_err} class="error_msg"></p>
     <p th:text=${msg_info}></p>
 
     <form class="registration_form" th:action="@{/login}" method="POST"> 
+        <label for="name">WPROWADŹ SWOJE IMIĘ</label>
+        <input type="text" name="name" id="name" value="">
+        <label for="surname">WPROWADŹ SWOJE NAZWISKO</label>
+        <input type="text" name="surname" id="surname" value="">
         <label for="username">WPROWADŹ E-MAIL</label>
         <input type="text" name="username" id="username" value="">
         <label for="password" text="WPROWADŹ HASŁO"></label>
         <input type="password" name="password" id="password" value="11">
-        
-        <button class="registration_button" type="submit">zaloguj</button>
+        <label for="country">WPROWADŹ KRAJ ZAMIESZKANIA</label>
+        <input type="text" name="country" id="country" value="">
+        <label for="sex">PODAJ PŁEĆ</label>
+        <select id="sex">
+          <option value="woman">K</option>
+          <option value="man">M</option>
+          <option value="other">I</option>
+        </select>
+        <button class="registration_button" type="submit">zarejestruj</button>
     </form>
     <div class="registration_links">
         <a href="">Przypomnij hasło</a>

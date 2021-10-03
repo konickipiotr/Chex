@@ -10,8 +10,7 @@ public class Achievement {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "achievement_sequence")
     private Long id;
     private int points;
-    private String imgurl;
-    private String imgpath;
+    private String img;
 
     public Achievement() {
     }
@@ -32,19 +31,11 @@ public class Achievement {
         this.points = points;
     }
 
-    public String getImgurl() {
-        return imgurl;
+    public String getImg() {
+        return img;
     }
 
-    public void setImgurl(String imgurl) {
-        this.imgurl = imgurl;
-    }
-
-    public String getImgpath() {
-        return imgpath;
-    }
-
-    public void setImgpath(String imgpath) {
-        this.imgpath = imgpath;
+    public void setImg(String img) {
+        this.img = img;
     }
 }

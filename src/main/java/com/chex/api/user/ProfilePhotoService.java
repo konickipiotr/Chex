@@ -23,20 +23,17 @@ public class ProfilePhotoService {
 
     public void deleteProfilePhoto(Long userid){
         User user = this.userRepository.getById(userid);
-        fileService.deleteFile(user.getImgpath());
-        user.setImgurl(null);
-        user.setImgurl(null);
+        fileService.deleteFile(user.getImg());
+        user.setImg(null);
         this.userRepository.save(user);
     }
 
     public void setNewProfilePhoto(String stringPhoto, Long userid){
         User user = this.userRepository.getById(userid);
-
         MultipartFile multipartFile = fileService.convertToMultipartFile(stringPhoto);
-        FileNameStruct fileNameStruct = fileService.uploadPhoto(multipartFile, user, FileType.PROFILEPHOTO);
-
-        user.setImgurl(fileNameStruct.webAppPath);
-        user.setImgpath(fileNameStruct.realPath);
+        String fileName = fileService.createFileName(multipartFile, user, FileType.PROFILEPHOTO);
+        fileService.uploadFiles(multipartFile, fileName);
+        user.setImg(fileName);
         this.userRepository.save(user);
     }
 }
