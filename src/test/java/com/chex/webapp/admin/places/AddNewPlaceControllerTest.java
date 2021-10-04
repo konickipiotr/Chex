@@ -11,7 +11,6 @@ import com.chex.modules.places.repository.PlaceNameRepository;
 import com.chex.modules.places.repository.PlaceRepository;
 import com.chex.utils.Duo;
 import com.chex.webapp.admin.places.newplace.PlaceForm;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,7 @@ import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
@@ -34,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@SuppressWarnings("ALL")
 @SpringBootTest
 @AutoConfigureMockMvc
 @ContextConfiguration
@@ -57,7 +58,7 @@ class AddNewPlaceControllerTest {
     private final Place p2 = new Place("AN0000000000000");
 
     @Autowired
-    public AddNewPlaceControllerTest(MockMvc mockMvc, ObjectMapper objectMapper, PlaceRepository placeRepository, PlaceNameRepository placeNameRepository, PlaceDescriptionRepository placeDescriptionRepository, CategoryRepository categoryRepository) {
+    public AddNewPlaceControllerTest(MockMvc mockMvc, PlaceRepository placeRepository, PlaceNameRepository placeNameRepository, PlaceDescriptionRepository placeDescriptionRepository, CategoryRepository categoryRepository) {
         this.mockMvc = mockMvc;
         this.placeRepository = placeRepository;
         this.placeNameRepository = placeNameRepository;
@@ -81,22 +82,19 @@ class AddNewPlaceControllerTest {
         PlaceName pn1 = new PlaceName(p1.getId(), "Europa", "Europe");
         PlaceName pn2 = new PlaceName(p2.getId(), "Ameryka Pónocna", "North America");
         this.placeNameRepository.saveAll(Arrays.asList(pn1, pn2));
-
-//        PlaceDescription pd1 = new PlaceDescription(p1.getId(), "pies", "koń");
-//        PlaceDescription pd2 = new PlaceDescription(p2.getId(), "zielony", "niebieski");
     }
 
     @Test
     void integate_test_full_path() throws Exception {
         String BASE_PATH = "/admin/places/new";
-        Map<String, Object> model = mockMvc.perform(get(BASE_PATH + "/continent").param("continent", "EU"))
+        Map<String, Object> model = Objects.requireNonNull(mockMvc.perform(get(BASE_PATH + "/continent").param("continent", "EU"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("admin/places/newplace"))
                 .andExpect(model().attribute("placetype", PlaceType.COUNTRY))
                 .andExpect(model().attribute("placeForm", hasProperty("prefix", is("EU"))))
                 .andExpect(model().attribute("placeForm", hasProperty("suffix", is(".000.000.00000"))))
                 .andExpect(model().attribute("placeForm", hasProperty("subplace", is(true))))
-                .andReturn().getModelAndView().getModel();
+                .andReturn().getModelAndView()).getModel();
 
         List<Duo<String>> pNames = (List<Duo<String>>) model.get("list");
         assertEquals(0, pNames.size());
@@ -117,11 +115,11 @@ class AddNewPlaceControllerTest {
 
         String polandID = pf.createId();
 
-        model = mockMvc.perform(post(BASE_PATH + "/" + PlaceType.COUNTRY.name())
-                .flashAttr("placeForm", pf))
+        model = Objects.requireNonNull(mockMvc.perform(post(BASE_PATH + "/" + PlaceType.COUNTRY.name())
+                        .flashAttr("placeForm", pf))
                 .andExpect(status().isOk())
                 .andExpect(view().name("admin/places/newplace"))
-                .andReturn().getModelAndView().getModel();
+                .andReturn().getModelAndView()).getModel();
 
         Place poland = this.placeRepository.getById(polandID);
         PlaceName polandName = this.placeNameRepository.getById(polandID);
@@ -148,14 +146,14 @@ class AddNewPlaceControllerTest {
         assertEquals("Polska", pNames.get(0).getValue());
 
 
-        model = mockMvc.perform(get(BASE_PATH + "/" + PlaceType.COUNTRY.name()).param("selectedPlace", polandID))
+        model = Objects.requireNonNull(mockMvc.perform(get(BASE_PATH + "/" + PlaceType.COUNTRY.name()).param("selectedPlace", polandID))
                 .andExpect(status().isOk())
                 .andExpect(view().name("admin/places/newplace"))
                 .andExpect(model().attribute("placetype", PlaceType.PROVINCE))
                 .andExpect(model().attribute("placeForm", hasProperty("prefix", is("EU.POL"))))
                 .andExpect(model().attribute("placeForm", hasProperty("suffix", is(".000.00000"))))
                 .andExpect(model().attribute("placeForm", hasProperty("subplace", is(true))))
-                .andReturn().getModelAndView().getModel();
+                .andReturn().getModelAndView()).getModel();
 
         pNames = (List<Duo<String>>) model.get("list");
         assertEquals(0, pNames.size());
@@ -173,11 +171,11 @@ class AddNewPlaceControllerTest {
 
         String dlsId = pf.createId();
 
-        model = mockMvc.perform(post(BASE_PATH + "/" + PlaceType.PROVINCE.name())
-                .flashAttr("placeForm", pf))
+        model = Objects.requireNonNull(mockMvc.perform(post(BASE_PATH + "/" + PlaceType.PROVINCE.name())
+                        .flashAttr("placeForm", pf))
                 .andExpect(status().isOk())
                 .andExpect(view().name("admin/places/newplace"))
-                .andReturn().getModelAndView().getModel();
+                .andReturn().getModelAndView()).getModel();
 
         Place dls = this.placeRepository.getById(dlsId);
         PlaceName dlsName = this.placeNameRepository.getById(dlsId);
@@ -205,14 +203,14 @@ class AddNewPlaceControllerTest {
 
         //*************************************
 
-        model = mockMvc.perform(get(BASE_PATH + "/" + PlaceType.PROVINCE.name()).param("selectedPlace", dlsId))
+        model = Objects.requireNonNull(mockMvc.perform(get(BASE_PATH + "/" + PlaceType.PROVINCE.name()).param("selectedPlace", dlsId))
                 .andExpect(status().isOk())
                 .andExpect(view().name("admin/places/newplace"))
                 .andExpect(model().attribute("placetype", PlaceType.REGION))
                 .andExpect(model().attribute("placeForm", hasProperty("prefix", is("EU.POL.DLS"))))
                 .andExpect(model().attribute("placeForm", hasProperty("suffix", is(".00000"))))
                 .andExpect(model().attribute("placeForm", hasProperty("subplace", is(true))))
-                .andReturn().getModelAndView().getModel();
+                .andReturn().getModelAndView()).getModel();
 
         pNames = (List<Duo<String>>) model.get("list");
         assertEquals(0, pNames.size());
@@ -229,11 +227,11 @@ class AddNewPlaceControllerTest {
 
         String wroId = pf.createId();
 
-        model = mockMvc.perform(post(BASE_PATH + "/" + PlaceType.REGION.name())
-                .flashAttr("placeForm", pf))
+        model = Objects.requireNonNull(mockMvc.perform(post(BASE_PATH + "/" + PlaceType.REGION.name())
+                        .flashAttr("placeForm", pf))
                 .andExpect(status().isOk())
                 .andExpect(view().name("admin/places/newplace"))
-                .andReturn().getModelAndView().getModel();
+                .andReturn().getModelAndView()).getModel();
 
         Place wro = this.placeRepository.getById(wroId);
         PlaceName wroName = this.placeNameRepository.getById(wroId);
@@ -260,14 +258,14 @@ class AddNewPlaceControllerTest {
         assertEquals("Wrocław", pNames.get(0).getValue());
 
         //*************************************
-        model = mockMvc.perform(get(BASE_PATH + "/" + PlaceType.REGION.name()).param("selectedPlace", wroId))
+        model = Objects.requireNonNull(mockMvc.perform(get(BASE_PATH + "/" + PlaceType.REGION.name()).param("selectedPlace", wroId))
                 .andExpect(status().isOk())
                 .andExpect(view().name("admin/places/newplace"))
                 .andExpect(model().attribute("placetype", PlaceType.OTHER))
                 .andExpect(model().attribute("placeForm", hasProperty("prefix", is("EU.POL.DLS.WRO"))))
                 .andExpect(model().attribute("placeForm", hasProperty("suffix", is(""))))
                 .andExpect(model().attribute("placeForm", hasProperty("subplace", is(false))))
-                .andReturn().getModelAndView().getModel();
+                .andReturn().getModelAndView()).getModel();
 
         pNames = (List<Duo<String>>) model.get("list");
         assertEquals(0, pNames.size());
@@ -287,11 +285,11 @@ class AddNewPlaceControllerTest {
 
         String placeId = pf.createId();
 
-        model = mockMvc.perform(post(BASE_PATH + "/" + PlaceType.OTHER.name())
-                .flashAttr("placeForm", pf))
+        model = Objects.requireNonNull(mockMvc.perform(post(BASE_PATH + "/" + PlaceType.OTHER.name())
+                        .flashAttr("placeForm", pf))
                 .andExpect(status().isOk())
                 .andExpect(view().name("admin/places/newplace"))
-                .andReturn().getModelAndView().getModel();
+                .andReturn().getModelAndView()).getModel();
 
         Place pl = this.placeRepository.getById(placeId);
         PlaceName plName = this.placeNameRepository.getById(placeId);

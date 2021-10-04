@@ -1,10 +1,8 @@
 package com.chex.webapp.admin.places.newplace;
 
-import com.chex.modules.category.CategoryRepository;
 import com.chex.modules.places.*;
 import com.chex.modules.places.model.Place;
 import com.chex.modules.places.model.PlaceName;
-import com.chex.modules.places.repository.PlaceDescriptionRepository;
 import com.chex.modules.places.repository.PlaceNameRepository;
 import com.chex.modules.places.repository.PlaceRepository;
 import com.chex.utils.Duo;
@@ -27,13 +25,9 @@ class AddPlaceServiceTest {
 
     private MockMvc mockMvc;
     @Mock
-    private CategoryRepository categoryRepository;
-    @Mock
     private PlaceRepository placeRepository;
     @Mock
     private PlaceNameRepository placeNameRepository;
-    @Mock
-    private PlaceDescriptionRepository placeDescriptionRepository;
 
     @InjectMocks
     private AddPlaceService addPlaceService;

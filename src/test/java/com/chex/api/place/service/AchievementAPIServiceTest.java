@@ -86,7 +86,7 @@ class AchievementAPIServiceTest {
         User user = new User();
         user.setId(1L);
 
-        List<AchievementShortView> achievementShortViewList = achievementAPIService.checkAchievement(new HashSet<String>(Arrays.asList("p0", "p10")), user.getId());
+        List<AchievementShortView> achievementShortViewList = achievementAPIService.checkAchievement(new HashSet<>(Arrays.asList("p0", "p10")), user.getId());
         assertTrue(achievementShortViewList.isEmpty());
     }
 
@@ -96,11 +96,7 @@ class AchievementAPIServiceTest {
         User user = new User();
         user.setId(1L);
 
-        UserAchievements ua = new UserAchievements();
-        ua.setUserid(user.getId());
-        ua.setAchievementid(ach1.getId());
-
-        List<AchievementShortView> achievementShortViewList = achievementAPIService.checkAchievement(new HashSet<String>(Arrays.asList("p1")), user.getId());
+        List<AchievementShortView> achievementShortViewList = achievementAPIService.checkAchievement(new HashSet<>(List.of("p1")), user.getId());
         assertTrue(achievementShortViewList.isEmpty());
     }
 
@@ -112,7 +108,7 @@ class AchievementAPIServiceTest {
         this.usersAchievementsInProgressRepository.save(new UsersAchievementsInProgress(user.getId(), ach1.getId(), p3));
         this.usersAchievementsInProgressRepository.save(new UsersAchievementsInProgress(user.getId(), ach1.getId(), p2));
 
-        List<AchievementShortView> achievementShortViewList = achievementAPIService.checkAchievement(new HashSet<String>(Arrays.asList("p1")), user.getId());
+        List<AchievementShortView> achievementShortViewList = achievementAPIService.checkAchievement(new HashSet<>(List.of("p1")), user.getId());
         assertEquals(1, achievementShortViewList.size());
         AchievementShortView asv = achievementShortViewList.get(0);
         assertEquals(ach1.getId(), asv.getId());
@@ -129,12 +125,12 @@ class AchievementAPIServiceTest {
         this.usersAchievementsInProgressRepository.save(new UsersAchievementsInProgress(user.getId(), ach1.getId(), p3));
         this.usersAchievementsInProgressRepository.save(new UsersAchievementsInProgress(user.getId(), ach1.getId(), p2));
 
-        List<Achievement> achievementList = achievementAPIService.addPlaceToUserAchievements(new HashSet<String>(Arrays.asList("p1")), user.getId());
+        List<Achievement> achievementList = achievementAPIService.addPlaceToUserAchievements(new HashSet<>(List.of("p1")), user.getId());
 
         List<UsersAchievementsInProgress> inProgress = this.usersAchievementsInProgressRepository.findByUseridAndAchievementid(user.getId(), ach1.getId());
         assertTrue(inProgress.isEmpty());
         assertTrue(this.userAchievementsRepository.existsByUseridAndAchievementid(user.getId(), ach1.getId()));
-        assertEquals(20, achievementList.stream().mapToInt(i -> i.getPoints()).sum());
+        assertEquals(20, achievementList.stream().mapToInt(Achievement::getPoints).sum());
     }
 
 
@@ -148,7 +144,7 @@ class AchievementAPIServiceTest {
         this.usersAchievementsInProgressRepository.save(new UsersAchievementsInProgress(user.getId(), ach2.getId(), p4));
         this.usersAchievementsInProgressRepository.save(new UsersAchievementsInProgress(user.getId(), ach2.getId(), p5));
 
-        List<AchievementShortView> achievementShortViewList = achievementAPIService.checkAchievement(new HashSet<String>(Arrays.asList("p3")), user.getId());
+        List<AchievementShortView> achievementShortViewList = achievementAPIService.checkAchievement(new HashSet<>(List.of("p3")), user.getId());
         assertEquals(2, achievementShortViewList.size());
         AchievementShortView asv = achievementShortViewList.get(0);
         assertTrue(ach1.getId().equals(asv.getId()) || ach2.getId().equals(asv.getId()));
@@ -168,7 +164,7 @@ class AchievementAPIServiceTest {
         this.usersAchievementsInProgressRepository.save(new UsersAchievementsInProgress(user.getId(), ach2.getId(), p5));
 
 
-        List<Achievement> achievementList = achievementAPIService.addPlaceToUserAchievements(new HashSet<String>(Arrays.asList("p3")), user.getId());
+        List<Achievement> achievementList = achievementAPIService.addPlaceToUserAchievements(new HashSet<>(List.of("p3")), user.getId());
 
         List<UsersAchievementsInProgress> inProgress = this.usersAchievementsInProgressRepository.findByUseridAndAchievementid(user.getId(), ach1.getId());
         List<UsersAchievementsInProgress> inProgress2 = this.usersAchievementsInProgressRepository.findByUseridAndAchievementid(user.getId(), ach2.getId());
@@ -178,6 +174,6 @@ class AchievementAPIServiceTest {
 
         assertTrue(this.userAchievementsRepository.existsByUseridAndAchievementid(user.getId(), ach1.getId()));
         assertTrue(this.userAchievementsRepository.existsByUseridAndAchievementid(user.getId(), ach2.getId()));
-        assertEquals(50, achievementList.stream().mapToInt(i -> i.getPoints()).sum());
+        assertEquals(50, achievementList.stream().mapToInt(Achievement::getPoints).sum());
     }
 }

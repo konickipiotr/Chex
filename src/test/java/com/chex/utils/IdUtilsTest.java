@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class IdUtilsTest {
 
-
-
     @Test
     void for_othre_id_return_appropriate_value() {
 
