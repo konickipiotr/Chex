@@ -42,7 +42,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
-//@Service
+@Service
 public class DbInit implements CommandLineRunner {
 
     private final AuthRepository authRepository;
@@ -112,7 +112,7 @@ public class DbInit implements CommandLineRunner {
         u3 = new User(user3.getId(), "Piotr", "Konicki");
         this.userRepository.saveAll(Arrays.asList(u1, u2, u3));
 
-        savePlacesForTesting();
+        //savePlacesForTesting();
         initBaseData();
     }
 

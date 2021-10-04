@@ -85,7 +85,7 @@ public class PostService {
         post.setPostvisibility(dto.getPostvisibility());
         this.postRepository.save(post);
 
-        if(!dto.getSfiles().isEmpty())
+        if(dto.getSfiles() != null && !dto.getSfiles().isEmpty())
             savePostFiles(post.getId(), user, dto.getSfiles());
     }
 
@@ -153,7 +153,7 @@ public class PostService {
         List<PlaceShortView> plist = new ArrayList<>();
         for(String id : IdUtils.stringIdsToList(ids)){
             String name = this.placeNameService.getName(id);
-            Place place = this.placeRepository.getById(id);
+            Place place = this.placeRepository.findById(id).get();
             PlaceShortView placeShortView = new PlaceShortView(id, name);
             placeShortView.setImgUrl(place.getImg());
             plist.add(placeShortView);
