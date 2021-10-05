@@ -22,7 +22,7 @@
 <nav th:fragment="menu" id="menu">
     <p class="username" th:text=${session.user.getName()}></p>
     <div class="photo_container">
-        <img class="profile-photo" th:src="@{${session.user.imgurl}}">
+        <img class="profile-photo" th:src="@{${session.user.img}}">
         <button class="change-photo"><i class="fas fa-camera"></i></button>
     </div>
     <div class="social-button-bar">
