@@ -32,7 +32,4 @@ public class LoginAPIController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(oAuth.get(), HttpStatus.OK);
     }
-
-
-
 }

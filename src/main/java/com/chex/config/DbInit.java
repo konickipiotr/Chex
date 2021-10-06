@@ -1,15 +1,10 @@
 package com.chex.config;
 
 import com.chex.api.forgotpassword.ResetCodeRepository;
-import com.chex.api.post.PostVisibility;
 import com.chex.api.registration.ActivationCodeRepository;
 import com.chex.authentication.AccountStatus;
 import com.chex.authentication.Auth;
 import com.chex.authentication.AuthRepository;
-import com.chex.modules.achievements.model.Achievement;
-import com.chex.modules.achievements.model.AchievementDescription;
-import com.chex.modules.achievements.model.AchievementName;
-import com.chex.modules.achievements.model.AchievementPlaces;
 import com.chex.modules.achievements.repository.AchievementDescriptionRepository;
 import com.chex.modules.achievements.repository.AchievementNameRepository;
 import com.chex.modules.achievements.repository.AchievementPlacesRepository;
@@ -22,16 +17,12 @@ import com.chex.modules.places.model.PlaceName;
 import com.chex.modules.places.repository.PlaceDescriptionRepository;
 import com.chex.modules.places.repository.PlaceNameRepository;
 import com.chex.modules.places.repository.PlaceRepository;
-import com.chex.modules.post.model.Comment;
-import com.chex.modules.post.model.Post;
 import com.chex.modules.post.repository.CommentRepository;
 import com.chex.modules.post.repository.PostPhotoRepository;
 import com.chex.modules.post.repository.PostRepository;
 import com.chex.user.model.User;
-import com.chex.user.model.UsersAchievementsInProgress;
 import com.chex.user.repository.UserAchievementsRepository;
 import com.chex.user.repository.UserRepository;
-import com.chex.user.model.VisitedPlace;
 import com.chex.user.repository.UsersAchievementsInProgressRepository;
 import com.chex.user.repository.VisitedPlacesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +30,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @Service
@@ -112,7 +102,7 @@ public class DbInit implements CommandLineRunner {
         u3 = new User(user3.getId(), "Piotr", "Konicki");
         this.userRepository.saveAll(Arrays.asList(u1, u2, u3));
 
-        //savePlacesForTesting();
+        savePlacesForTesting();
         initBaseData();
     }
 
