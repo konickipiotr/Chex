@@ -7,65 +7,68 @@
 
     <link rel="stylesheet" type="text/css" href="/css/common_style.css">
     <link rel="stylesheet" type="text/css" href="../static/css/common_style.css">
-    <link rel="stylesheet" type="text/css" href="/css/user/login_style.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/user/login_style.css">
+    <link rel="stylesheet" type="text/css" href="/css/user/registration_style.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/user/registration_style.css">
+    <link rel="stylesheet" type="text/css" href="/css/user/not_logged_style.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/user/not_logged_style.css">
+
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://pl.allfont.net/allfont.css?fonts=league-spartan" rel="stylesheet" type="text/css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    
-    <header class="top_login">
-        <div class="login-top-part1">
-            <div class="logo-div">
-                <img src="../static/img/chexlogo.png" width="200" height="200">
-            </div>
-            <div class="xxx">
-                <div class="logo-div">
-                    <span class="create_new_account_span">Stwórz nowe konto</span>
-                </div>      
-                    <span style="display: block; ">CHANGE THE LANGUAGE</span>            
-            </div>
-            <div>
-                <span></span>
-            </div>
-        </div>       
-    </header>
+   <div class="main_container_login">
 
-    <p th:text=${msg_err} class="error_msg"></p>
-    <p th:text=${msg_info}></p>
+       <div class="main_container_login_left">
+           <div class="chexlogo_div">
+                <span class="chexlogo_span">CHEX</span>
+                <span class="chexslogan_span">PODRÓŻUJ POZNAWAJ ZDOBYWAJ</span>
+            </div>
+            <div class="alerts">
+                <div class="error_msg">xxx</div>
+                <div class="info_msg">xxx</div>
+            </div>
+            <div class="label_login">
+                <form class="registration_form" th:action="@{/login}" method="POST"> 
+                    <label for="name">WPROWADŹ SWOJE IMIĘ</label>
+                    <input type="text" name="name" id="name" value="">
+                    <label for="surname">WPROWADŹ SWOJE NAZWISKO</label>
+                    <input type="text" name="surname" id="surname" value="">
+                    <label for="username">WPROWADŹ E-MAIL</label>
+                    <input type="text" name="username" id="username" value="">
+                    <label for="password" text="">WPROWADŹ HASŁO</label>
+                    <input type="password" name="password" id="password" value="11">
+                    <label for="country">WPROWADŹ KRAJ ZAMIESZKANIA</label>
+                    <input type="text" name="country" id="country" value="">
+                    <label for="sex">PODAJ PŁEĆ</label>
+                    <select id="sex">
+                      <option value="woman">K</option>
+                      <option value="man">M</option>
+                      <option value="other">I</option>
+                    </select>
+                    <button class="registration_button" type="submit">zarejestruj</button>
+                </form>
+            </div>
+            <div class="triangle">
+                <img src="../static/img/trojkat-dol.png" width="180%" height="180%">
+            </div>
+        </div>
+  
+       <div class="main_container_login_right">
+        <img class="triangle_right" src="../static/img/trojkat_gora.png" width="30%" height="30%">
+        <img class="greenimg" src="../static/img/circlelightgreen.png">
+        <img class="mountainimg" src="../static/img/gory_pagestart.png">
+        <img class="eiflaimg" src="../static/img/eifla.png">
+        <img class="lineimg" src="../static/img/slaczek.png" width="10%" height="5%">
+       </div>
 
-    <form class="registration_form" th:action="@{/login}" method="POST"> 
-        <label for="name">WPROWADŹ SWOJE IMIĘ</label>
-        <input type="text" name="name" id="name" value="">
-        <label for="surname">WPROWADŹ SWOJE NAZWISKO</label>
-        <input type="text" name="surname" id="surname" value="">
-        <label for="username">WPROWADŹ E-MAIL</label>
-        <input type="text" name="username" id="username" value="">
-        <label for="password" text="WPROWADŹ HASŁO"></label>
-        <input type="password" name="password" id="password" value="11">
-        <label for="country">WPROWADŹ KRAJ ZAMIESZKANIA</label>
-        <input type="text" name="country" id="country" value="">
-        <label for="sex">PODAJ PŁEĆ</label>
-        <select id="sex">
-          <option value="woman">K</option>
-          <option value="man">M</option>
-          <option value="other">I</option>
-        </select>
-        <button class="registration_button" type="submit">zarejestruj</button>
-    </form>
-    <div class="registration_links">
-        <a href="">Przypomnij hasło</a>
-        <a href="">Rejestracja</a>
-    </div>
-    <div class="picture_globus">
-        <img src="../static/img/globus.png">
-    </div>
+   </div>
 
 </body>
 </html>
