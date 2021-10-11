@@ -1,82 +1,15 @@
-header.top_login{
-    background: rgb(5,4,72);
-    background: linear-gradient(90deg, rgba(5,4,72,1) 0%, rgba(9,9,121,1) 0%, rgba(8,8,114,1) 0%, rgba(0,212,255,1) 100%);
-    color: white;
-    font-family: 'DM Sans', sans-serif;
-}
-
-.login-top-part1{
-    display: flex;
-    justify-content: space-between;
-    align-content: space-around;
-    align-items: center;
-}
-
-.create_new_account_span{
-    font-size: 30px;
-}
-
-.xxx{
-    display: flex; 
-    flex-direction: column; 
-    align-items: center;
-}
-
-.registration_form{
+.chexlogo_div{
     display: flex;
     flex-direction: column;
-    font-family: 'DM Sans', sans-serif;
-    color: #8f8e8e;
-    font-size: 12px;
-    justify-content: center;
-    align-items: center;
+    margin-top: 20%;
+    margin-left: 10%;
 }
 
-.registration_form input{
-    border-radius: 10px 10px 10px 10px;
-    background-color: #ECECEC;
-    border: none;
-    padding: 5px 5px 5px 5px;
+.label_login{
+    margin-top: 5%;
+    text-align: center;
+}
+.label_login input{
+    margin-left: 1%;
 }
 
-.registration_form label{
-    padding: 5px 5px 5px 5px;
-}
-
-#sex{
-    font-size: 0.9rem;
-    font-weight: normal;
-    padding: 4px;
-    width: 190px;
-    margin: 1%;
-    border-radius: 10px;
-    border: 2px solid transparent;
-    background-color: #ECECEC;
-    margin: 0;
-}
-
-.registration_button{
-    background-color: #5E17EB;
-    color: white;
-    font-family: 'Poppins', sans-serif;
-    width: 120px;
-    border-radius: 20px;
-    font-weight: bold;
-}
-
-.registration_links{
-    display: flex;
-    justify-content: center;
-    color: #5E17EB;
-    font-weight: bold;
-    font-family: 'Poppins', sans-serif;
-}
-
-.registration_links a{
-    padding: 5px 5px 5px 5px;
-}
-
-.picture_globus{
-    display: flex;
-    justify-content: flex-end;
-}
