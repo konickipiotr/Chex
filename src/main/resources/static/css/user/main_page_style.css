@@ -1,0 +1,191 @@
+.main_container_main_page{
+    display: flex;
+    
+}
+.menu_and_posts{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.menu{
+    background-color: #ecf0f3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.side_bar{
+    background-color: #9ed0c9;
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    height: 100vh;
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 30%;
+    background-position: 0px 40px;
+
+
+}
+.side_bar_icons{
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    z-index: 2;
+
+    
+}
+
+.side_bar img {
+    display: flex;
+    align-self: center;
+    margin-top: 5px;
+    z-index: 3;
+    overflow: scroll;
+
+}
+
+
+
+.side_bar span{
+    display: flex;
+    align-self: center;
+    margin-top: 5px;
+    z-index: 3;
+}
+
+button{
+    width: 90%;
+    z-index: 2;
+    align-self: center;
+}
+
+span{
+    font-family: 'League Spartan Bold', arial;
+    color: #415064;
+    font-size: 20px;
+    text-align: center;
+}
+
+.triangle_right{
+    right: 0%;
+}
+
+.trojkat_gora{
+    position: relative;
+    z-index: 1;
+}
+
+.posts_container{
+    display: flex;
+    justify-content: center;
+}
+.post{
+    background-color: #f1f1f1;
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+    padding-bottom: 1%;
+    justify-content: center;
+}
+.post_achievments{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.post_header{
+    background-color:#415164;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+
+}
+.post_header span{
+    color: white;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.post_header img{
+
+    margin-right: 2%;
+}
+.post_header_right{
+text-align: end;
+}
+
+.post_img{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.post_icons{
+    text-align: center;
+}
+.user_img{
+    border-radius: 50px 50px 50px 50px;
+}
+.achiev span{
+    font-size: 10px;
+    font-weight: normal;
+    font-family: 'Ubuntu', sans-serif;
+}
+.post_header span{
+    font-size: 13px;
+}
+.text_under_img{
+    font-size: 15px;
+    font-family: 'Ubuntu', sans-serif;
+}
+.add_comment{
+    background-color: white ;
+    margin-right: 30%;
+    padding-bottom: 1%;
+    padding-top: 1%;
+    border-radius: 20px 20px 20px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 1%;
+    color: gray;
+}
+
+.post_comments_header, .post_comments_bottom{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 30%;
+    padding-top: 1%;
+    align-items: center;
+    font-size: 10px;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+    color: #415064;
+    margin-top: 1%;
+
+}
+.post_comments_bottom{
+    font-size: 13px;
+}
+textarea{
+    border: none;
+    background-color: white;
+    color: gray;
+    width: 100%;
+    height: 100%;
+
+}
+.post_header_left{
+    display: flex;
+    align-items: center;
+    margin-left: 1%;
+    padding-top:0.5%;
+    padding-bottom: 0.5%;;
+}

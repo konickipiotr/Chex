@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title th:text="#{app_name}"></title>
+    <script src="https://kit.fontawesome.com/7ccfa6815b.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/common_style.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/common_style.css">
+    <link rel="stylesheet" type="text/css" href="/css/user/registration_style.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/user/registration_style.css">
+    <link rel="stylesheet" type="text/css" href="/css/user/not_main_page_style.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/user/main_page_style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://pl.allfont.net/allfont.css?fonts=league-spartan" rel="stylesheet" type="text/css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+</head>
+    <body style="background-image: url('../static/img/worldmap.png');   background-repeat:no-repeat">
+        
+        <div class="main_container_main_page">
+            <div class="side_bar" style="background-image: url('../static/img/circlelightgreenlighter2.png');">
+                
+                <span>IMIĘ I NAZWISKO</span>
+                <img  class="user_img" src="../static/img/user.png" style="width: 40%;">
+                <div class="side_bar_icons">
+               
+                    <img src="../static/img/friends.png" style="width: 50px; height: 50px">
+                    <img src="../static/img/messageimg.png" style="width: 50px; height: 50px">
+                </div>
+                <button>Strona główna</button>
+                <button>Miejsca</button>
+                <button>Osiągnięcia</button>
+            </div>
+            <div class="menu_and_posts">
+                <div class="menu">
+                    <div class="chexlogo_div">
+                        <span class="chexlogo_span">CHEX</span>
+                    </div>
+                    <div style="display: flex; width: 450px;">
+                        <img src="../static/img/polish.png" style="width: 50px; height: 50px;z-index: 4;">
+                        <img src="../static/img/english.png" style="width: 50px; height: 50px;z-index: 4">
+                        <img src="../static/img/settings.png" style="width: 50px; height: 50px;z-index: 4">
+                        <img src="../static/img/logout.png" style="width: 50px; height: 50px; z-index: 4; position: relative; left: 50%;">
+                        <img class="trojkat_gora" src="../static/img/trojkat_zielony.png" width="50%" height="" style="position: fixed; right: 0; width: 150px; top:0;">
+                    </div>
+                </div>
+                <div class="posts_container">
+                    <div class="post">
+                        <div class="post_header">
+                            <div class="post_header_left">
+                                <img  class="user_img"  src="../static/img/user.png" style="width: 8%;">
+                                <span class="post_header_name">IMIĘ I NAZWISKO</span>
+                            </div>
+                            <div class="post_header_right">
+                                <span>11.11.2011</span>
+                                <img src="../static/img/kosz.png" style="width: 3%;">
+                            </div>
+                        </div>
+                        <div class="post_achievments" >
+
+                            <div class="achiev">
+                                <span>FOTO</span>
+                                <span>ZDOBYŁ OSIĄGNIĘCIE ...</span>
+                            </div>
+                            <div class="achiev">
+                                <span>FOTO</span>
+                                <span>ZDOBYŁ OSIĄGNIĘCIE ...</span>
+                            </div>
+                            <div class="achiev">
+                                <span>FOTO</span>
+                                <span>ZDOBYŁ OSIĄGNIĘCIE ...</span>
+                            </div>
+                            <div class="achiev">
+                                <span>FOTO</span>
+                                <span>ZDOBYŁ OSIĄGNIĘCIE ...</span>
+                            </div>
+                            <div class="achiev">
+                                <span>FOTO</span>
+                                <span>ZDOBYŁ OSIĄGNIĘCIE ...</span>
+                            </div>
+                        </div>
+                        <div class="post_img">
+                            <img src="../static/img/góryfoto.jpg" style="width: 50%;">
+                            <span class="text_under_img" >Wybierz najlepszą drogę do swojego upragnionego celu</span>
+                            <span>...</span>
+                        </div>
+                        <div class="post_icons">
+                            <img src="../static/img/friends.png" style="width: 30px; height: 30px">
+                            <img src="../static/img/messageimg.png" style="width: 30px; height: 30px">
+                        </div>
+                        <div class="add_comment">
+                            <img  class="user_img" src="../static/img/user.png" style="width: 5%;">
+                            <textarea>Napisz Komenrarz ... </textarea>
+                            <img src="../static/img/messageimg.png" style="width: 30px; height: 30px">
+                        </div>
+                        <div class="post_comments">
+                            
+                            <div class="post_comments_header">
+                                <img  class="user_img" src="../static/img/user.png" style="width: 3%;">
+                                <spam>IMIE I NAZWISKO</spam>
+                                <spam>11.11.2011</spam>
+                            </div>
+                        
+                            <div class="post_comments_bottom">
+                                <spam>Jakiś komentarz</spam>
+                                <img src="../static/img/kosz.png" style="width: 3%;">
+                            </div>
+                        </div>
+                    
+                    </div>
+
+                </div>
+            </div>
+            <div class="triangle">
+                <img src="../static/img/trojkat-dol.png" width="180%" height="180%">
+            </div>
+
+            
+       
+
+        
+        
+        
+        </div>      
+        
+    </body>
+</html>
