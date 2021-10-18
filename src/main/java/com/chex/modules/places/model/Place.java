@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 
 @Entity
-public class Place {
+public class Place{
 
     /*
     id - Field of 16 characters

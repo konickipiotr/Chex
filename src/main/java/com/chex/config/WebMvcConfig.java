@@ -25,5 +25,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry
                 .addResourceHandler("/assets/**")
                 .addResourceLocations("file://" + GlobalSettings.appPath + "/assets/");
+
+        registry
+                .addResourceHandler("/tmp/**")
+                .addResourceLocations("file://" + GlobalSettings.chexTmp);
     }
 }

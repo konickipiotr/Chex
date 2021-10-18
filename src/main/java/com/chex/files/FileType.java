@@ -4,5 +4,6 @@ public enum FileType {
     POSTPHOTO,
     PROFILEPHOTO,
     ACHIEVEMENTASSET,
-    PLACEPICTURE
+    PLACEPICTURE,
+    CHALLENGE
 }

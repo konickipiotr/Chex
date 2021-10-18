@@ -2,6 +2,11 @@ package com.chex.api.place;
 
 import com.chex.api.post.PostVisibility;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -10,10 +15,13 @@ import java.util.Map;
 public class AchievedPlaceDTO {
 
     private Map<String, Integer> achievedPlaces;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime timestamp;
     private String description;
     private List<String> sfiles;
     private PostVisibility postvisibility = PostVisibility.PUBLIC;
+    private List<Long> userChallengesComplete;
 
     public AchievedPlaceDTO() {
     }
@@ -56,5 +64,13 @@ public class AchievedPlaceDTO {
 
     public void setPostvisibility(PostVisibility postvisibility) {
         this.postvisibility = postvisibility;
+    }
+
+    public List<Long> getUserChallengesComplete() {
+        return userChallengesComplete;
+    }
+
+    public void setUserChallengesComplete(List<Long> userChallengesComplete) {
+        this.userChallengesComplete = userChallengesComplete;
     }
 }

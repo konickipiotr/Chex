@@ -1,5 +1,6 @@
 package com.chex.api.place.service;
 
+import com.chex.modules.challenges.model.ChallengePoint;
 import com.chex.modules.places.model.Coords;
 import com.chex.modules.places.model.Place;
 
@@ -13,6 +14,17 @@ public class CalculateCoords {
 
         List<Place> placesInRange = new ArrayList<>();
         for(Place p : allplaces) {
+            double distance = calculateDistance(new Coords(p.getLatitude(), p.getLongitude()), currentCoords);
+            if(distance <= p.getRadius())
+                placesInRange.add(p);
+        }
+        return placesInRange;
+    }
+
+    public static List<ChallengePoint> isChallengePointInRange(Coords currentCoords, List<ChallengePoint> allplaces) {
+
+        List<ChallengePoint> placesInRange = new ArrayList<>();
+        for(ChallengePoint p : allplaces) {
             double distance = calculateDistance(new Coords(p.getLatitude(), p.getLongitude()), currentCoords);
             if(distance <= p.getRadius())
                 placesInRange.add(p);
