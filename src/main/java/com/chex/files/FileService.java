@@ -3,11 +3,13 @@ package com.chex.files;
 import com.chex.config.GlobalSettings;
 import com.chex.modules.post.model.PostPhoto;
 import com.chex.user.model.User;
+import net.bytebuddy.utility.RandomString;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
@@ -149,5 +152,67 @@ public class FileService {
             dir.mkdirs();
 
         return fileDirectory + filename;
+    }
+
+
+    public String saveToTmp(MultipartFile file) throws FileNotFoundException {
+
+        if (file == null || file.isEmpty())
+            throw new FileNotFoundException();
+
+        String ext = "." + file.getOriginalFilename().substring(file.getOriginalFilename().length() - 3);
+
+        File dir = new File(GlobalSettings.chexTmp);
+        if(!dir.exists())
+            dir.mkdirs();
+
+
+        String randomFilename;
+        do{
+            randomFilename = RandomString.make(40);
+            randomFilename += ext;
+        }while (Arrays.asList(dir.list()).contains(randomFilename));
+
+
+        String path = dir.getPath() + "/" + randomFilename;
+        try {
+            Path fullpath = Paths.get(path);
+            Files.copy(file.getInputStream(), fullpath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw  new FailedSaveFileException();
+        }
+
+        return path;
+    }
+
+    public String moveToFromTmpToWorkspace(String tmpPath, FileType fileType) throws FileNotFoundException {
+
+        File tmpFile = new File(tmpPath);
+
+        if(!new File(tmpPath).exists()){
+            throw new FileNotFoundException();
+        }
+
+        String ext = "." + tmpPath.substring(tmpPath.length() - 3);
+
+        File dir = new File(GlobalSettings.appPath + "/assets/challenges");
+        if(!dir.exists())
+            dir.mkdirs();
+
+        String randomFilename;
+        do{
+            randomFilename = RandomString.make(20);
+            randomFilename = "ch" + randomFilename + ext;
+        }while (Arrays.asList(dir.list()).contains(randomFilename));
+
+
+        String path = dir.getPath() + "/" + randomFilename;
+        try {
+            Files.copy(tmpFile.toPath(), Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw  new FailedSaveFileException();
+        }
+
+        return randomFilename;
     }
 }

@@ -19,6 +19,7 @@ public class User {
     private int nextlevel;
     private String title;
 
+
     public String getName(){
         return this.firstname + " " + this.lastname;
     }

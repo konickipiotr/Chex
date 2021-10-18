@@ -1,13 +1,11 @@
 package com.chex.lang;
 
-import com.chex.modules.places.repository.PlaceDescriptionRepository;
-import com.chex.modules.places.repository.PlaceNameRepository;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.data.jpa.repository.JpaRepository;
+
 
 public class LanguageUtils {
 
-    private LanguageGetter nameGetter;
+    private final LanguageGetter nameGetter;
     private LanguageGetter descriptionGetter;
 
     public LanguageUtils(LanguageGetter nameGetter, LanguageGetter descriptionGetter) {
@@ -20,6 +18,8 @@ public class LanguageUtils {
     }
 
     public String getName(){
+        if(nameGetter == null)
+            return null;
         String language = LocaleContextHolder.getLocale().getLanguage();
         switch (language){
             case "pl": return nameGetter.getPl();
@@ -28,6 +28,8 @@ public class LanguageUtils {
     }
 
     public String getDescription(){
+        if(descriptionGetter == null)
+            return null;
         String language = LocaleContextHolder.getLocale().getLanguage();
         switch (language){
             case "pl": return descriptionGetter.getPl();

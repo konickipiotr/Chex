@@ -1,12 +1,14 @@
 package com.chex.api.place;
 
 import com.chex.api.AuthService;
+import com.chex.api.place.response.CheckPlaceRequest;
 import com.chex.api.place.response.CheckPlaceResponse;
 import com.chex.api.place.response.CheckPlaceResponseStatus;
 import com.chex.api.place.service.PlaceNameService;
 import com.chex.authentication.AccountStatus;
 import com.chex.authentication.Auth;
 import com.chex.modules.CheckPlaceView;
+import com.chex.modules.places.model.Coords;
 import com.chex.modules.places.model.Place;
 import com.chex.modules.places.repository.PlaceRepository;
 import com.chex.modules.post.model.Post;
@@ -37,7 +39,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -120,12 +121,18 @@ class CheckPlaceAPIControllerTest {
     void there_is_no_place_in_the_area_and_return_not_found() throws Exception {
         Mockito.when(authService.getUserId(any())).thenReturn(user.getId());
 
-        String contentAsString = mockMvc.perform(get("/api/checkplace?latitude=51.10938588760097&longitude=17.04738960378325"))
+        CheckPlaceRequest request = new CheckPlaceRequest();
+        request.setCoords(new Coords(51.10938588760097, 17.04738960378325));
+        request.setTimestamp(LocalDateTime.now());
+
+        String contentAsString = mockMvc.perform(post("/api/checkplace")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
         CheckPlaceResponse response = mapper.readValue(contentAsString, new TypeReference<>() {});
         assertEquals(CheckPlaceResponseStatus.NOTFOUND, response.getResponseStatus());
-        assertNull(response.getCheckPlaceViewList());
+        assertTrue(response.getCheckPlaceViewList().isEmpty());
     }
 
     @Test
@@ -135,7 +142,13 @@ class CheckPlaceAPIControllerTest {
         Mockito.when(placeNameService.getDescription(any(String.class))).thenReturn("YY");
         Mockito.when(authService.getUserId(any())).thenReturn(user.getId());
 
-        MvcResult mvcResult = mockMvc.perform(get("/api/checkplace?latitude=51.109558190965856&longitude=17.031288094382667"))
+        CheckPlaceRequest request = new CheckPlaceRequest();
+        request.setCoords(new Coords(51.109558190965856, 17.031288094382667));
+        request.setTimestamp(LocalDateTime.now());
+
+        MvcResult mvcResult = mockMvc.perform(post("/api/checkplace")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
                 .andExpect(status().isOk()).andReturn();
 
         String contentAsString = mvcResult.getResponse().getContentAsString();
@@ -203,7 +216,13 @@ class CheckPlaceAPIControllerTest {
 
         Mockito.when(authService.getUserId(any())).thenReturn(user.getId());
 
-        MvcResult mvcResult = mockMvc.perform(get("/api/checkplace?latitude=51.109558190965856&longitude=17.031288094382667"))
+        CheckPlaceRequest request = new CheckPlaceRequest();
+        request.setCoords(new Coords(51.109558190965856, 17.031288094382667));
+        request.setTimestamp(LocalDateTime.now());
+
+        MvcResult mvcResult = mockMvc.perform(post("/api/checkplace")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
                 .andExpect(status().isOk()).andReturn();
 
 
@@ -212,7 +231,7 @@ class CheckPlaceAPIControllerTest {
         });
 
         assertEquals(CheckPlaceResponseStatus.ALREADYEXISTS, response.getResponseStatus());
-        assertNull(response.getCheckPlaceViewList());
+        assertTrue(response.getCheckPlaceViewList().isEmpty());
     }
 
     @Test
@@ -237,8 +256,14 @@ class CheckPlaceAPIControllerTest {
                 .content(mapper.writeValueAsString(dto)))
                 .andExpect(status().isOk());
 
+        CheckPlaceRequest request = new CheckPlaceRequest();
+        request.setCoords(new Coords(51.110469965599435, 17.047374508810307));
+        request.setTimestamp(LocalDateTime.now());
+
         Mockito.when(authService.getUserId(any())).thenReturn(user.getId());
-        MvcResult mvcResult = mockMvc.perform(get("/api/checkplace?latitude=51.110469965599435&longitude=17.047374508810307"))
+        MvcResult mvcResult = mockMvc.perform(post("/api/checkplace")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
                 .andExpect(status().isOk()).andReturn();
 
         String contentAsString = mvcResult.getResponse().getContentAsString();
@@ -256,8 +281,14 @@ class CheckPlaceAPIControllerTest {
         Mockito.when(placeNameService.getName(any(String.class))).thenReturn("XX");
         Mockito.when(placeNameService.getDescription(any(String.class))).thenReturn("YY");
 
+        CheckPlaceRequest request = new CheckPlaceRequest();
+        request.setCoords(new Coords(51.11071245329221, 17.04830791753398));
+        request.setTimestamp(LocalDateTime.now());
+
         Mockito.when(authService.getUserId(any())).thenReturn(user.getId());
-        MvcResult mvcResult = mockMvc.perform(get("/api/checkplace?latitude=51.11071245329221&longitude=17.04830791753398"))
+        MvcResult mvcResult = mockMvc.perform(post("/api/checkplace")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
                 .andExpect(status().isOk()).andReturn();
 
         String contentAsString = mvcResult.getResponse().getContentAsString();

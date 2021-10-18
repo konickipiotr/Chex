@@ -41,7 +41,7 @@
                 <label for="descriptionen">Opis en</label><br>
                 <textarea id="descriptionen" name="descriptionen" th:text="${achievementForm.descriptionpl}"></textarea><br><br>
 
-                <input type="file" id="picture" name="picture" accept="image/png, image/jpeg, image/jpg, image/bmp" style="display: none">
+                <input type="file" id="picture" name="picture" accept="image/png, image/jpeg, image/jpg, image/bmp" style="display: none" onchange="displayFileInfo(this)">
                 <span id="fileinfo"></span>
                 <button type="button" onclick="chooseImage()">wybierz obrazek</button>
 
@@ -88,25 +88,6 @@
 <script th:inline="javascript">
     var pp = [[${places}]];
 
-<!--    var pp = [-->
-<!--        {"key":"EU.000.000.000.00000","value":"Europa"},-->
-<!--        {"key":"NA.000.000.000.00000","value":"Ameryka Północna"},-->
-<!--        {"key":"AZ.000.000.000.00000","value":"Azja"},-->
-<!--        {"key":"EU.POL.000.000.00000","value":"Polska"},-->
-<!--        {"key":"EU.GER.000.000.00000","value":"Niemcy"},-->
-<!--        {"key":"EU.ITL.000.000.00000","value":"Włochy"},-->
-<!--        {"key":"NA.USA.000.000.00000","value":"USA"},-->
-<!--        {"key":"NA.MEX.000.000.00000","value":"Meksyk"},-->
-<!--        {"key":"EU.POL.DLS.000.00000","value":"Dolnysląsk"},-->
-<!--        {"key":"EU.POL.OPL.000.00000","value":"Opolskie"},-->
-<!--        {"key":"EU.POL.DLS.WRO.00000","value":"Wrocław"},-->
-<!--        {"key":"EU.POL.DLS.LEG.00000","value":"Legnica"},-->
-<!--        {"key":"EU.POL.DLS.KLD.00000","value":"Kłodzko"},-->
-<!--        {"key":"EU.POL.DLS.KLD.00001","value":"Twierdza"},-->
-<!--        {"key":"EU.POL.DLS.WRO.00001","value":"Rzeka Odra"},-->
-<!--        {"key":"EU.POL.DLS.WRO.00002","value":"Rynek"},-->
-<!--        {"key":"EU.POL.DLS.WRO.00003","value":"Katedra"},-->
-<!--        ];-->
 
     var allplaces = new Map();
     var currentList = new Map();

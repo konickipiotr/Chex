@@ -1,4 +1,4 @@
-package com.chex.utils.exceptions;
+package com.chex.files;
 
 public class FailedSaveFileException extends RuntimeException {
     public FailedSaveFileException() {

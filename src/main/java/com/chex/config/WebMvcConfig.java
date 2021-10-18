@@ -20,10 +20,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
                 .addResourceHandler("/users/**")
-                .addResourceLocations("file://" + GlobalSettings.appPath + "users/");
+                .addResourceLocations("file://" + GlobalSettings.appPath + "/users/");
 
         registry
                 .addResourceHandler("/assets/**")
-                .addResourceLocations("file://" + GlobalSettings.appPath + "assets/");
+                .addResourceLocations("file://" + GlobalSettings.appPath + "/assets/");
+
+        registry
+                .addResourceHandler("/tmp/**")
+                .addResourceLocations("file://" + GlobalSettings.chexTmp);
     }
 }

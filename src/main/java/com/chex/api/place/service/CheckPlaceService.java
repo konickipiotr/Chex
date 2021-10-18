@@ -1,6 +1,7 @@
 package com.chex.api.place.service;
 
 import com.chex.api.place.AchievedPlaceDTO;
+import com.chex.api.place.response.CheckPlaceRequest;
 import com.chex.api.place.response.CheckPlaceResponse;
 import com.chex.api.place.response.CheckPlaceResponseStatus;
 import com.chex.modules.places.model.Coords;
@@ -31,15 +32,15 @@ public class CheckPlaceService {
         this.visitedPlacesRepository = visitedPlacesRepository;
     }
 
-    public List<Place> checkPlace(Coords currentCoords, Long userid, CheckPlaceResponse checkPlaceResponse) {
-        List<Place> places = filterPlace(currentCoords);
+    public List<Place> checkPlace(CheckPlaceRequest request, Long userid, CheckPlaceResponse checkPlaceResponse) {
+        List<Place> places = filterPlace(request.getCoords());
 
         if(places.isEmpty()) {
             checkPlaceResponse.setResponseStatus(CheckPlaceResponseStatus.NOTFOUND);
             return null;
         }
 
-        List<Place> inRange = CalculateCoords.isInRange(currentCoords, places);
+        List<Place> inRange = CalculateCoords.isInRange(request.getCoords(), places);
         if(inRange.isEmpty()){
             checkPlaceResponse.setResponseStatus(CheckPlaceResponseStatus.NOTFOUND);
             return null;
