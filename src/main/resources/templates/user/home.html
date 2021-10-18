@@ -1,118 +1,128 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title th:text="#{app_name}"></title>
-
     <script src="https://kit.fontawesome.com/7ccfa6815b.js" crossorigin="anonymous"></script>
 
-    
-    <link rel="stylesheet" type="text/css" href="../../static/css/common_style.css">
-    <link rel="stylesheet" type="text/css" href="../../static/css/user/user_fragments.css">
-    <link rel="stylesheet" type="text/css" href="../../static/css/user/user_style.css">
-    <link rel="stylesheet" type="text/css" href="../../static/css/user/home_style.css">
-
     <link rel="stylesheet" type="text/css" href="/css/common_style.css">
-    <link rel="stylesheet" type="text/css" href="/css/user/user_fragments.css">
-    <link rel="stylesheet" type="text/css" href="/css/user/user_style.css">
-    <link rel="stylesheet" type="text/css" href="/css/user/home_style.css">
+    <link rel="stylesheet" type="text/css" href="/css/user/main_page_style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://pl.allfont.net/allfont.css?fonts=league-spartan" rel="stylesheet" type="text/css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
 </head>
-<body>
-    <header th:replace="user/fragments/top :: top" class="top"></header>
-    <div class="main-container">
-        <nav th:replace="user/fragments/menu :: menu" id="menu"></nav>
-    
-        <section id="content">
-            <!-- ***************************************************** -->
-
-            <div class="inner_conntent">
-
-                <div class="post" th:each="p : ${posts}">
-                    <div class="post-header">
-                        <div class="post-header-left">
-                            <img th:src="@{${p.authorPhoto}}">
-                            <a href="" th:text="${p.authorName}"></a>
-                        </div>
-
-                        <div class="post-header-right">
-                            <p th:text="${p.createdAt}"></p>
-                            <span th:if="${p.isAuthor}">
-                                <a href=""><i class="fas fa-trash-alt"></i></a>
-                            </span>
-                        </div>
+    <body style="background-image: url('../static/img/worldmap.png');   background-repeat:no-repeat">
+        
+        <div class="main_container_main_page">
+            <div class="side_bar" style="background-image: url('../static/img/circlelightgreenlighter2.png');">
+                
+                <span>IMIĘ I NAZWISKO</span>
+                <img  class="user_img" src="/img/user.png" style="width: 40%;">
+                <div class="side_bar_icons">
+               
+                    <img src="/img/friends.png" style="width: 50px; height: 50px">
+                    <img src="/img/messageimg.png" style="width: 50px; height: 50px">
+                </div>
+                <button>Strona główna</button>
+                <button>Miejsca</button>
+                <button>Osiągnięcia</button>
+            </div>
+            <div class="menu_and_posts">
+                <div class="menu">
+                    <div class="chexlogo_div">
+                        <span class="chexlogo_span">CHEX</span>
                     </div>
-                    
-                    <div class="post-content">
-                        <p class="post_info">Był w miejscu:</p>
-                        <div class="place-element" th:each="pl : ${p.places}">
-                            <img th:src="@{${pl.imgUrl}}">
-                            <a href="" th:text="${pl.name}"></a>
-                        </div>
-                        <p th:if="${p.subPlaces.isEmpty() == false}" class="post_info">Pierwszy raz odwiedził region:</p>
-                        <div class="place-element" th:each="pl : ${p.subPlaces}">
-                            <img th:src="@{${pl.imgUrl}}">
-                            <a href="" th:text="${pl.name}"></a>
-                        </div>
-                        <!-- <p class="post_info">Oraz zdobyło osiągnięcia</p>
-                        <div class="place-element">
-                            <img src="../../static/img/user.png">
-                            <p>Śnieznik</p>
-                            <a href="">Korana gór</a>
-                        </div> -->
-
-                        <div class="post-photos">
-                            <img src="../../static/img/user.png" class="photo-1">
-
-                            <img src="../../static/img/user.png" class="photo-2">
-                            <img src="../../static/img/user.png" class="photo-2">
-
-                            <img src="../../static/img/user.png" class="photo-3">
-                            <img src="../../static/img/user.png" class="photo-3">
-                            <img src="../../static/img/user.png" class="photo-3">
-                     
-
-                        </div>
-                        <p class="post-description" th:text="${p.description}"></p>
-                    </div>
-
-                    <div class="post-bottom-bar">
-                        <div>
-                            <a th:if="${p.voted}" href=""><i class="fas fa-star"></i></a>
-                            <a th:unless="${p.voted}" href=""><i class="far fa-star"></i></a>
-                            <span th:text="${p.stanum}"></span>
-                        </div>
-                        <a class="btnOpenPost" href="">rozwiń post</a>
-                        <div></div>
-                    </div>
-                    
-                    <div class="post-add-comment">
-                        <form>
-                            <textarea></textarea>
-                            <button style="width: 10%;" type="submit">DODAJ</button>
-                        </form>
-                    </div>
-                    <div class="post-comment">
-                        <div class="comment-element" th:each="c, it : ${p.commentViews}" th:unless="${it.index > 2}">
-                            <div class="comment-element-header">
-                                <div class="comment-element-header-left">
-                                    <img th:src="@{${c.authorPhoto}}">
-                                    <a href="" th:text="${c.authorName}"></a>
-                                </div>
-                                <div class="comment-element-header-right">
-                                    <p th:text="${c.createdAt}"></p>
-                                    <a th:if="${c.isAuthor}" href=""><i class="fas fa-trash-alt"></i></a>
-                                </div>
-                            </div>
-
-                            <p class="comment-element-content" th:text="${c.content}"></p>
-                        </div>
-
-                        <a th:if="${p.commentViews.size() > 3}" href="" class="more-btn">--- Więcej ---</a>
+                    <div style="display: flex; width: 450px;">
+                        <img src="/img/polish.png" style="width: 50px; height: 50px;z-index: 4;">
+                        <img src="/img/english.png" style="width: 50px; height: 50px;z-index: 4">
+                        <img src="/img/settings.png" style="width: 50px; height: 50px;z-index: 4">
+                        <img src="/img/logout.png" style="width: 50px; height: 50px; z-index: 4; position: relative; left: 50%;">
+                        <img class="trojkat_gora" src="/img/trojkat_zielony.png" width="50%" height="" style="position: fixed; right: 0; width: 150px; top:0;">
                     </div>
                 </div>
+                <div class="posts_container">
+                    <div class="post">
+                        <div class="post_header">
+                            <div class="post_header_left">
+                                <img  class="user_img"  src="/img/user.png" style="width: 8%;">
+                                <span class="post_header_name">IMIĘ I NAZWISKO</span>
+                            </div>
+                            <div class="post_header_right">
+                                <span>11.11.2011</span>
+                                <img src="/img/kosz.png" style="width: 3%;">
+                            </div>
+                        </div>
+                        <div class="post_achievments" >
+
+                            <div class="achiev">
+                                <span>FOTO</span>
+                                <span>ZDOBYŁ OSIĄGNIĘCIE ...</span>
+                            </div>
+                            <div class="achiev">
+                                <span>FOTO</span>
+                                <span>ZDOBYŁ OSIĄGNIĘCIE ...</span>
+                            </div>
+                            <div class="achiev">
+                                <span>FOTO</span>
+                                <span>ZDOBYŁ OSIĄGNIĘCIE ...</span>
+                            </div>
+                            <div class="achiev">
+                                <span>FOTO</span>
+                                <span>ZDOBYŁ OSIĄGNIĘCIE ...</span>
+                            </div>
+                            <div class="achiev">
+                                <span>FOTO</span>
+                                <span>ZDOBYŁ OSIĄGNIĘCIE ...</span>
+                            </div>
+                        </div>
+                        <div class="post_img">
+                            <img src="/img/góryfoto.jpg" style="width: 50%;">
+                            <span class="text_under_img" >Wybierz najlepszą drogę do swojego upragnionego celu</span>
+                            <span>...</span>
+                        </div>
+                        <div class="post_icons">
+                            <img src="/img/friends.png" style="width: 30px; height: 30px">
+                            <img src="/img/messageimg.png" style="width: 30px; height: 30px">
+                        </div>
+                        <div class="add_comment">
+                            <img  class="user_img" src="/img/user.png" style="width: 5%;">
+                            <textarea>Napisz Komenrarz ... </textarea>
+                            <img src="/img/messageimg.png" style="width: 30px; height: 30px">
+                        </div>
+                        <div class="post_comments">
+                            
+                            <div class="post_comments_header">
+                                <img  class="user_img" src="/img/user.png" style="width: 3%;">
+                                <spam>IMIE I NAZWISKO</spam>
+                                <spam>11.11.2011</spam>
+                            </div>
+                        
+                            <div class="post_comments_bottom">
+                                <spam>Jakiś komentarz</spam>
+                                <img src="/img/kosz.png" style="width: 3%;">
+                            </div>
+                        </div>
+                    
+                    </div>
+
+                </div>
             </div>
-            <!-- ***************************************************** -->
-        </section>
-    </div>
-</body>
+            <div class="triangle">
+                <img src="/img/trojkat-dol.png" width="180%" height="180%">
+            </div>
+
+            
+       
+
+        
+        
+        
+        </div>      
+        
+    </body>
 </html>

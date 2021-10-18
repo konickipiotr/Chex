@@ -6,11 +6,8 @@
     <script src="https://kit.fontawesome.com/7ccfa6815b.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" type="text/css" href="/css/common_style.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/common_style.css">
     <link rel="stylesheet" type="text/css" href="/css/user/login_style.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/user/login_style.css">
     <link rel="stylesheet" type="text/css" href="/css/user/not_logged_style.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/user/not_logged_style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,38 +26,39 @@
                 <span class="chexlogo_span">CHEX</span>
                 <span class="chexslogan_span">PODRÓŻUJ POZNAWAJ ZDOBYWAJ</span>
             </div>
-            <form>
+           <div class="alerts">
+               <p class="error_msg" th:text="${error_msg}">xxx</p>
+               <p class="info_msg"  th:text="${info_msg}">xxx</p>
+           </div>
+            <form th:action="@{/login}" method="post">
                 <div class="label_login">
-                    <label> 
-                    <input type="text" name="login" value="Login" />
-                    </label> 
-                    <label> 
-                    <input type="text" name="login" value="Hasło" />
-                    </label>
+                    <label for="username">login</label>
+                    <input type="text" minlength="2" name="username" id="username" value="user1" required/>
+                    <label for="password">Hasło</label>
+                    <input type="password" name="password" id="password" value="11" required/>
                 </div>
                 <div class="login_forgetpas_btn">
-                    <button>Zaloguj</button>
-                    <button class="forgetpass_btn">Przypomnij<br> hasło</button>
-                </div>
-                <div class="registration_btn">
-                    <button>Zarejestruj</button>
+                    <button type="submit">Zaloguj</button>
                 </div>
             </form>
-            <div class="alerts">
-                <div class="error_msg">xxx</div>
-                <div class="info_msg">xxx</div>
-            </div>
+           <div class="login_forgetpas_btn">
+               <a th:href="@{/resetpassword}" class="forgetpass_btn">Przypomnij hasło</a>
+           </div>
+           <div class="registration_btn">
+
+               <a th:href="@{/registration}">Zarejestruj</a>
+           </div>
             <div class="triangle">
-                <img src="../static/img/trojkat-dol.png" width="180%" height="180%">
+                <img src="/img/trojkat-dol.png" width="180%" height="180%">
             </div>
         </div>
   
        <div class="main_container_login_right">
-        <img class="trojkat_gora" src="../static/img/trojkat_gora.png" width="30%" height="30%">
-        <img class="greenimg" src="../static/img/circlelightgreen.png">
-        <img class="mountainimg" src="../static/img/gory_pagestart.png">
-        <img class="eiflaimg" src="../static/img/eifla.png">
-        <img class="slaczekimg" src="../static/img/slaczek.png" width="10%" height="5%">
+        <img class="trojkat_gora" src="/img/trojkat_gora.png" width="30%" height="30%">
+        <img class="greenimg" src="/img/circlelightgreen.png">
+        <img class="mountainimg" src="/img/gory_pagestart.png">
+        <img class="eiflaimg" src="/img/eifla.png">
+        <img class="slaczekimg" src="/img/slaczek.png" width="10%" height="5%">
        </div>
    </div>
 

@@ -26,6 +26,11 @@ public class ResetPasswordController {
         this.restTemplate = restTemplate;
     }
 
+    @GetMapping
+    public String toResetPasswordPage(){
+        return "reset_password";
+    }
+
     @GetMapping("/{code}")
     public String checkCode(@PathVariable("code") String code, Model model){
         String path = GlobalSettings.domain + "/api/forgotpassword/" + code;
@@ -36,7 +41,7 @@ public class ResetPasswordController {
             setMessage(e, model);
             return "login";
         }
-        return "resetpassword";
+        return "reset_password";
     }
 
     @PostMapping
@@ -44,8 +49,8 @@ public class ResetPasswordController {
         String path = GlobalSettings.domain + "/api/forgotpassword/change";
 
         if(passwordForm.passwordsAreNotTheSame()){
-            model.addAttribute("msg_err", "Hasła nie są takie same");
-            return "resetpassword";
+            model.addAttribute("error_msg", "Hasła nie są takie same");
+            return "reset_password";
         }
 
         try {
@@ -59,11 +64,11 @@ public class ResetPasswordController {
 
     private void setMessage(HttpClientErrorException e, Model model){
         if(e.getStatusCode().equals(HttpStatus.NOT_FOUND)){
-            model.addAttribute("msg_info", "Błędny link do resetu hasła. Może został juz wykorzystany.");
+            model.addAttribute("info_msg", "Błędny link do resetu hasła. Może został juz wykorzystany.");
         }else if(e.getStatusCode().is5xxServerError()){
-            model.addAttribute("msg_err", "Błąde serwera");
+            model.addAttribute("error_msg", "Błąde serwera");
         }else {
-            model.addAttribute("msg_err", "Coś poszło nie tak");
+            model.addAttribute("error_msg", "Coś poszło nie tak");
         }
     }
 }
