@@ -1,0 +1,38 @@
+.registration_form{
+    display: flex;
+    flex-direction: column;
+    color:white;
+    font-family: 'Open Sans', sans-serif;
+    align-items: center;
+    padding: 5%;
+}
+
+#sex{
+    width: 40%;
+}
+
+.registration_form input{
+    width: 40%;
+    margin: 2%;
+}
+
+.triangle_right{
+    width: 120px;
+    height: 110px;
+    border: 1 px solid black;
+    position: fixed;
+    top: 0%;
+    right: 30%;
+}
+    
+.chexlogo_div{
+    display: flex;
+    flex-direction: column;
+    margin-top: 2%;
+    margin-left: 1%;
+}
+
+.alerts{
+    display: flex;
+    justify-content: center;
+}

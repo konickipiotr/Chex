@@ -9,52 +9,60 @@
     <link rel="stylesheet" type="text/css" href="../static/css/common_style.css">
     <link rel="stylesheet" type="text/css" href="/css/user/login_style.css">
     <link rel="stylesheet" type="text/css" href="../static/css/user/login_style.css">
+    <link rel="stylesheet" type="text/css" href="/css/user/not_logged_style.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/user/not_logged_style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://pl.allfont.net/allfont.css?fonts=league-spartan" rel="stylesheet" type="text/css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
 </head>
 
 <body>
+   <div class="main_container_login">
 
-    <header class="top_login">
-        <div class="login-top-part1">
-            <div class="logo-div">
-                <img src="../static/img/chexlogo.png" width="200" height="200">
+       <div class="main_container_login_left">
+           <div class="chexlogo_div">
+                <span class="chexlogo_span">CHEX</span>
+                <span class="chexslogan_span">PODRÓŻUJ POZNAWAJ ZDOBYWAJ</span>
             </div>
-            <div class="xxx">
-                <div class="logo-div">
-                    <span class="create_new_account_span">Zaloguj się</span>
-                </div>            
-                    <span style="display: block; ">CHANGE THE LANGUAGE</span>              
+            <form>
+                <div class="label_login">
+                    <label> 
+                    <input type="text" name="login" value="Login" />
+                    </label> 
+                    <label> 
+                    <input type="text" name="login" value="Hasło" />
+                    </label>
+                </div>
+                <div class="login_forgetpas_btn">
+                    <button>Zaloguj</button>
+                    <button class="forgetpass_btn">Przypomnij<br> hasło</button>
+                </div>
+                <div class="registration_btn">
+                    <button>Zarejestruj</button>
+                </div>
+            </form>
+            <div class="alerts">
+                <div class="error_msg">xxx</div>
+                <div class="info_msg">xxx</div>
             </div>
-            <div>
-                <span></span>
+            <div class="triangle">
+                <img src="../static/img/trojkat-dol.png" width="180%" height="180%">
             </div>
-        </div>        
-    </header>
-
-    <p th:text=${msg_err} class="error_msg"></p>
-    <p th:text=${msg_info}></p>
-
-    <form class="registration_form" th:action="@{/login}" method="POST"> 
-        <label for="username">WPROWADŹ E-MAIL</label>
-        <input type="text" name="username" id="username" value="admin">
-        <label for="password" text="WPROWADŹ HASŁO"></label>
-        <input type="password" name="password" id="password" value="11">
-        
-        <button class="registration_button" type="submit">zaloguj</button>
-    </form>
-    <div class="registration_links">
-        <a href="">Przypomnij hasło</a>
-        <a href="">Rejestracja</a>
-    </div>
-    <div class="picture_globus">
-        <img src="../static/img/globus.png">
-    </div>
+        </div>
+  
+       <div class="main_container_login_right">
+        <img class="trojkat_gora" src="../static/img/trojkat_gora.png" width="30%" height="30%">
+        <img class="greenimg" src="../static/img/circlelightgreen.png">
+        <img class="mountainimg" src="../static/img/gory_pagestart.png">
+        <img class="eiflaimg" src="../static/img/eifla.png">
+        <img class="slaczekimg" src="../static/img/slaczek.png" width="10%" height="5%">
+       </div>
+   </div>
 
 </body>
 </html>
